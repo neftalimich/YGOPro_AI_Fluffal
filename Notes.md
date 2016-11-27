@@ -1,0 +1,57 @@
+VERSIONES:
+- v0.0.0.2.0 (Release)
+	- I'm back!!!
+	- Fluffal Penguin: scripted.
+	- Frightfur Reborn: scripted.
+	- Frightfur Patchwork: scripted and deck adapted.
+	- All proyect reworked: New Fusion summon check and conditions restructured.
+- v0.0.0.1.0 (RC)
+	- Versión candidata
+- v0.0.0.7.0 (Estable)
+	- ParasiteFusioner: agregado su script.
+	- FSheepAdvantageFilter: filtro que obtiene si FSheep tiene ventaja.
+	- Mejoras generales.
+- v0.0.0.6.8 (Estable)
+	- BattlePosition: mejoras al elegir la posición de batalla.
+	- Magical Spring: agregado su script.
+	- Algunos bugs corregidos.
+	- Mejoras generales.
+- v0.0.0.6.7 (Estable)
+	- TVendor: mejorado su uso cuando se tiene desventaja.
+	- FSheep: se mejoró sus objetivos de ataque.
+	- JAvarice: agregado su script.
+	- Ahora juega mejor contra BA, pronto agregaré más decks débiles contra FSheep.
+	- Mejoras generales.
+	- Algunos bugs corregidos.
+- v0.0.0.6.5 (Estable)
+	- ToyVendor, Wings, Bear: Mejoras en el uso y combinación de estas cartas.
+	- Octo: Mejores objetivos, Desterrado al cementerio.
+	- FSabreTooth: mejor selección de objetivo cementerio al campo.
+	- TTwisters: dejar el uso genérico y crear el propio para el deck.
+	- Mejoras generales.
+- v0.0.0.6.1 (Estable)
+	- Finaliza la migración.
+	- Nuevo modo: Fluffal vs Vanity's Emptiness.
+	- Nuevo modo: Fluffal vs Darklaw.
+	- Mejoras generales.
+- v0.0.0.6.0 
+	- Reestructuración de algunos aspectos del proyecto para mejorar el código.
+	- Muchas mejoras en general.
+	- Bugs corregidos.
+- v0.0.0.5.7 (previo)
+	- Compatible con la versión beta 34a
+	- Fuffal Owl: se arregló el efecto para realizar fusion summon.
+	- Bugs corregidos
+- v0.0.0.5.6
+	- Receta: Se actualizó la receta, pero se puede cambiar con las cartas del sidedeck.
+	- Fluffal Octo: se agregó la carta y su script.
+	- Frightfur Kraken: se agregó la carta y su script.
+	- Frightfur Wolf: se mejoró la elección de la cantidad de materiales.
+	- Mejoradas las condiciones para el uso de las cartas.
+	- Mejoras en general.
+	- Bugs corregidos.
+-V0.0.0.5.5
+  - Nuevas cartas: DFusion, Galaxy Cyclone.
+  - Muchas mejoras.
+
+Las versiones anteriores no tienen registro.
