@@ -8,8 +8,10 @@ function MaterialFSabreTooth(cards)
   if CardsMatchingFilter(cards,FrightfurMonFilter) > 0
   and (
     GlobalEdgeImpMaterial + GlobalFluffalMaterial > 1
-	or GlobalEdgeImpMaterial + GlobalFluffalMaterial > 0
-	and #OppField() < 2
+	or 
+	GlobalEdgeImpMaterial + GlobalFluffalMaterial > 0
+	and #OppField() < 2 
+	and BattlePhaseCheck()
   )
   then
     return true

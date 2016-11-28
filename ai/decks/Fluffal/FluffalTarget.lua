@@ -8,17 +8,17 @@ end
 GlobalPenguin = 0
 function PenguinTarget(cards,min,max,c)
   if GlobalPenguin == 1 then
-    CountPrioTarget(cards,PRIO_TOFIELD,1,nil,nil,nil,"PenguinTarget - Field")
+    --CountPrioTarget(cards,PRIO_TOFIELD,1,nil,nil,nil,"PenguinTarget - Field")
     return Add(cards,PRIO_TOFIELD,max)
   end
   if GlobalPenguin == 0 then
-    CountPrioTarget(cards,PRIO_DISCARD,1,nil,nil,nil,"PenguinTarget - Grave")
+    --CountPrioTarget(cards,PRIO_DISCARD,1,nil,nil,nil,"PenguinTarget - Grave")
     return Add(cards,PRIO_DISCARD,min)
   end
 end
 function OwlTarget(cards,min,max,c)
   local result
-  if FilterLocation(c,LOCATION_MZONE) then
+  if GlobalOwl == 1 then
     print("OwlTarget - Fusion Summon")
     result = FusionSummonTarget(cards,min,max,c,MATERIAL_TOGRAVE)
   else
@@ -160,6 +160,7 @@ function TVendorTarget(cards,min,max,c)
 end
 
 function FPatchworkTarget(cards,min,max,c)
+  --CountPrioTarget(cards,PRIO_TOHAND,1,nil,nil,nil,"FPatchworkTarget")
   return Add(cards,PRIO_TOHAND,max)
 end
 function FRebornTarget(cards,min,max,c)
@@ -177,6 +178,9 @@ GlobalFusionId = 0 -- Fusion MonsterID
 
 GlobalPolymerization = 0
 function PolymerizationTarget(cards,min,max,c)
+  if FilterLocation(c,LOCATION_GRAVE) then -- FSubstitute
+    return Add(cards,PRIO_TODECK)
+  end
   local result
   GlobalPolymerization = 1
   result = FusionSummonTarget(cards,min,max,c,MATERIAL_TOGRAVE)
@@ -215,6 +219,7 @@ function FFusionTarget(cards,min,max,c)
 end
 
 -- Spell TARGET
+GlobalIFusion = 0
 function IFusionTarget(cards,min,max,c)
   GlobalIFusion = 1
   CountPrioTarget(cards,PRIO_TOFIELD,1,nil,nil,nil,"IFusionTarget")

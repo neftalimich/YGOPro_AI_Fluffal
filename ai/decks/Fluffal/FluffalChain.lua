@@ -1,6 +1,20 @@
 ------------------------
 -------- CHAIN ---------
 ------------------------
+-- OtherM CHAIN
+function ChainMaxxCFluffal(c)
+  return
+    CardsMatchingFilter(OppField(),MaxxCAdvantageFilter) > 0
+	or (
+	  HasID(OppExtra(),90809975,true) -- Toadally Awesome
+	  and CardsMatchingFilter(OppMon(),FilterRace,RACE_AQUA) >= 2
+	  and CardsMatchingFilter(OppMon(),FilterLevel,2) >= 2
+	)
+	or (
+	  CardsMatchingFilter(OppMon(),FilterAttribute,ATTRIBUTE_WIND) > 0
+	  and HasID(OppHand(),53932291,true) -- Speedroid Taketomborg
+	)
+end
 -- Spell CHAIN
 function ChainMSpring(c)
   if FluffalRemovalCheckCard(c)
@@ -42,23 +56,45 @@ function FluffalRemovalCheckCard(c)
 	or RemovalCheckCard(c,CATEGORY_TOHAND)
 	or RemovalCheckCard(c,CATEGORY_REMOVE)
 end
-
+GlobalOppMaxxC = 0
 function FluffalChain(cards)  -- FLUFFAL CHAIN
+  if HasID(cards,23434538,ChainMaxxCFluffal) then
+    return {1,CurrentIndex}
+  end
   if HasID(cards,43455065,ChainMSpring) then -- MSpring
-    return 1,CurrentIndex
+    return {1,CurrentIndex}
   end
   if HasID(cards,43898403,ChainTwinTwister) then -- TwinTwisters
-    return 1,CurrentIndex
+    return {1,CurrentIndex}
   end
   if HasIDNotNegated(cards,66127916,ChainFReserve) then -- FReserve
     return {1,CurrentIndex}
   end
   if HasIDNotNegated(cards,98954106,ChainJAvarice) then -- JAvarice
-    return 1,CurrentIndex
+    return {1,CurrentIndex}
   end
   if HasIDNotNegated(cards,51452091,false) then -- RDecree
-    return 1,CurrentIndex
+    return {1,CurrentIndex}
   end
+  
+  -- Opp Maxx "C"
+  if GlobalOppMaxxC ~= Duel.GetTurnCount() then
+    for i=1,Duel.GetCurrentChain() do
+	  local p = Duel.GetChainInfo(i, CHAININFO_TRIGGERING_PLAYER)
+      local e = Duel.GetChainInfo(i, CHAININFO_TRIGGERING_EFFECT)
+	  local c = nil
+	  if e and p and (p == 1- player_ai) then
+        c=e:GetHandler()
+	    if c then
+		  if c:GetCode() == 23434538 then
+		    --print("OppMaxxC")
+		    GlobalOppMaxxC = Duel.GetTurnCount()
+		  end
+	    end
+      end
+    end
+  end
+  
   return nil
 end
 

@@ -1,10 +1,10 @@
 # YGOPro_AI_Fluffal
-YGOPro - AI - Fluffal v0.0.2.0 (Stable) by neftalimich
+YGOPro - AI - Fluffal v0.0.2.0.1 (Stable) by neftalimich
 
 Español: 
 
 **Próximamente**
-- v.0.0.2.0: Mas jugadas alternativas contra decks que le generan debilidad.
+- v.0.0.2.1: Mas jugadas alternativas contra decks que le generan debilidad.
 	
 **Desarrollo:**
 
@@ -19,9 +19,9 @@ El desarrollo de la IA tendrá diferentes etapas etapas:
 	6. Chain: Cadenas (encadenar). 100%
 	7. Summon: Condiciones para realizar la invocación. 90%
 	8. Battle: Fase de batalla. 95%
-2. Mejorar los scripts para que juegue contra las cartas Floodgate mas comunes. 0%
-3. Crear script para que al azar realice jugadas arriesgadas en caso de que tenga desventaja. 0%
-4. Crear distintas maneras de jugar contra decks que le generen debilidades. Ejemplo: Monarcas o Masked Hero. 0%
+2. Mejorar los scripts para que juegue contra las cartas Floodgate mas comunes. 10%
+3. Crear script para que al azar realice jugadas arriesgadas en caso de que tenga desventaja. 5%
+4. Crear distintas maneras de jugar contra decks que le generen debilidades. Ejemplo: Monarcas o Masked Hero. 10%
 
 Cada etapa irá mejorando conforme se encuentren errores, deficiencias en su algoritmo o mejoras en general.
 Se colocará junto a la versión si es estable o no.
@@ -35,12 +35,12 @@ Se colocará junto a la versión si es estable o no.
 
 **Método de instalación:**
 
-1. Descarga el archivo: próximamente (v0.0.2.0).
+1. Descarga el archivo: *próximamente* (v0.0.2.0). 
 2. Descomprime el paquete. Revisa que contiene las carpeta ai, deck, pics (opcional).
 3. Copia las carpetas en el directorio raiz de YGOPro 1.033.A (dentro están las carpetas por defecto: ai, deck)
 4. Te preguntará si deseas combinar las carpetas y/o sobrescribir los archivos, elige que sí.
 5. En caso de que haya una versión estable más reciente en github puedes descargarla directamente y sobrescribir la anterior omitiendo los archivos como este léeme.
-
+Nota: En caso de que no haya enlace, descargalo diréctamente de de github.
 
 **Hitos:**
 

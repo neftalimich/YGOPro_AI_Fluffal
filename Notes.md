@@ -1,9 +1,17 @@
 VERSIONES:
+- v0.0.0.2.1 (Release)
+	- Fusion Substitute: agregado su script.
+	- ChainMaxxC: agregado su script.
+	- Frightfur SpSummon: Mejorado.
+	- Mejora en general
+	- FOwl Target: bug corregido.
+	- IFusion: varible global arreglada.
+	- Algunos otros bugs corregidos
 - v0.0.0.2.0 (Release)
-	- I'm back!!!
-	- Fluffal Penguin: scripted.
-	- Frightfur Reborn: scripted.
-	- Frightfur Patchwork: scripted and deck adapted.
+	- ¡¡¡Estoy de regreso!!!
+	- Fluffal Penguin: agregado su script.
+	- Frightfur Reborn: agregado su script.
+	- Frightfur Patchwork: agregado su script y adaptación de la IA.
 	- All proyect reworked: New Fusion summon check and conditions restructured.
 - v0.0.0.1.0 (RC)
 	- Versión candidata

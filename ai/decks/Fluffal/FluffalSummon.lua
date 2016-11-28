@@ -131,24 +131,23 @@ end
 function SummonTomahawk(c)
   return OPTCheck(97567736+1)
 end
-function SummonChain()
-  return
-    BattlePhaseCheck()
-	and (
-	  OppGetStrongestAttDef() < c.attack
-	  or
-	  OppGetStrongestAttDef() < AIGetStrongestAttack()
-	  and CanWinBattle(c,OppMon())
-	)
+function SummonChain(c)
+  return SummonEdgeImp(c)
 end
 function SummonSabres(c)
+  return SummonEdgeImp(c)
+end
+function SummonEdgeImp(c)
   return
     BattlePhaseCheck()
 	and (
 	  OppGetStrongestAttDef() < c.attack
 	  or
 	  OppGetStrongestAttDef() < AIGetStrongestAttack()
-	  and CanWinBattle(c,OppMon())
+	  and (
+	    CanWinBattle(c,OppMon())
+		or CardsMatchingFilter(AIMon(),FrightfurMonFilter) >= #OppMon()
+	  )
 	)
 end
 -- Other SUMMON
@@ -202,8 +201,12 @@ function FSummonFSabreTooth(c)
   )
   then
     return true
+  else
+    if CardsMatchingFilter(AIMon(),FilterID,80889750) == 2 then
+	  return 1
+	end
+	return false
   end
-  return false
 end
 function SpSummonFSabreTooth(c)
   if not HasIDNotNegated(AIMon(),80889750,true) -- FSabreTooth
@@ -240,13 +243,14 @@ function SpSummonFKraken(c)
 	then
 	  return true
 	else
-	  if not BattlePhaseCheck() then
-	    return 1
-	  end
 	  return false
 	end
+  else
+	if not BattlePhaseCheck() then
+	  return 1
+	end
+	return false
   end
-  return false
 end
 
 function FLeoFinish()
@@ -343,6 +347,10 @@ function FSummonFTiger(c)
 	  CardsMatchingFilter(OppField(),FTigerDestroyFilter) == 1
 	  and OppGetStrongestAttDef() >= AIGetStrongestAttack()
 	  and HasID(AIMon(),80889750,true) -- FSabreTooth
+  else
+    if not BattlePhaseCheck() then
+	  return 1
+	end
   end
   return false
 end

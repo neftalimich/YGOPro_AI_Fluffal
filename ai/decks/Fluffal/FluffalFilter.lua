@@ -204,7 +204,7 @@ function CountPrioTarget(cards,loc,minPrio,Type,filter,opt,debugMode)
       c.prio = -1
     end
 	if debugMode ~= nil then
-	  print(debugMode.." - Prio: "..c.prio,c.id.." - "..GetName(c))
+	  print(debugMode.." - Prio: "..c.prio,c.original_id.." - "..GetName(c))
 	end
 	if c.prio > minPrio then
 	  result = result + 1
@@ -358,6 +358,8 @@ end
 function MaxxCAdvantageFilter(c)
   return
     MaxxCZBAdvantageFilter(c)
+	or (c.id == 58069384 and HasID(OppExtra(),10443957,true)) -- Cyber Dragon Nova
+	
 end
 
 function MaxxCZBAdvantageFilter(c)

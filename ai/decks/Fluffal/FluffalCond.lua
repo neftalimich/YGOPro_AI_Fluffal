@@ -1952,21 +1952,21 @@ end
 function PolyCond(loc,c)
   if loc == PRIO_TOHAND then
     if FilterLocation(c,LOCATION_DECK)
+	or FilterLocation(c,LOCATION_GRAVE)
+	or FilterLocation(c,LOCATION_ONFIELD)
 	then
 	  if HasID(UseLists({AIHand(),AIST()}),c.id,true)
 	  then
 	    return 1
 	  end
-	  return not HasID(AIHand(),c.id,true)
-	end
-	if FilterLocation(c,LOCATION_ONFIELD) then
-	  return true
-	end
-	if FilterLocation(c,LOCATION_GRAVE) then
+	  if c.original_id == 74335036 -- FSubstitute
+	  then
+	    return false
+	  end
 	  return true
 	end
 	if FilterLocation(c,LOCATION_REMOVED) then
-	  return true
+	  return c.original_id == 74335036 -- FSubstitute
 	end
   end
   if loc == PRIO_TOGRAVE then
@@ -2001,7 +2001,7 @@ function PolyCond(loc,c)
   end
   if loc == PRIO_BANISH then
     if FilterLocation(c,LOCATION_GRAVE) then
-	  return true
+	  return c.original_id ~= 74335036 -- FSubstitute
 	end
     if FilterLocation(c,LOCATION_ONFIELD) then
 	  return false
@@ -2110,10 +2110,16 @@ function FSabreToothCond(loc,c)
 	  end
 	  if GlobalFFusion > 0 then
 	    if MaterialFSabreToothBanish() then
+		  if GlobalIFusion == 1 then
+		    return 11
+		  end
 		  return FSummonFSabreTooth(c)
 		end
 	  else
 	    if MaterialFSabreTooth() then
+		  if GlobalIFusion == 1 then
+		    return 11
+		  end
 		  return FSummonFSabreTooth(c)
 		end
 	  end
@@ -2541,8 +2547,10 @@ end
 function FSheepCond(loc,c)
   if loc == MATERIAL_TOGRAVE then
     if FilterAffected(c,EFFECT_CANNOT_ATTACK) then -- IFusion
-	  GlobalIFusion = 0
 	  OPTReset(c.cardid)
+	  if GlobalFusionPerform > 0 then
+	    GlobalIFusion = 0
+	  end
 	  return 9999
 	else
 	  return 4 + PrioFrightfurMaterial(c,1)
@@ -2724,9 +2732,9 @@ FluffalPriorityList={
  [34773082] = {8,4,1,1,5,1,9,0,7,1,FPatchworkCond},	-- Frightfur Patchwork (BETA)
 [100214101] = {5,2,1,1,2,1,2,1,1,1,FRebornCond},	-- Frightfur Reborn (BETA)
  [01845204] = {1,1,1,1,3,2,3,1,8,1,IFusionCond},	-- Instant Fusion
- [24094653] = {1,1,1,1,2,1,2,1,1,1,PolyCond},		-- Polymerization
+ [24094653] = {2,1,1,1,2,1,2,1,2,1,PolyCond},		-- Polymerization
  [94820406] = {1,1,1,1,2,1,2,1,1,1,DFusionCond},	-- Dark Fusion
- [05133471] = {1,1,1,1,7,5,6,5,1,1,GCycloneCond},			-- Galaxy Cyclone
+ [05133471] = {1,1,1,1,7,5,6,5,1,1,GCycloneCond},	-- Galaxy Cyclone
  [43455065] = {1,1,1,1,1,1,2,1,1,1,nil},			-- Magical Spring
  [43898403] = {1,1,1,1,5,3,6,4,1,1,nil},			-- Twin Twister
 

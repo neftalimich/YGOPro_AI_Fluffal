@@ -193,7 +193,7 @@ function FluffalInit(cards,to_bp_allowed,to_ep_allowed) -- FLUFFAL INIT
 
   -- GLOBAL
   GlobalPenguin = 0
-  GlobalFluffalFSummon = false
+  GlobalOwl = 0
   GlobalSabres = 0
   GlobalTVendor = 0
   GlobalFusionId = 0
@@ -202,20 +202,22 @@ function FluffalInit(cards,to_bp_allowed,to_ep_allowed) -- FLUFFAL INIT
   GlobalFFusion = 0
   GlobalFluffalMaterial = 0
   GlobalEdgeImpMaterial = 0
+  GlobalCanFusionSummon = false
 
   -- GLOBAL INIT
+  print("--1")
   GlobalFluffalPercent = CountFluffal(AIDeck()) / #AIDeck()
   print("FluffalPercent: ",(GlobalFluffalPercent * 100).." %")
   if CardsMatchingFilter(Act,FluffalFusionSTFilter2) > 0
   then
     GlobalCanFusionSummon = true
   end
-  --print("---1")
+  print("--2")
   -- FLUFFAL KAIJU
   if CardsMatchingFilter(OppMon(),BossMonFilter) > 0 then
     FluffalSpSumKaiju(cards.spsummonable_cards)
   end
-  --print("---2")
+  print("--3")
   -- FLUFFAL VS VANITY'S EMPTINESS
   if CardsMatchingFilter(OppST(),VanityFilter) > 0 then
     local vanity = FluffalVsVanity(cards,to_bp_allowed,to_ep_allowed)
@@ -224,7 +226,7 @@ function FluffalInit(cards,to_bp_allowed,to_ep_allowed) -- FLUFFAL INIT
     end
 	return nil
   end
-  --print("---3")
+  print("--4")
   -- FLUFFAL VS DARKLAW
   GlobalDarkLaw = 0
   if HasID(OppMon(),50720316,true) -- ShadowMist
@@ -248,7 +250,7 @@ function FluffalInit(cards,to_bp_allowed,to_ep_allowed) -- FLUFFAL INIT
     end
 	return nil
   end
-  --print("---4")
+  print("--5")
   -- FLUFFAL VS MACRO
   --if MacroCheck() then -- Is not working
     --local macro = FluffalVsMacro(cards,to_bp_allowed,to_ep_allowed)
@@ -256,7 +258,7 @@ function FluffalInit(cards,to_bp_allowed,to_ep_allowed) -- FLUFFAL INIT
 	  --return {macro[1],macro[2]}
     --end
   --end
-  --print("---5",CardsMatchingFilter(OppField(),ExtraDeckBlockedFilter))
+  print("--6")
   -- FLUFFAL VS EXTRA DECK BLOCKED
   if CardsMatchingFilter(OppField(),ExtraDeckBlockedFilter) > 0 then
     local extra = FluffalVsExtraBlocked(cards,to_bp_allowed,to_ep_allowed)
@@ -265,13 +267,13 @@ function FluffalInit(cards,to_bp_allowed,to_ep_allowed) -- FLUFFAL INIT
     end
 	return nil
   end
-  --print("---6")
+  print("--7")
   -- FLUFFAL PRINCIPAL
   local principal = FluffalPrincipal(cards,to_bp_allowed,to_ep_allowed)
   if principal then
     return {principal[1],principal[2]}
   end
-  --print("---7")
+  print("--8")
   -- FLUFFAL REPOSITION
   if HasIDNotNegated(Rep,40636712,RepFKraken) then
     return {COMMAND_CHANGE_POS,CurrentIndex}
@@ -282,7 +284,7 @@ function FluffalInit(cards,to_bp_allowed,to_ep_allowed) -- FLUFFAL INIT
   if HasIDNotNegated(Rep,83531441,RepDante) then
     return {COMMAND_CHANGE_POS,CurrentIndex}
   end
-  --print("---8")
+  print("--9")
   -- TURN END
   if TurnEndCheck() then
     -- ACTIVE END
@@ -312,11 +314,13 @@ function FluffalInit(cards,to_bp_allowed,to_ep_allowed) -- FLUFFAL INIT
 	if HasIDNotNegated(SetMon,72413000,SetFluffal) then -- Wings
       return {COMMAND_SET_MONSTER,CurrentIndex}
     end
-	if HasIDNotNegated(SetMon,98280324,SetFluffal) then -- Sheep
+	if HasIDNotNegated(SetMon,98280324,SetFluffal) -- Sheep
+	and AI.GetPlayerLP(1) < 6000
+	then
       return {COMMAND_SET_MONSTER,CurrentIndex}
     end
   end
-  --print("---END")
+  print("--END")
   return nil
 end
 
@@ -382,7 +386,7 @@ function FluffalPrincipal(cards,to_bp_allowed,to_ep_allowed)
   local SetST = cards.st_setable_cards
 
   -- ACTIVE 0
-  --print("0")
+  print("---7.0")
   if HasIDNotNegated(Act,10383554,UseFLeo) then
     return {COMMAND_ACTIVATE,CurrentIndex}
   end
@@ -409,7 +413,7 @@ function FluffalPrincipal(cards,to_bp_allowed,to_ep_allowed)
   if HasIDNotNegated(Act,34773082,UseFPatchwork) then
     return {COMMAND_ACTIVATE,CurrentIndex}
   end
-  --print("1")
+  print("---7.1")
   -- ACTIVE EFFECT PRINCIPAL
   if HasIDNotNegated(Act,97567736,false,(97567736*16),UseTomahawkDamage)
   then
@@ -442,10 +446,15 @@ function FluffalPrincipal(cards,to_bp_allowed,to_ep_allowed)
   if HasIDNotNegated(Act,66127916,UseFReserve) then
     return {COMMAND_ACTIVATE,CurrentIndex}
   end
+  if HasIDNotNegated(Act,24094653,false,nil,LOCATION_GRAVE)
+  and UseFSubstituteGrave(Act[CurrentIndex])
+  then
+    return {COMMAND_ACTIVATE,CurrentIndex}
+  end
   if HasIDNotNegated(Act,30068120,UseSabresNoEdgeImp) then
     return {COMMAND_ACTIVATE,CurrentIndex}
   end
-  --print("2")
+  print("---7.2")
   -- NORMAL SUMMON NO DOG
   if HasIDNotNegated(Sum,65331686,SummonOwlNoFusionST) then
     local CurrentIndexAux = CurrentIndex
@@ -470,7 +479,7 @@ function FluffalPrincipal(cards,to_bp_allowed,to_ep_allowed)
     end
     return {COMMAND_SUMMON,CurrentIndexAux}
   end
-  --print("3")
+  print("---7.3")
   -- ACTIVE TOY VENDOR PRINCIPAL
   if HasIDNotNegated(Act,03841833,UseBearDiscard,1) then
     return {COMMAND_ACTIVATE,CurrentIndex}
@@ -480,13 +489,13 @@ function FluffalPrincipal(cards,to_bp_allowed,to_ep_allowed)
   end
   if HasIDNotNegated(Act,70245411,nil,nil,LOCATION_SZONE,POS_FACEUP) -- TVendor
   then
-    if UseTVendor(Act[CurrentIndex],1) then
+    if UseTVendor(Act[CurrentIndex],true) then
       return {COMMAND_ACTIVATE,CurrentIndex}
 	end
   end
   if HasIDNotNegated(Act,70245411,nil,nil,LOCATION_SZONE,POS_FACEDOWN)
   then
-    if ActiveTVendor(Act[CurrentIndex],1) then
+    if ActiveTVendor(Act[CurrentIndex],true) then
       return {COMMAND_ACTIVATE,CurrentIndex}
 	end
   end
@@ -499,7 +508,7 @@ function FluffalPrincipal(cards,to_bp_allowed,to_ep_allowed)
       return {COMMAND_ACTIVATE,CurrentIndex}
 	end
   end
-  --print("4")
+  print("---7.4")
   -- NORMAL SUMMON PRINCIPAL
   if HasID(Act,43898403,UseTwinTwister) then
     return {COMMAND_ACTIVATE,CurrentIndex}
@@ -520,7 +529,7 @@ function FluffalPrincipal(cards,to_bp_allowed,to_ep_allowed)
     end
     return {COMMAND_SUMMON,CurrentIndexAux}
   end
-  --print("5")
+  print("---7.5")
   -- ACTIVE 2
   if HasIDNotNegated(Act,83531441,UseDanteFluffal) then
     return {COMMAND_ACTIVATE,CurrentIndex}
@@ -534,7 +543,7 @@ function FluffalPrincipal(cards,to_bp_allowed,to_ep_allowed)
   if HasIDNotNegated(Act,03841833,UseBearPoly) then
     return {COMMAND_ACTIVATE,CurrentIndex}
   end
-  --print("6")
+  print("---7.6")
   -- NORMAL SUMMON 2
   if HasIDNotNegated(Sum,10802915,SummonTGuide) then
     return {COMMAND_SUMMON,CurrentIndex}
@@ -589,7 +598,7 @@ function FluffalPrincipal(cards,to_bp_allowed,to_ep_allowed)
     end
     return {COMMAND_SUMMON,CurrentIndexAux}
   end
-  --print("7")
+  print("---7.7")
   -- ACTIVE EFFECT SHEEP
   if HasIDNotNegated(UseLists({AIHand(),AIMon()}),98280324,true) -- Sheep
   and #AIMon() <= 3
@@ -602,7 +611,7 @@ function FluffalPrincipal(cards,to_bp_allowed,to_ep_allowed)
 	  end
     end
   end
-  --print("8")
+  print("---7.8")
   -- SPECIAL SUMMON 1
   if HasIDNotNegated(SpSum,98280324,SpSummonSheep) then
     return {COMMAND_SPECIAL_SUMMON,CurrentIndex}
@@ -616,22 +625,22 @@ function FluffalPrincipal(cards,to_bp_allowed,to_ep_allowed)
   if HasIDNotNegated(SpSum,42110604,SpSummonChanbara) then
     return {COMMAND_SPECIAL_SUMMON,CurrentIndex}
   end
-  --print("9")
+  print("---7.9")
   -- PREFUSION SUMMON
   if HasIDNotNegated(Act,17194258) and BattlePhaseCheck() then -- FConscription
     return {COMMAND_ACTIVATE,CurrentIndex}
   end
-  --print("10")
+  print("---7.10")
   -- ACTIVE EFFECT TOY VENDOR 2
   if HasIDNotNegated(Act,70245411,nil,nil,LOCATION_SZONE,POS_FACEUP)
   then
-    if UseTVendor(Act[CurrentIndex],2) then
+    if UseTVendor(Act[CurrentIndex],false) then
       return {COMMAND_ACTIVATE,CurrentIndex}
 	end
   end
   if HasIDNotNegated(Act,70245411,nil,nil,LOCATION_SZONE,POS_FACEDOWN)
   then
-    if ActiveTVendor(Act[CurrentIndex],2) then
+    if ActiveTVendor(Act[CurrentIndex],false) then
       return {COMMAND_ACTIVATE,CurrentIndex}
 	end
   end
@@ -641,7 +650,7 @@ function FluffalPrincipal(cards,to_bp_allowed,to_ep_allowed)
       return {COMMAND_ACTIVATE,CurrentIndex}
 	end
   end
-  --print("11")
+  print("---7.11")
   -- ACTIVE EFFECT FUSION PRINCIPAL
   if HasIDNotNegated(Act,01845204,UseIFusion) then
     return {COMMAND_ACTIVATE,CurrentIndex}
@@ -664,13 +673,18 @@ function FluffalPrincipal(cards,to_bp_allowed,to_ep_allowed)
 	  return {COMMAND_ACTIVATE,CurrentIndex}
 	end
   end
+  if HasIDNotNegated(Act,24094653,false,nil,LOCATION_HAND+LOCATION_SZONE)
+  and UseFSubstitute(Act[CurrentIndex])
+  then
+    return {COMMAND_ACTIVATE,CurrentIndex}
+  end
   if HasIDNotNegated(Act,24094653,UsePolymerization) then
     return {COMMAND_ACTIVATE,CurrentIndex}
   end
   if HasIDNotNegated(Act,94820406,UseDFusion) then
     return {COMMAND_ACTIVATE,CurrentIndex}
   end
-  --print("12")
+  print("---7.12")
   -- ACTIVE EFFECT POST FUSION
   if HasIDNotNegated(Act,66127916,UseFReserveDisadvantage) then
     return {COMMAND_ACTIVATE,CurrentIndex}
@@ -678,7 +692,7 @@ function FluffalPrincipal(cards,to_bp_allowed,to_ep_allowed)
   if HasIDNotNegated(Act,98954106,UseJAvarice) then
     return {COMMAND_ACTIVATE,CurrentIndex}
   end
-  --print("13")
+  print("---7.13")
   -- ACTIVE EFFECT SHEEP TOMAHAWK
   if HasIDNotNegated(Act,98280324,UseSheepTomahawk) then
     GlobalSheep = 1
@@ -687,7 +701,7 @@ function FluffalPrincipal(cards,to_bp_allowed,to_ep_allowed)
   if HasIDNotNegated(SpSum,98280324,SpSummonSheepTomahawk) then
     return {COMMAND_SPECIAL_SUMMON,CurrentIndex}
   end
-  --print("14")
+  print("---7.14")
   -- ACTIVE EFFECT FUSION 2
   if HasIDNotNegated(Act,06077601,UseFFusion)
   and AI.GetCurrentPhase() == PHASE_MAIN1
@@ -700,6 +714,7 @@ function FluffalPrincipal(cards,to_bp_allowed,to_ep_allowed)
   if HasIDNotNegated(Act,43698897,ActiveFFactory) then
     return {COMMAND_ACTIVATE,CurrentIndex}
   end
+  print("---7.15")
   -- ACTIVE END
   if HasID(Act,05133471,nil,nil,LOCATION_GRAVE)
   and UseGalaxyCyclone(2)
@@ -715,6 +730,7 @@ function FluffalPrincipal(cards,to_bp_allowed,to_ep_allowed)
   then
     return {COMMAND_ACTIVATE,CurrentIndex}
   end
+  print("---7.16")
   -- NORMAL SUMMON END
   if HasIDNotNegated(Sum,61173621,SummonChain) then
     return {COMMAND_SUMMON,CurrentIndex}
@@ -729,16 +745,14 @@ function FluffalPrincipal(cards,to_bp_allowed,to_ep_allowed)
   if HasIDNotNegated(Sum,30068120,SummonSabres) then
     return {COMMAND_SUMMON,CurrentIndex}
   end
-  --print("15")
-
-  print("END PRINCIPAL")
+  GlobalIFusion = 0
+  print("---7 END")
 end
 
 ------------------------
 ------ ALTERNATIVE -----
 ------------------------
 function FluffalSpSumKaiju(SpSum)
-  print("FluffalSpSumKaiju")
   for i=1,#SpSum do
     local c = SpSum[i]
 	if FilterSet(c,0xD3) then -- Kaiju
@@ -819,7 +833,7 @@ function FluffalVsVanity(cards,to_bp_allowed,to_ep_allowed)
   end
   if HasIDNotNegated(Act,70245411,nil,nil,LOCATION_SZONE,POS_FACEDOWN)
   then
-    if ActiveTVendor(Act[CurrentIndex],1) then
+    if ActiveTVendor(Act[CurrentIndex],false) then
       return {COMMAND_ACTIVATE,CurrentIndex}
 	end
   end
@@ -828,7 +842,7 @@ function FluffalVsVanity(cards,to_bp_allowed,to_ep_allowed)
   end
   if HasIDNotNegated(Act,70245411,nil,nil,LOCATION_HAND)
   then
-    if ActiveTVendor(Act[CurrentIndex],1) then
+    if ActiveTVendor(Act[CurrentIndex],false) then
       return {COMMAND_ACTIVATE,CurrentIndex}
 	end
   end
@@ -858,25 +872,6 @@ function FluffalVsVanity(cards,to_bp_allowed,to_ep_allowed)
   end
   if HasIDNotNegated(Sum,39246582,SummonDogEnd) then
     return {COMMAND_SUMMON,CurrentIndex}
-  end
-  -- ACTIVE EFFECT TOY VENDOR 2
-  if HasIDNotNegated(Act,70245411,nil,nil,LOCATION_SZONE,POS_FACEUP)
-  then
-    if UseTVendor(Act[CurrentIndex],2) then
-      return {COMMAND_ACTIVATE,CurrentIndex}
-	end
-  end
-  if HasIDNotNegated(Act,70245411,nil,nil,LOCATION_SZONE,POS_FACEDOWN)
-  then
-    if ActiveTVendor(Act[CurrentIndex],2) then
-      return {COMMAND_ACTIVATE,CurrentIndex}
-	end
-  end
-  if HasIDNotNegated(Act,70245411,nil,nil,LOCATION_HAND)
-  then
-    if ActiveTVendor(Act[CurrentIndex],2) then
-      return {COMMAND_ACTIVATE,CurrentIndex}
-	end
   end
   -- NORMAL SUMMON END
   if HasIDNotNegated(Sum,13241004) -- Penguin
@@ -919,7 +914,11 @@ function FluffalVsDarkLaw(cards,to_bp_allowed,to_ep_allowed)
   then
     return {COMMAND_ACTIVATE,CurrentIndex}
   end
-
+  if HasIDNotNegated(Act,24094653,false,nil,LOCATION_HAND+LOCATION_SZONE)
+  and UseFSubstitute(Act[CurrentIndex])
+  then
+    return {COMMAND_ACTIVATE,CurrentIndex}
+  end
   if HasIDNotNegated(Act,24094653,UsePolymerization)
   then
     return {COMMAND_ACTIVATE,CurrentIndex}
@@ -1045,7 +1044,7 @@ function FluffalPrioMode(safemode)
     minPrio = 1
   end
 
-  if #AIMon() <= 1 and not NormalSummonCheck() then
+  if #AIMon() <= 1 and NormalSummonCheck() then
     minPrio = minPrio - 1
   end
 
@@ -1059,6 +1058,16 @@ end
 function RoundCustom(num, idp)
   local mult = 10^(idp or 0)
   return math.floor(num * mult + 0.5) / mult
+end
+
+function FluffalSafeSpSummon(mode)
+  if GlobalOppMaxxC == Duel.GetTurnCount()
+  then
+    if AIGetStrongestAttack() > OppGetStrongestAttack() then
+	  return false
+	end
+  end
+  return true
 end
 ------------------------
 -------- FILTER --------

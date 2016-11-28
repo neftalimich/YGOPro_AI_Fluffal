@@ -28,6 +28,7 @@
 - Frightfur Patchwork
 - Frightfur Reborn
 - Polymerization
+- Fusion Substitute
 - Dark Fusion
 - Instant Fusion (Only FSheep)
 - Fusion Reserve

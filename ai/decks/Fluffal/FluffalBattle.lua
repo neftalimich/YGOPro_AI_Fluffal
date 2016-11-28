@@ -44,7 +44,7 @@ function FluffalPosition(id,available) -- FLUFFAL POSITION
     end
   end
 
-  if id == 57477163 and GlobalIFusion > 0 then -- FSheep by IFusion
+  if id == 57477163 and GlobalIFusion == 1 then -- FSheep by IFusion
     return 4 -- POS_FACEUP_DEFENSE?
   end
 

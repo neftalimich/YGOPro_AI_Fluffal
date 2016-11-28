@@ -82,12 +82,14 @@ function UseOwlFusion(c)
   if AI.GetPlayerLP(1) <= 500 then
     return false
   end
+  GlobalOwl = 1
   GlobalFluffalMaterial = CountFluffalMaterial(UseLists({AIMon(),AIHand()}),MATERIAL_TOGRAVE)
   GlobalEdgeImpMaterial = CountEdgeImpMaterial(UseLists({AIMon(),AIHand()}),MATERIAL_TOGRAVE)
   local countF = CountFrighturFusion()
-
+  GlobalOwl = 0
   if countF > 0
   then
+    GlobalOwl = 1
     return true
   end
   return false
@@ -299,12 +301,9 @@ function UseBulb(c)
     return false
   end
 end
-function UseMaxxC(c)
-  return
-    CardsMatchingFilter(OppField(),MaxxCAdvantageFilter) > 0
-end
 -- FluffalS USE
 function ActiveTVendor(c,mode)
+  --CountPrioTarget(AIHand(),PRIO_DISCARD,1,nil,nil,nil,"DISCARD")
   if HasID(AIHand(),72413000,true) -- Wings
   then
 	return true
@@ -350,6 +349,7 @@ function ActiveTVendor(c,mode)
   return false
 end
 function UseTVendor(c,mode)
+  --CountPrioTarget(AIHand(),PRIO_DISCARD,1,nil,nil,nil,"DISCARD")
   if HasID(AIHand(),72413000,true) -- Wings
   then
     OPTSet(c.cardid)
@@ -459,6 +459,7 @@ function UseIFusion(c)
   and CountFrightfurMon(UseLists({AIMon(),AIGrave()})) > 2 -- Frightfurs
   and CountMaterialFTarget(UseLists({AIMon(),AIGrave()}),PRIO_BANISH) > 1
   then
+    GlobalActivatedCardID = c.id
     OPTSet(c.id)
     return true
   else
@@ -490,20 +491,43 @@ function UseMSpring(c)
     return false
   end
 end
-
 -- FUSION USE
 GlobalFluffalMaterial = 0
 GlobalEdgeImpMaterial = 0
 function UsePolymerization(c)
+  if c.original_id == 74335036 then -- FSubstitute
+    return false
+  end
   GlobalPolymerization = 1
-
   GlobalFluffalMaterial = CountFluffalMaterial(UseLists({AIMon(),AIHand()}),MATERIAL_TOGRAVE)
   GlobalEdgeImpMaterial = CountEdgeImpMaterial(UseLists({AIMon(),AIHand()}),MATERIAL_TOGRAVE)
   local countF = CountFrighturFusion()
-
   GlobalPolymerization = 0
-
   if countF > 0
+  then
+    return true
+  end
+  return false
+end
+function UseFSubstitute(c)
+  if c.original_id == 74335036 -- FSubstitute
+  and not FilterLocation(c,LOCATION_GRAVE)
+  then
+    GlobalPolymerization = 1
+    GlobalFluffalMaterial = CountFluffalMaterial(AIMon(),MATERIAL_TOGRAVE)
+    GlobalEdgeImpMaterial = CountEdgeImpMaterial(AIMon(),MATERIAL_TOGRAVE)
+    local countF = CountFrighturFusion()
+    GlobalPolymerization = 0
+    if countF > 0
+    then
+      return true
+    end
+  end
+  return false
+end
+function UseFSubstituteGrave(c)
+  if c.original_id == 74335036
+  and FilterLocation(c,LOCATION_GRAVE)
   then
     return true
   end
