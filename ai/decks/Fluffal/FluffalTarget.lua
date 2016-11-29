@@ -309,7 +309,7 @@ function MaxMaterials(fusionId,min,max)
 	local oppRemainLP = AI.GetPlayerLP(2) - expectedDamage
 	if oppRemainLP > 0
 	then
-	  result = RoundCustom((oppRemainLP / (2000 + FrightfurBoost(fusionId))),0)
+	  result = math.ceil(oppRemainLP / (2000 + FrightfurBoost(fusionId)))
 	end
   end
 

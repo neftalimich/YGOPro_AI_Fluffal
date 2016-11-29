@@ -8,7 +8,7 @@ require("ai.decks.Fluffal.FluffalChain")
 require("ai.decks.Fluffal.FluffalBattle")
 
 function FluffalStartup(deck)
-  print("AI_Fluffal v0.0.2.0 by neftalimich.")
+  print("AI_Fluffal v0.0.2.0.1 by neftalimich.")
   deck.Init					= FluffalInit
   deck.Card					= FluffalCard
   deck.Chain				= FluffalChain
@@ -1044,7 +1044,7 @@ function FluffalPrioMode(safemode)
     minPrio = 1
   end
 
-  if #AIMon() <= 1 and NormalSummonCheck() then
+  if #AIMon() <= 1 then
     minPrio = minPrio - 1
   end
 

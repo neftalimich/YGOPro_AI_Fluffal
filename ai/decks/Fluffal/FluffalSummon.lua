@@ -202,7 +202,9 @@ function FSummonFSabreTooth(c)
   then
     return true
   else
-    if CardsMatchingFilter(AIMon(),FilterID,80889750) == 2 then
+    if CardsMatchingFilter(AIMon(),FilterID,80889750) == 2 
+	or not BattlePhaseCheck()
+	then
 	  return 1
 	end
 	return false
@@ -285,16 +287,21 @@ function SpSummonFBear(c)
 end
 
 function FWolfFinish()
-  local fluffalMon = CountFluffal(UseLists({AIHand(),AIMon()}))
+  --print("FWolfFinish")
+  local cards = UseLists({AIHand(),AIMon()})
+  if GlobalFFusion == 1 then cards = UseLists({AIGrave(),AIMon()}) end
+  local fluffalMon = CountFluffal(cards)
   local frightfurMon = CountFrightfurMon(AIMon())
   local expecteDamage = ExpectedDamageMichelet(1,NotFluffalFilter)
   local fBoost = FrightfurBoost(11039171)
   local frightfurAtk = 2000 + fBoost
+  --print("FWolf - Attack",frightfurAtk)
   --print("expecteDamage: "..expecteDamage)
-  expecteDamage = expecteDamage + (frightfurAtk * (fluffalMon + 1))
+  expecteDamage = expecteDamage + (fBoost * (frightfurMon + 1))
   --print("DummyExpecteDamage: "..expecteDamage)
-  --local materialNeeded = ((AI.GetPlayerLP(2) - expecteDamage) / frightfurAtk)
+  local materialNeeded = math.ceil((AI.GetPlayerLP(2) - expecteDamage) / frightfurAtk)
   --print("MaterialNeeded: "..materialNeeded)
+  --print((fluffalMon + 1),fluffalMon,(fluffalMon + 1) >= materialNeeded)
   return
     #OppMon() == 0
 	or
@@ -317,8 +324,7 @@ function FWolfFinish()
 	)
 	and expecteDamage < AI.GetPlayerLP(2)
 	and
-	  ((AI.GetPlayerLP(2) - expecteDamage) / frightfurAtk)
-	  <= (fluffalMon + 1)
+	  (fluffalMon + 1) >= materialNeeded
 end
 function FSummonFWolf(c)
   if not HasIDNotNegated(AIMon(),11039171,true) -- FWolf

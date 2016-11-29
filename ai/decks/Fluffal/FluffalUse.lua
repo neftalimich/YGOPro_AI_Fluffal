@@ -403,6 +403,7 @@ function UseFFactory(c,safemode)
   or
   #OppField() <= 2
   and UseFFactoryAux(false)
+  and BattlePhaseCheck()
   then
     GlobalFluffalMaterial = CountFluffalMaterial(UseLists({AIMon(),AIHand()}),MATERIAL_TOGRAVE)
     GlobalEdgeImpMaterial = CountEdgeImpMaterial(UseLists({AIMon(),AIHand()}),MATERIAL_TOGRAVE)
@@ -676,7 +677,9 @@ function UseDanteFluffal(c)
 end
 
 function FluffalEffectYesNo(id,card) -- FLUFFAL EFFECT YESNO
-  print("EffectYesNo - Cardid: "..card.id.." - desc: "..card.description)
+  if card then
+    print("EffectYesNo - Cardid: "..card.id.." - desc: "..card.description)
+  end
   local result = nil
 
   if id == 39246582 then -- Dog
