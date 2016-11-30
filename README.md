@@ -1,5 +1,5 @@
 # YGOPro_AI_Fluffal
-YGOPro - AI - Fluffal v0.0.2.0.0 (Stable) by neftalimich
+YGOPro - AI - Fluffal v0.0.2.0.1 (Stable) by neftalimich
 
 Español: 
 
@@ -35,7 +35,7 @@ Se colocará junto a la versión si es estable o no.
 
 **Método de instalación:**
 
-1. Descarga el archivo: http://www.mediafire.com/file/32d94zts4dxva46/AI+34b.rar (v0.0.2.0.0). 
+1. Descarga el archivo: http://www.mediafire.com/file/32d94zts4dxva46/AI+34b.rar (v0.0.2.0.1). 
 2. Descomprime el paquete. Revisa que contiene las carpeta ai, deck, pics (opcional).
 3. Copia las carpetas en el directorio raiz de YGOPro 1.033.A (dentro están las carpetas por defecto: ai, deck)
 4. Te preguntará si deseas combinar las carpetas y/o sobrescribir los archivos, elige que sí.

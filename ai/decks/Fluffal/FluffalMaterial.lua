@@ -5,7 +5,12 @@ function MaterialFSabreTooth(cards)
   if cards == nil then
     cards = UseLists({AIMon(),AIHand()})
   end
-  if CardsMatchingFilter(cards,FrightfurMonFilter) > 0
+  if (
+    HasID(AIMon(),40636712,true) -- FKraken
+	or HasID(AIMon(),85545073,true) -- FBear
+	or HasID(AIMon(),00464362,true) -- FTiger
+    or HasID(AIMon(),57477163,true) -- FSheep
+  )
   and (
     GlobalEdgeImpMaterial + GlobalFluffalMaterial > 1
 	or 
@@ -175,3 +180,14 @@ function MaterialStarve()
   end
   return false
 end
+
+--[[
+80889750, -- Frightfur Sabre-Tooth
+40636712, -- Frightfur Kraken
+10383554, -- Frightfur Leo
+85545073, -- Frightfur Bear
+11039171, -- Frightfur Wolf
+00464362, -- Frightfur Tiger
+57477163, -- Frightfur Sheep
+41209827, -- Starve Venom Fusion Dragon
+]]

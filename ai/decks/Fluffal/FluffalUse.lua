@@ -444,9 +444,13 @@ function UseIFusion(c)
   if AI.GetPlayerLP(1) <= 1000 then
     return false
   end
+  print("UseIFusion")
   if HasID(AIExtra(),80889750,true) -- FSabreTooth
   --and not HasID(AIMon(),57477163,true) -- FSheep
-  and CardsMatchingFilter(UseLists({AIHand(),AIST()}),FluffalFusionSTFilter) > 0
+  and (
+    CardsMatchingFilter(UseLists({AIHand(),AIST()}),FluffalFusionSTFilter) > 0
+	or HasID(UseLists({AIHand(),AIST()}),43698897,true) -- FFactory
+  )
   and (
     CountFluffalMaterial(UseLists({AIHand(),AIMon()}),MATERIAL_TOGRAVE)
 	+ CountEdgeImpMaterial(UseLists({AIHand(),AIMon()}),MATERIAL_TOGRAVE)
@@ -693,7 +697,7 @@ function FluffalEffectYesNo(id,card) -- FLUFFAL EFFECT YESNO
 	result = 1
   end
   if id == 87246309  then -- Octo
-    if card.description == 121824 then
+    if (card.description/16) == id then
 	  id = id
 	else -- Material
 	  id = id + 1

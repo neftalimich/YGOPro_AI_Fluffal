@@ -272,6 +272,9 @@ function FSummonFBear(c)
   return SpSummonFBear(c)
 end
 function SpSummonFBear(c)
+  if not BattlePhaseCheck() then
+	return 1
+  end
   local frightfurAtk = 2200 + FrightfurBoost(85545073)
   c.attack = frightfurAtk
   local canAttack = FluffalCanAttack(OppMon(),frightfurAtk)
@@ -280,7 +283,6 @@ function SpSummonFBear(c)
     return
 	  #OppMon() > 0
 	  and canAttack > 0
-	  and BattlePhaseCheck()
 	  and CanWinBattle(c,OppMon(),true)
   end
   return false
@@ -327,11 +329,13 @@ function FWolfFinish()
 	  (fluffalMon + 1) >= materialNeeded
 end
 function FSummonFWolf(c)
+  if not BattlePhaseCheck() then
+	return 0
+  end
   if not HasIDNotNegated(AIMon(),11039171,true) -- FWolf
   then
     return
       FWolfFinish()
-	  and BattlePhaseCheck()
 	  and CardsMatchingFilter(OppMon(),FilterAffected,EFFECT_INDESTRUCTABLE_BATTLE) == 0
   end
   return false
