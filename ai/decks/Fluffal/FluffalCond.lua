@@ -325,7 +325,8 @@ function BearCond(loc,c)
 end
 function OwlCond(loc,c)
   if loc == MATERIAL_TOGRAVE then
-    if not OPTCheck(c.id) or Get_Card_Count_ID(AIHand(),c.id) > 1
+    if not OPTCheck(c.id) or GlobalOwl == 1
+	or Get_Card_Count_ID(AIHand(),c.id) > 1
 	then
       return 3 + PrioFluffalMaterial(c,1)
 	else
@@ -2553,12 +2554,15 @@ function FNordenCond(loc,c)
   end
   if loc == PRIO_TOFIELD then
     if FilterLocation(c,LOCATION_EXTRA) then
-	  if HasID(AIGrave(),13241004,true) -- Penguin
+	  local waterMon = SubGroup(UseLists({AIGrave(),AIMon()}),FilterAttribute,ATTRIBUTE_WATER)
+	  if CardsMatchingFilter(waterMon,FilterLevel,4) > 0
 	  and HasID(AIExtra(),17412721,true) -- Norden
       and HasID(AIExtra(),00440556,true) -- Bahamut
       and OPTCheck(00440556)
       and HasID(AIExtra(),90809975,true) -- Toadally
+	  and GlobalIFusion > 0
 	  then
+	    GlobalIFusion = 0
 	    return 11
 	  else
 	   return false

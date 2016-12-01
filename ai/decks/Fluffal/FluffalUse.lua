@@ -445,7 +445,9 @@ function UseIFusion(c)
     return false
   end
   -- Toadally Awesome
-  if HasID(AIExtra(),17412721,true) -- Norden
+  local waterMon = SubGroup(UseLists({AIGrave(),AIMon()}),FilterAttribute,ATTRIBUTE_WATER)
+  if CardsMatchingFilter(waterMon,FilterLevel,4) > 0
+  and HasID(AIExtra(),17412721,true) -- Norden
   and HasID(AIExtra(),00440556,true) -- Bahamut
   and OPTCheck(00440556)
   and HasID(AIExtra(),90809975,true) -- Toadally
@@ -467,7 +469,6 @@ function UseIFusion(c)
 	+ CountEdgeImpMaterial(UseLists({AIHand(),AIMon()}),MATERIAL_TOGRAVE)
   )	> 1
   then
-    GlobalActivatedCardID = c.id
     OPTSet(c.id)
     return true
   elseif not HasID(AIMon(),80889750,true) -- FSabreTooth
@@ -475,7 +476,6 @@ function UseIFusion(c)
   and CountFrightfurMon(UseLists({AIMon(),AIGrave()})) > 2 -- Frightfurs
   and CountMaterialFTarget(UseLists({AIMon(),AIGrave()}),PRIO_BANISH) > 1
   then
-    GlobalActivatedCardID = c.id
     OPTSet(c.id)
     return true
   else

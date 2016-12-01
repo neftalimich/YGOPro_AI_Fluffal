@@ -404,7 +404,7 @@ end
 
 function FluffalCard(cards,min,max,id,c)  -- FLUFFAL CARD
   if c then
-    print("FluffalCard: "..c.id.." - min: "..min.." - max: "..max)
+    --print("FluffalCard: "..c.id.." - min: "..min.." - max: "..max)
   end
   -- Fluffal TARGET
   if id == 39246582 then -- Dog

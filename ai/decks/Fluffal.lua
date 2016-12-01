@@ -196,6 +196,7 @@ function FluffalInit(cards,to_bp_allowed,to_ep_allowed) -- FLUFFAL INIT
   GlobalOwl = 0
   GlobalSabres = 0
   GlobalTVendor = 0
+  GlobalActivatedCardID = 0
   GlobalSummonId = 0
   GlobalFusionId = 0
   GlobalPolymerization = 0
@@ -742,7 +743,7 @@ function FluffalPrincipal(cards,to_bp_allowed,to_ep_allowed)
   if HasIDNotNegated(Sum,61173621,SummonChain) then
     return {COMMAND_SUMMON,CurrentIndex}
   end
-  if HasIDNotNegated(Sum,13241004) -- Penguin
+  if HasIDNotNegated(Sum,13241004,SummonEdgeImp) -- Penguin
   then
     return {COMMAND_SUMMON,CurrentIndex}
   end
@@ -880,8 +881,8 @@ function FluffalVsVanity(cards,to_bp_allowed,to_ep_allowed)
   if HasIDNotNegated(Sum,39246582,SummonDogEnd) then
     return {COMMAND_SUMMON,CurrentIndex}
   end
-  -- NORMAL SUMMON END
-  if HasIDNotNegated(Sum,13241004) -- Penguin
+  -- VANITY NORMAL SUMMON END
+  if HasIDNotNegated(Sum,13241004,SummonEdgeImp) -- Penguin
   then
     return {COMMAND_SUMMON,CurrentIndex}
   end
