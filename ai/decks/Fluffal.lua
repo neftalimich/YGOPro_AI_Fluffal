@@ -115,6 +115,7 @@ FluffalActivateBlacklist={
 57477163, -- Frightfur Sheep
 41209827, -- Starve Venom Fusion Dragon
 42110604, -- Hi-Speedroid Chanbara
+90809975, -- Toadally Awesome
 83531441, -- Dante
 }
 FluffalSummonBlacklist={
