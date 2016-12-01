@@ -530,6 +530,10 @@ function FluffalPrincipal(cards,to_bp_allowed,to_ep_allowed)
     end
     return {COMMAND_SUMMON,CurrentIndexAux}
   end
+  if HasIDNotNegated(Sum,13241004,SummonPenguinAwesome)
+  then
+    return {COMMAND_SUMMON,CurrentIndex}
+  end
   if HasIDNotNegated(Sum,65331686,SummonOwl) then
     local CurrentIndexAux = CurrentIndex
     if HasIDNotNegated(Sum,13241004,SummonPenguin)
@@ -742,10 +746,6 @@ function FluffalPrincipal(cards,to_bp_allowed,to_ep_allowed)
   print("---7.16")
   -- NORMAL SUMMON END
   if HasIDNotNegated(Sum,61173621,SummonChain) then
-    return {COMMAND_SUMMON,CurrentIndex}
-  end
-  if HasIDNotNegated(Sum,13241004,SummonEdgeImp) -- Penguin
-  then
     return {COMMAND_SUMMON,CurrentIndex}
   end
   if HasIDNotNegated(Sum,67441435,SummonBulb) then

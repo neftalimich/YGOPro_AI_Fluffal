@@ -21,6 +21,18 @@ function SummonPenguin()
   end
   return false
 end
+function SummonPenguinAwesome(c)
+  if HasID(UseLists({AIHand(),AIST()}),01845204,true) -- IFusion
+  and OPTCheck(01845204)
+  and HasID(AIExtra(),17412721,true) -- Norden
+  and HasID(AIExtra(),00440556,true) -- Bahamut
+  and OPTCheck(00440556)
+  and HasID(AIExtra(),90809975,true) -- Toadally
+  and #AIMon() <= 3
+  then
+    return true
+  end
+end
 function SummonOwl()
   return
     OPTCheck(65331686) -- Own

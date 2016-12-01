@@ -59,7 +59,7 @@ end
 GlobalOppMaxxC = 0
 function FluffalChain(cards)  -- FLUFFAL CHAIN
   --print("Fluffal Chain")
-  if HasIDNotNegated(cards,90809975,ChainNegation) -- Toadally
+  if HasIDNotNegated(cards,90809975,false,(90809975*16)+1,ChainNegation) -- Toadally
   then
     return {1,CurrentIndex}
   end

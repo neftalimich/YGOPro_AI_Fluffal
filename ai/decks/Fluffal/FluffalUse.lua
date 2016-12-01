@@ -763,6 +763,21 @@ function FluffalEffectYesNo(id,card) -- FLUFFAL EFFECT YESNO
   if id == 41209827 then -- FStarve
     result = 1
   end
+  
+  if id == 90809975 then -- Toadally
+    local toadallyEffect = card.description - (90809975*16)
+    id = 90809975 + toadallyEffect
+	if toadallyEffect == 0 then
+	elseif toadallyEffect == 1 then
+	  result = 0
+	elseif toadallyEffect == 2 then
+	  result = 1
+	elseif toadallyEffect == 3 then
+	  result = 0
+	elseif toadallyEffect == 4 then
+	  result = 0
+	end
+  end
 
   if result then
     if result == 1 then
