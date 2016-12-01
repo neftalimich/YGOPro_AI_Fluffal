@@ -138,7 +138,16 @@ function FKrakenSendFilter(c)
   )
 end
 -- Other Fusion FILTER
+function FluffalNordenFilter(c)
+  return 
+    FilterAttribute(c,ATTRIBUTE_WATER)
+	and FilterLevel(c,4)
+end
 -- Other XYZ FILTER
+function FluffalBahamutMaterialFilter(c)
+  return Negated(c)
+    or c.id == 17412721
+end
 
 -- Other Filter
 function FluffalDestroyFilter(c,nontarget)

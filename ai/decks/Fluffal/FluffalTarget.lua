@@ -267,10 +267,14 @@ function FTigerTarget(cards,min,max,c)
   local result = BestTargets(cards,maxTargets,TARGET_DESTROY,FTigerDestroyFilter)
   return result
 end
-function StarveTarget(cards,min,max,c)
+-- OtherF TARGET
+function FStarveTarget(cards,min,max,c)
   return BestTargets(cards,max,TARGET_DESTROY)
 end
-
+function FNordenTarget(cards,min,max,c)
+  return Add(cards,PRIO_TOFIELD,1,FluffalNordenFilter)
+end
+-- Other TARGET
 function BossMonsterTarget(cards,min,max,c)
   local bossIndex = 1
   if HasIDNotNegated(cards,58481572,true)
@@ -297,7 +301,9 @@ end
 -- FUSION FUNCTIONS
 function MaxMaterials(fusionId,min,max)
   local result = 1
-  if(fusionId == 80889750) then -- FSabreTooth
+  if fusionId == 80889750 -- FSabreTooth
+  and GlobalFusionPerform == 3
+  then 
     result = 2
   else
     result = 1
@@ -398,7 +404,7 @@ end
 
 function FluffalCard(cards,min,max,id,c)  -- FLUFFAL CARD
   if c then
-    --print("FluffalCard: "..c.id.." - min: "..min.." - max: "..max)
+    print("FluffalCard: "..c.id.." - min: "..min.." - max: "..max)
   end
   -- Fluffal TARGET
   if id == 39246582 then -- Dog
@@ -507,11 +513,24 @@ function FluffalCard(cards,min,max,id,c)  -- FLUFFAL CARD
   if id == 00464362 then -- FTiger
     return FTigerTarget(cards,min,max,c)
   end
-  -- Other TARGET
+  -- OtherF TARGET
   if id == 41209827 then
-    return StarveTarget(cards,min,max,c)
+    return FStarveTarget(cards,min,max,c)
   end
-
+  if id == 17412721 then
+    return FNordenTarget(cards,min,max,c)
+  end
+  -- OtherX TARGET
+  if id == 90809975 then -- Toadally
+    return Add(cards,PRIO_TODECK,max,FilterID,90809975)
+  end
+  if id == 00440556 then -- Bahamut Effect
+    return Add(cards,PRIO_TOGRAVE)
+  end
+  if GlobalSummonId == 00440556 then -- Bahamut Summon
+    return Add(cards,PRIO_TOGRAVE,min,FluffalBahamutMaterialFilter)
+  end
+  
   if GlobalKaiju == 1 then
     GlobajKaiju = 0
     return BossMonsterTarget(cards,min,max,c)

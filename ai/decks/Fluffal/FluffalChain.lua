@@ -58,6 +58,11 @@ function FluffalRemovalCheckCard(c)
 end
 GlobalOppMaxxC = 0
 function FluffalChain(cards)  -- FLUFFAL CHAIN
+  --print("Fluffal Chain")
+  if HasIDNotNegated(cards,90809975,ChainNegation) -- Toadally
+  then
+    return {1,CurrentIndex}
+  end
   if HasID(cards,40636712,UseFKrakenRepo) then
     return {1,CurrentIndex}
   end

@@ -444,7 +444,18 @@ function UseIFusion(c)
   if AI.GetPlayerLP(1) <= 1000 then
     return false
   end
-  print("UseIFusion")
+  -- Toadally Awesome
+  if HasID(AIExtra(),17412721,true) -- Norden
+  and HasID(AIExtra(),00440556,true) -- Bahamut
+  and OPTCheck(00440556)
+  and HasID(AIExtra(),90809975,true) -- Toadally
+  and #AIMon() <= 3
+  then
+    GlobalActivatedCardID = c.id
+    OPTSet(c.id)
+    return true
+  end
+  -- FSabreTooth
   if HasID(AIExtra(),80889750,true) -- FSabreTooth
   --and not HasID(AIMon(),57477163,true) -- FSheep
   and (
@@ -668,12 +679,16 @@ function UseFTiger(c)
   return false
 end
 -- Other Fusion USE
-function UseStarve(c)
+function UseFStarve(c)
   GlobalActivatedCardID = c.id
   OPDSet(c.id)
   return true
 end
 -- Other XYZ USE
+function UseBahamutFluffal(c)
+  OPTSet(c.id)
+  return true
+end
 function UseDanteFluffal(c)
   GlobalActivatedCardID = c.id
   OPDSet(c.id)
@@ -745,7 +760,7 @@ function FluffalEffectYesNo(id,card) -- FLUFFAL EFFECT YESNO
     result = 1
   end
 
-  if id == 41209827 then -- Starve
+  if id == 41209827 then -- FStarve
     result = 1
   end
 
@@ -765,7 +780,10 @@ function FluffalYesNo(desc) -- FLUFFAL YESNO
     print("YesNo - desc: "..desc)
   end
   if desc == 93 then -- Choose material?
-    return 0 -- Always?
+    if GlobalFusionId == 80889750 then
+	  return 1
+	end
+    return 0
   end
   return nil
 end

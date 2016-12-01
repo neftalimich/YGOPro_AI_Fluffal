@@ -161,8 +161,8 @@ function MaterialFSheepBanish(cards)
   return MaterialFSheep(cards)
 end
 
-function MaterialStarve()
-  --print("MaterialStarve")
+function MaterialFStarve()
+  --print("MaterialFStarve")
   local countStarveMaterial = 0
   local fsabre = CardsMatchingFilter(AIMon(),FilterID,80889750) -- FSabretooth
   local frightfurs = CardsMatchingFilter(AIMon(),FrightfurMonFilter)

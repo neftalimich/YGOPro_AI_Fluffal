@@ -39,6 +39,7 @@
 - Glow-up Bulb
 - Tour Guide from the Underworld
 - Starve Venom Fusion Dragon
+- Norden/Bahamut/Toadally
 - Naturia Beast
 - Hi-Speedroid Chanbara
 - Dante, Traveler of the Burning Abyss

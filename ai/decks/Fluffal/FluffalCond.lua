@@ -2420,6 +2420,9 @@ function FSheepCond(loc,c)
 	  if not HasID(AIExtra(),c.id,true) then
 	    return 0
 	  end
+	  if GlobalIFusion > 0 then
+	    return 5
+	  end
 	  if GlobalFFusion > 0 then
 	    if MaterialFSheepBanish() then
 		  return FSummonFSheep(c)
@@ -2474,7 +2477,7 @@ function FSheepCond(loc,c)
   end
   return true
 end
-function StarveCond(loc,c)
+function FStarveCond(loc,c)
   if loc == MATERIAL_TOGRAVE then
     return 0
   end
@@ -2498,15 +2501,15 @@ function StarveCond(loc,c)
 	  if not HasID(AIExtra(),c.id,true) then
 	    return 0
 	  end
-	  if MaterialStarve() then
-	    return FSummonStarve(c)
+	  if MaterialFStarve() then
+	    return FSummonFStarve(c)
 	  end
 	  return 1
 	end
 	if FilterLocation(c,LOCATION_GRAVE)
 	or FilterLocation(c,LOCATION_REMOVED)
 	then
-	  return SpSummonStarve(c)
+	  return SpSummonFStarve(c)
 	end
   end
   if loc == PRIO_TOGRAVE then
@@ -2541,6 +2544,42 @@ function StarveCond(loc,c)
   end
   return true
 end
+function FNordenCond(loc,c)
+  if loc == MATERIAL_TOGRAVE then
+    return 10
+  end
+  if loc == PRIO_TOHAND then
+    return true
+  end
+  if loc == PRIO_TOFIELD then
+    if FilterLocation(c,LOCATION_EXTRA) then
+	  if HasID(AIGrave(),13241004,true) -- Penguin
+	  and HasID(AIExtra(),17412721,true) -- Norden
+      and HasID(AIExtra(),00440556,true) -- Bahamut
+      and OPTCheck(00440556)
+      and HasID(AIExtra(),90809975,true) -- Toadally
+	  then
+	    return 11
+	  else
+	   return false
+	  end
+	end
+	return true
+  end
+  if loc == PRIO_TOGRAVE then
+    if FilterLocation(c,LOCATION_OVERLAY) then
+	  return 11
+	end
+	return true
+  end
+  if loc == PRIO_TODECK then
+    return true
+  end
+  if loc == PRIO_BANISH then
+    return true
+  end
+  return true
+end
 
 MATERIAL_TOGRAVE = 21 -- Custom
 --[[PRIO_TOHAND = 1
@@ -2552,16 +2591,16 @@ MATERIAL_TOGRAVE = 21 -- Custom
 --]]
 FluffalPriorityList={
  [39246582] = {8,1,7,1,4,1,3,1,9,5,DogCond},		-- Fluffal Dog
- [13241004] = {6,2,10,1,3,1,2,1,8,4,PenguinCond},	-- Fluffal Penguin
- [03841833] = {10,3,2,1,5,2,2,1,7,3,BearCond},		-- Fluffal Bear
+ [13241004] = {6,2,10,1,3,1,2,1,3,2,PenguinCond},	-- Fluffal Penguin
+ [03841833] = {10,3,2,1,5,2,2,1,8,3,BearCond},		-- Fluffal Bear
  [65331686] = {8,3,6,4,2,1,1,1,5,2,OwlCond},		-- Fluffal Owl
- [98280324] = {4,2,0,0,2,1,3,1,6,2,SheepCond},		-- Fluffal Sheep
+ [98280324] = {4,2,0,0,2,1,3,1,7,2,SheepCond},		-- Fluffal Sheep
  [87246309] = {5,2,8,3,1,1,2,1,4,2,OctoCond},		-- Fluffal Octo
  [02729285] = {7,4,3,1,1,0,1,1,3,1,CatCond},		-- Fluffal Cat
  [38124994] = {5,3,3,1,1,0,1,1,2,1,RabitCond},		-- Fluffal Rabit
  [06142488] = {1,1,9,3,5,0,6,1,9,8,MouseCond},		-- Fluffal Mouse
  [72413000] = {9,1,4,2,9,4,10,8,6,1,WingsCond},		-- Fluffal Wings
- [81481818] = {2,1,5,3,5,1,4,1,4,3,PatchworkCond},	-- Fluffal Patchwork
+ [81481818] = {2,1,5,3,5,1,4,1,5,3,PatchworkCond},	-- Fluffal Patchwork
  [97567736] = {1,1,5,2,1,1,8,4,6,2,TomahawkCond},	-- Edge Imp Tomahawk
  [61173621] = {8,2,4,4,7,1,9,1,4,1,ChainCond},		-- Edge Imp Chain
  [30068120] = {7,3,4,3,6,3,5,3,5,1,SabresCond},		-- Edge Imp Sabres
@@ -2573,7 +2612,7 @@ FluffalPriorityList={
  [70245411] = {9,5,1,1,4,1,2,0,1,1,TVendorCond},	-- Toy Vendor
  [06077601] = {6,1,1,1,3,1,3,0,9,1,FFusionCond},	-- Frightfur Fusion
  [43698897] = {7,3,1,1,2,1,1,0,1,1,FFactoryCond},	-- Frightfur Factory
- [34773082] = {8,4,1,1,5,1,9,0,7,1,FPatchworkCond},	-- Frightfur Patchwork (BETA)
+ [34773082] = {8,4,1,1,5,1,9,0,7,1,FPatchworkCond},	-- Frightfur Patchwork
 [100214101] = {5,2,1,1,2,1,2,1,1,1,FRebornCond},	-- Frightfur Reborn (BETA)
  [01845204] = {1,1,1,1,3,2,3,1,8,1,IFusionCond},	-- Instant Fusion
  [24094653] = {2,1,1,1,2,1,2,1,2,1,PolyCond},		-- Polymerization
@@ -2593,7 +2632,8 @@ FluffalPriorityList={
  [11039171] = {2,1,10,1,1,0,1,1,8,1,FWolfCond},		-- Frightfur Wolf
  [00464362] = {3,1,7,4,5,4,1,1,3,1,FTigerCond},		-- Frightfur Tiger
  [57477163] = {4,1,6,2,4,2,1,1,2,1,FSheepCond},		-- Frightfur Sheep
- [41209827] = {2,1,10,1,1,1,1,1,1,1,StarveCond}, 	-- Starve Venom Fusion Dragon<
+ [41209827] = {2,1,10,1,1,1,1,1,1,1,FStarveCond}, 	-- Starve Venom Fusion Dragon
+ [17412721] = {1,1,4,1,1,1,9,1,1,1,FNordenCond}, 	-- Elder Entity Norden
  [33198837] = {1,1,1,1,1,1,1,1,1,1,nil}, 			-- Naturia Beast
  [42110604] = {1,1,1,1,1,1,1,1,1,1,nil}, 			-- Hi-Speedroid Chanbara
  [83531441] = {1,1,1,1,1,1,1,1,1,1,nil}, 			-- Dante

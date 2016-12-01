@@ -163,7 +163,7 @@ function SummonTGuide()
 	)
     then
       return true
-	elseif HasID(AIExtra(),41209827,true) -- Starve
+	elseif HasID(AIExtra(),41209827,true) -- FStarve
 	and CardsMatchingFilter(OppMon(),FilterSummon,SUMMON_TYPE_SPECIAL) > 0
 	and CardsMatchingFilter(OppMon(),FilterLevelMin,5) > 0
 	and HasID(UseLists({AIHand(),AIST()}),24094653,true) -- Polymerization
@@ -406,18 +406,18 @@ function SpSummonFSheep(c)
   return false
 end
 -- OtherF SUMMON
-function FSummonStarve(c)
+function FSummonFStarve(c)
   return
 	CardsMatchingFilter(OppMon(),FilterSummon,SUMMON_TYPE_SPECIAL) > 0
 	and (
-      SpSummonStarve()
+      SpSummonFStarve()
 	  or
 	  AI.GetPlayerLP(2) <= 2800
 	  and CardsMatchingFilter(OppMon(),FilterPosition,POS_FACEUP_ATTACK) > 0
     )
 end
-function SpSummonStarve(c)
-  if not HasIDNotNegated(AIMon(),41209827,true) -- Starve
+function SpSummonFStarve(c)
+  if not HasIDNotNegated(AIMon(),41209827,true) -- FStarve
   then
     return CardsMatchingFilter(OppMon(),FilterLevelMin,5) > 0
   end
@@ -438,6 +438,14 @@ function SpSummonChanbara(c)
 	  or CardsMatchingFilter(OppMon(),FilterAttackMax,2200) > 0
 	  or #OppMon() == 0
 	)
+end
+-- OtherX SUMMON
+function SpSummonBahamutFluffal(c)
+  if HasID(AIExtra(),90809975,true) then -- Toadally
+    GlobalSummonId = 00440556
+    return true
+  end
+  return false
 end
 
 ------------------------

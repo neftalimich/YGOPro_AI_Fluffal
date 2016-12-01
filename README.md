@@ -1,5 +1,5 @@
 # YGOPro_AI_Fluffal
-YGOPro - AI - Fluffal v0.0.2.0.1 (Stable) by neftalimich
+YGOPro - AI - Fluffal v0.0.2.0.2 (Stable) by neftalimich
 
 Español: 
 

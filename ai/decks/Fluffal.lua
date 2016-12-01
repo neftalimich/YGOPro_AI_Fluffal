@@ -196,6 +196,7 @@ function FluffalInit(cards,to_bp_allowed,to_ep_allowed) -- FLUFFAL INIT
   GlobalOwl = 0
   GlobalSabres = 0
   GlobalTVendor = 0
+  GlobalSummonId = 0
   GlobalFusionId = 0
   GlobalPolymerization = 0
   GlobalDFusion = 0
@@ -395,11 +396,17 @@ function FluffalPrincipal(cards,to_bp_allowed,to_ep_allowed)
   then
     return {COMMAND_ACTIVATE,CurrentIndex}
   end
-  if HasIDNotNegated(Act,41209827,UseStarve) then
+  if HasIDNotNegated(Act,41209827,UseFStarve) then
     return {COMMAND_ACTIVATE,CurrentIndex}
   end
   if HasIDNotNegated(Act,40636712,UseFKrakenSend) then
     return {COMMAND_ACTIVATE,CurrentIndex}
+  end
+  if HasIDNotNegated(Act,00440556,UseBahamutFluffal) then
+    return {COMMAND_ACTIVATE,CurrentIndex}
+  end
+  if HasIDNotNegated(SpSum,00440556,SpSummonBahamutFluffal) then
+    return {COMMAND_SPECIAL_SUMMON,CurrentIndex}
   end
   if HasIDNotNegated(Act,30068120,UseSabresFPatchwork) then
     return {COMMAND_ACTIVATE,CurrentIndex}
@@ -431,7 +438,7 @@ function FluffalPrincipal(cards,to_bp_allowed,to_ep_allowed)
   end
   if HasIDNotNegated(SpSum,83531441,SpSummonDante)
   and not (
-    FSummonStarve()
+    FSummonFStarve()
 	and HasID(UseLists({AIHand(),AIST()}),24094653,true)
   )
   then
@@ -798,7 +805,7 @@ function FluffalVsVanity(cards,to_bp_allowed,to_ep_allowed)
   if HasIDNotNegated(Act,10383554,UseFLeo) then
     return {COMMAND_ACTIVATE,CurrentIndex}
   end
-  if HasIDNotNegated(Act,41209827,UseStarve) then
+  if HasIDNotNegated(Act,41209827,UseFStarve) then
     return {COMMAND_ACTIVATE,CurrentIndex}
   end
   if HasIDNotNegated(Act,40636712,UseFKrakenSend) then
