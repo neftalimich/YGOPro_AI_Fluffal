@@ -1,4 +1,8 @@
 VERSIONES:
+- v0.0.2.0.3
+	- Brilliant Fusion: agregado el script.
+	- Mejoras en general.
+	- Bugs corregidos.
 - v0.0.2.0.2 
 	- Toadally/Bahamut/Norden/IFusion: agregado el script.
 	- Mejoras en general.

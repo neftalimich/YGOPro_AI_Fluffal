@@ -139,7 +139,7 @@ function FKrakenSendFilter(c)
 end
 -- Other Fusion FILTER
 function FluffalNordenFilter(c)
-  return 
+  return
     FilterAttribute(c,ATTRIBUTE_WATER)
 	and FilterLevel(c,4)
 end
@@ -276,6 +276,14 @@ end
 ------------------------
 -------- CHECK ---------
 ------------------------
+-- Xyz CHECK
+function ToadallyPlayCheck()
+  return
+    HasID(AIExtra(),00440556,true) -- Bahamut
+	and OPTCheck(00440556)
+    and HasID(AIExtra(),90809975,true) -- Toadally
+end
+-- Flootgate CHECK
 function FlootGateCheatCheck()
   if HasID(OppHand(),05851097,true) -- Vanity
   or HasID(OppHand(),30241314,true) -- MacroCosmos
@@ -368,7 +376,7 @@ function MaxxCAdvantageFilter(c)
   return
     MaxxCZBAdvantageFilter(c)
 	or (c.id == 58069384 and HasID(OppExtra(),10443957,true)) -- Cyber Dragon Nova
-	
+
 end
 
 function MaxxCZBAdvantageFilter(c)

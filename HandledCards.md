@@ -30,7 +30,7 @@
 - Polymerization
 - Fusion Substitute
 - Dark Fusion
-- Instant Fusion (Only FSheep)
+- Instant Fusion
 - Fusion Reserve
 
 **OTHER MON**
@@ -39,12 +39,14 @@
 - Glow-up Bulb
 - Tour Guide from the Underworld
 - Starve Venom Fusion Dragon
-- Norden/Bahamut/Toadally
+- Norden/Bahamut/Toadally - New
+- Gem-Knight Seraphinite - New
 - Naturia Beast
 - Hi-Speedroid Chanbara
 - Dante, Traveler of the Burning Abyss
 
 **OTHER ST**
+- Brilliant Fusion - New
 - Foolish Burial of Belongings
 - Fusion Conscription
 - Galaxy Cyclone
