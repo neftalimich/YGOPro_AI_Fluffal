@@ -41,7 +41,7 @@ function SummonPenguinAwesome(c)
   end
   return false
 end
-function SummonOwl()
+function SummonOwl(c)
   return
     OPTCheck(65331686) -- Own
 	and CardsMatchingFilter(OppField(),ExtraDeckBlockedFilter) == 0
