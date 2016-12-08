@@ -111,11 +111,13 @@ function SabresTarget(cards,min,max,c)
 	  return Add(cards,PRIO_DISCARD,min,FilterID,24094653) -- Polymerization
 	end
   end
-  if (CardsMatchingFilter(AIST(),TVendorCheckFilter,true) > 0
-  or HasID(AIHand(),70245411,true)) -- TVendor
+  if (
+    CardsMatchingFilter(AIST(),TVendorCheckFilter,true) > 0
+    or HasID(AIHand(),70245411,true) -- TVendor
+  )
   and PriorityCheck(AIHand(),PRIO_DISCARD) > 3
   then
-    return Add(cards,PRIO_TOFIELD,FluffalFilter)
+    return Add(cards,PRIO_TOFIELD,min,FluffalFilter)
   end
   return Add(cards,PRIO_DISCARD)
 end
@@ -445,7 +447,7 @@ function FluffalCard(cards,min,max,id,c)  -- FLUFFAL CARD
     return ChainTarget(cards,min,max,c)
   end
   if id == 30068120 then -- Sabres
-    return SabresTarget(cards)
+    return SabresTarget(cards,min,max,c)
   end
   -- Other TARGET
   if id == 10802915 then -- TGuide

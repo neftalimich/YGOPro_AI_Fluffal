@@ -659,8 +659,12 @@ function CatCond(loc,c)
 	  then
 	    return 1
 	  end
-	  if HasID(UseLists({AIHand(),AIST()}),24094653,true) -- Polymerization
-	  or HasID(AIHand(),79109599,true) -- KoS
+	  local polyCount = CardsMatchingFilter(UseLists({AIHand(),AIST()}),FilterID,24094653)
+	  if polyCount > 1 
+	  and not HasID(UseLists({AIHand(),AIMon()}),13241004,true) -- Penguin
+	  then
+	    return 5
+	  elseif polyCount > 0
 	  then
 	    return true
 	  else
