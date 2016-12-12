@@ -39,7 +39,7 @@ function FluffalStartup(deck)
   deck.PriorityList         = FluffalPriorityList
 
   -- DEBUG
-  --[[
+  --[[]]
   local e0=Effect.GlobalEffect()
 	e0:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e0:SetCode(EVENT_CHAIN_SOLVED)
