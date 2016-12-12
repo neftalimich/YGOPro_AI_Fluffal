@@ -59,7 +59,7 @@ function UseBearPoly(c)
     return false
   end
 end
-function UseOwlPoly()
+function UseOwlPoly(c)
   if CardsMatchingFilter(OppField(),SpellBlockedFilter) > 0
   or
   HasID(UseLists({AIHand(),AIMon()}),61173621,true) -- Chain
@@ -723,7 +723,7 @@ function FluffalEffectYesNo(id,card) -- FLUFFAL EFFECT YESNO
     id = id + 1 -- Material
 	result = 1
   end
-  if id == 65331686 and UseOwlPoly() then -- Owl
+  if id == 65331686 and UseOwlPoly(card) then -- Owl
 	result = 1
   end
   if id == 87246309  then -- Octo

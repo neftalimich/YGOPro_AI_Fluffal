@@ -41,7 +41,7 @@ function SummonPenguinAwesome(c)
   end
   return false
 end
-function SummonOwl()
+function SummonOwl(c)
   return
     OPTCheck(65331686) -- Own
 	and CardsMatchingFilter(OppField(),ExtraDeckBlockedFilter) == 0
@@ -51,11 +51,11 @@ function SummonOwl()
 	 CardsMatchingFilter(AIMon(),FrightfurMonFilter)
 	) > 0
 end
-function SummonOwlNoFusionST()
+function SummonOwlNoFusionST(c)
   return
     OPTCheck(65331686) -- Own
 	and CardsMatchingFilter(UseLists({AIHand(),AIST()}),FluffalFusionSTFilter) == 0
-	and UseOwlPoly()
+	and UseOwlPoly(c)
 	and not OPTCheck(72413000) -- Wings
 	and CardsMatchingFilter(OppField(),ExtraDeckBlockedFilter) == 0
 end
