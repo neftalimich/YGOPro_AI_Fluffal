@@ -8,7 +8,7 @@ require("ai.decks.Fluffal.FluffalChain")
 require("ai.decks.Fluffal.FluffalBattle")
 
 function FluffalStartup(deck)
-  print("AI_Fluffal v0.0.2.0.4 by neftalimich.")
+  print("AI_Fluffal v0.0.2.0.5 by neftalimich.")
   deck.Init					= FluffalInit
   deck.Card					= FluffalCard
   deck.Chain				= FluffalChain
@@ -39,7 +39,7 @@ function FluffalStartup(deck)
   deck.PriorityList         = FluffalPriorityList
 
   -- DEBUG
-  --[[]]
+  --[[
   local e0=Effect.GlobalEffect()
 	e0:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e0:SetCode(EVENT_CHAIN_SOLVED)
@@ -91,7 +91,7 @@ FluffalActivateBlacklist={
 06077601, -- Frightfur Fusion
 43698897, -- Frightfur Factory
 34773082, -- Frightfur Patchwork
-100214101,-- Frightfur Reborn (BETA)
+28039390, -- Frightfur Reborn
 01845204, -- Instant Fusion
 24094653, -- Polymerization
 94820406, -- Dark Fusion
@@ -106,6 +106,7 @@ FluffalActivateBlacklist={
 98954106, -- Jar of Avarice
 51452091, -- Royal Decree
 
+91034681, -- Frightfur Daredevil
 80889750, -- Frightfur Sabre-Tooth
 40636712, -- Frightfur Kraken
 10383554, -- Frightfur Leo
@@ -138,6 +139,7 @@ FluffalSummonBlacklist={
 06205579, -- Parasite Fusioner
 67441435, -- Glow-Up Bulb
 
+91034681, -- Frightfur Daredevil
 80889750, -- Frightfur Sabre-Tooth
 40636712, -- Frightfur Kraken
 10383554, -- Frightfur Leo
@@ -154,7 +156,7 @@ FluffalSetBlacklist={
 06077601, -- Frightfur Fusion
 43698897, -- Frightfur Factory
 34773082, -- Frightfur Patchwork
-100214101,-- Frightfur Reborn (BETA)
+28039390, -- Frightfur Reborn
 01845204, -- Instant Fusion
 24094653, -- Polymerization
 94820406, -- Dark Fusion
@@ -279,6 +281,9 @@ function FluffalInit(cards,to_bp_allowed,to_ep_allowed) -- FLUFFAL INIT
   end
   --print("--8")
   -- FLUFFAL REPOSITION
+  if HasIDNotNegated(Rep,80889750,RepFSabreTooth) then
+    return {COMMAND_CHANGE_POS,CurrentIndex}
+  end
   if HasIDNotNegated(Rep,40636712,RepFKraken) then
     return {COMMAND_CHANGE_POS,CurrentIndex}
   end
@@ -352,7 +357,7 @@ end
 06077601, -- Frightfur Fusion
 43698897, -- Frightfur Factory
 34773082, -- Frightfur Patchwork
-100214101,-- Frightfur Reborn (BETA)
+28039390, -- Frightfur Reborn
 01845204, -- Instant Fusion
 24094653, -- Polymerization
 94820406, -- Dark Fusion
@@ -758,7 +763,7 @@ function FluffalPrincipal(cards,to_bp_allowed,to_ep_allowed)
   then
     return {COMMAND_ACTIVATE,CurrentIndex}
   end
-  if HasIDNotNegated(Act,100214101,UseFReborn)
+  if HasIDNotNegated(Act,28039390,UseFReborn)
   and AI.GetCurrentPhase() == PHASE_MAIN1
   then
     return {COMMAND_ACTIVATE,CurrentIndex}

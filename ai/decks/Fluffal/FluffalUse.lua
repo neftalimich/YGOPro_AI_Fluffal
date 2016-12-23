@@ -759,6 +759,9 @@ function FluffalEffectYesNo(id,card) -- FLUFFAL EFFECT YESNO
 	result = 1
   end
 
+  if id == 91034681 then -- FDaredevil
+	result = 1
+  end
   if id == 80889750 then -- FSabreTooth
 	result = 1
   end
@@ -842,7 +845,7 @@ end
 06077601, -- Frightfur Fusion
 43698897, -- Frightfur Factory
 34773082, -- Frightfur Patchwork
-100214101,-- Frightfur Reborn (BETA)
+28039390, -- Frightfur Reborn
 01845204, -- Instant Fusion
 24094653, -- Polymerization
 94820406, -- Dark Fusion
@@ -856,6 +859,7 @@ end
 98954106, -- Jar of Avarice
 51452091, -- Royal Decree
 
+91034681, -- Frightfur Daredevil
 80889750, -- Frightfur Sabre-Tooth
 40636712, -- Frightfur Kraken
 10383554, -- Frightfur Leo

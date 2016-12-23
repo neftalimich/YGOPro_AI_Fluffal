@@ -13,6 +13,7 @@
 - Edge Imp Tomahawk
 - Edge Imp Chain
 - Edge Imp Sabres
+- Frightfur Daredevil
 - Frightfur Sabre-Tooth
 - Frightfur Kraken
 - Frightfur Leo

@@ -6,6 +6,7 @@ FluffalAtt={
 13241004, -- Fluffal Penguin
 97567736, -- Edge Imp Tomahawk
 
+91034681, -- Frightfur Daredevil
 80889750, -- Frightfur Sabre-Tooth
 40636712, -- Frightfur Kraken
 10383554, -- Frightfur Leo
@@ -156,6 +157,12 @@ function FluffalBattleCommand(cards,activatable)  -- FLUFFAL BATTLE COMMAND
   )
   then
     return Attack(IndexByID(cards,57477163))
+  end
+  if HasIDNotNegated(cards,91034681) -- FDaredevil
+  and CanWinBattle(cards[CurrentIndex],targets,false,false)
+  and CardsMatchingFilter(targets,FilterPosition,POS_DEFENSE) == #targets
+  then
+    return Attack(IndexByID(cards,91034681))
   end
   if HasIDNotNegated(cards,80889750) -- FSabreTooth
   and CanWinBattle(cards[CurrentIndex],targets,false,false)

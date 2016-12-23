@@ -1,4 +1,9 @@
 VERSIONES:
+- v0.0.2.0.5
+	- Frightfur Daredevil: agregado el script
+	- Mejoras en general.
+- v0.0.2.0.4
+	- Bugs corregidos.
 - v0.0.2.0.3
 	- Brilliant Fusion: agregado el script.
 	- Mejoras en general.
