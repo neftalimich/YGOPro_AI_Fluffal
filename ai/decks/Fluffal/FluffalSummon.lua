@@ -396,6 +396,11 @@ function FSummonFTiger(c)
 	then
 	  return 11
 	end
+	if GlobalFFusion > 0 
+	and CardsMatchingFilter(OppField(),FTigerDestroyFilter) > 3
+	then
+	  return 10
+	end
 	if OppGetStrongestAttDef() >= AIGetStrongestAttack()
 	and OppGetStrongestAttDef() > 3000
 	and CardsMatchingFilter(OppMon(),FilterAffected,EFFECT_IMMUNE_EFFECT) > 0

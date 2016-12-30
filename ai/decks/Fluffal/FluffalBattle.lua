@@ -54,6 +54,7 @@ function FluffalPosition(id,available) -- FLUFFAL POSITION
 	  --print("FSheep - Atk: "..frightfurAtk)
       if FluffalCanAttack(OppMon(),frightfurAtk) == 0
 	  and FluffalCannotAttack(OppMon(),frightfurAtk,FilterPosition,POS_FACEUP_ATTACK) > 0
+	  and frightfurAtk < 3200
 	  then
         result = 4 -- POS_FACEUP_DEFENSE?
 	  else

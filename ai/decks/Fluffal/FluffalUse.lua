@@ -260,9 +260,7 @@ function UseKoS(c)
   and BattlePhaseCheck()
   then
     if
-    CardsMatchingFilter(AIDeck(),FilterID,24094653) -- Polymerization
-    >
-    CardsMatchingFilter(UseLists({AIDeck(),AIHand(),AIST()}),FilterID,34773082) -- FPatchwork
+    CardsMatchingFilter(AIDeck(),FilterID,24094653) > 1 -- Polymerization
     or
     CardsMatchingFilter(AIDeck(),CountFPatchworkTarget) == 0
 	or
@@ -270,6 +268,11 @@ function UseKoS(c)
     then
       return true
 	end
+  end
+  if GlobalIFusion > 0 
+  and CardsMatchingFilter(UseLists({AIHand(),AIST()}),FluffalFusionSTFilter2) <= 1
+  then
+    return true
   end
   return false
 end
@@ -459,6 +462,7 @@ function UseIFusion(c)
     CountFluffalMaterial(UseLists({AIHand(),AIMon()}),MATERIAL_TOGRAVE)
 	+ CountEdgeImpMaterial(UseLists({AIHand(),AIMon()}),MATERIAL_TOGRAVE)
   )	> 1
+  and #AIMon() <= 3
   then
     OPTSet(c.id)
     return true
@@ -466,6 +470,7 @@ function UseIFusion(c)
   and HasID(UseLists({AIHand(),AIST()}),06077601,true) -- FFusion
   and CountFrightfurMon(UseLists({AIMon(),AIGrave()})) > 2 -- Frightfurs
   and CountMaterialFTarget(UseLists({AIMon(),AIGrave()}),PRIO_BANISH) > 1
+  and #AIMon() <= 3
   then
     OPTSet(c.id)
     return true

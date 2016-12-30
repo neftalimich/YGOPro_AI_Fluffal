@@ -101,6 +101,7 @@ FluffalActivateBlacklist={
 43898403, -- Twin Twister
 12580477, -- Raigeki
 07394770, -- Brilliant Fusion
+18895832, -- System Down
 
 66127916, -- Fusion Reserve
 98954106, -- Jar of Avarice
@@ -164,6 +165,7 @@ FluffalSetBlacklist={
 35726888, -- Foolish Burial of Belongings
 12580477, -- Raigeki
 07394770, -- Brilliant Fusion
+18895832, -- System Down
 
 51452091, -- Royal Decree
 }
@@ -217,6 +219,11 @@ function FluffalInit(cards,to_bp_allowed,to_ep_allowed) -- FLUFFAL INIT
   if CardsMatchingFilter(Act,FluffalFusionSTFilter2) > 0
   then
     GlobalCanFusionSummon = true
+  end
+  if HasIDNotNegated(Act,18895832) -- System Down
+  and CardsMatchingFilter(UseLists({OppMon(),OppGrave()}),FilterRace,RACE_MACHINE) > 3
+  then
+    return {COMMAND_ACTIVATE,CurrentIndex}
   end
   --print("--2")
   -- FLUFFAL KAIJU

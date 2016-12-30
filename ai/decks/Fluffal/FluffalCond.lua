@@ -368,12 +368,15 @@ function OwlCond(loc,c)
 	  end
 	end
 	if FilterLocation(c,LOCATION_ONFIELD) then
-	  if not HasID(AIHand(),c.id,true) then
-	    if OPTCheck(c.id) and not NormalSummonCheck()
+	  if not HasID(AIHand(),c.id,true) 
+	  then
+	    if not OPTCheck(c.id) then
+		  return 9
+		elseif not NormalSummonCheck() 
 		then
 		  return true
 		else
-		  return 9
+		  return false
 		end
 	  end
 	end
@@ -2422,7 +2425,9 @@ function FTigerCond(loc,c)
   end
   if loc == PRIO_TOFIELD then
     if FilterLocation(c,LOCATION_EXTRA) then
-	  if not HasID(AIExtra(),c.id,true) then
+	  if not HasID(AIExtra(),c.id,true) 
+	  or HasID(AIMon(),c.id,true)
+	  then
 	    return 0
 	  end
 	  if GlobalFFusion > 0 then
