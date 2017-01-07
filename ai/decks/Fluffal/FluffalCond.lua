@@ -321,6 +321,10 @@ function BearCond(loc,c)
 	  or not HasID(AIDeck(),70245411,true) -- TVendor
 	  then
 	    return 6
+	  elseif Get_Card_Count_ID(AIST(),70245411) > 0 -- TVendor
+	  and not (PriorityCheck(AIHand(),PRIO_DISCARD) > FluffalPrioMode(mode))
+	  then
+	    return 3
 	  else
 	    return not OPTCheck(c.id)
       end
@@ -1611,7 +1615,9 @@ function FFusionCond(loc,c)
   end
   if loc == PRIO_DISCARD then
     if FilterLocation(c,LOCATION_HAND) then
-	  return CardsMatchingFilter(UseLists({AIST(),AIHand(),AIDeck()}),FilterID,c.id) == 3
+	  return 
+	    CardsMatchingFilter(UseLists({AIST(),AIHand(),AIDeck()}),FilterID,c.id) == 3
+		and not (PriorityCheck(AIGrave(),PRIO_BANISH,3) > 3)
 	end
   end
   if loc == PRIO_BANISH then
@@ -1831,7 +1837,6 @@ end
 function PolyCond(loc,c)
   if loc == PRIO_TOHAND then
     if FilterLocation(c,LOCATION_DECK)
-	or FilterLocation(c,LOCATION_GRAVE)
 	or FilterLocation(c,LOCATION_ONFIELD)
 	then
 	  if HasID(UseLists({AIHand(),AIST()}),c.id,true)
@@ -1843,6 +1848,13 @@ function PolyCond(loc,c)
 	    return false
 	  end
 	  return true
+	end
+	if FilterLocation(c,LOCATION_GRAVE) then
+	  if c.original_id == 74335036 -- FSubstitute
+	  then
+	    return false
+	  end
+	  return 5
 	end
 	if FilterLocation(c,LOCATION_REMOVED) then
 	  return c.original_id == 74335036 -- FSubstitute
@@ -1959,11 +1971,14 @@ function FDaredevil(loc,c)
   end
   if loc == PRIO_TOHAND then
     if FilterLocation(c,LOCATION_EXTRA)
-	or FilterLocation(c,LOCATION_ONFIELD)
-	or FilterLocation(c,LOCATION_GRAVE)
 	or FilterLocation(c,LOCATION_REMOVED)
 	then
 	  return true
+	end
+	if FilterLocation(c,LOCATION_ONFIELD)
+	or FilterLocation(c,LOCATION_GRAVE)
+	then
+	  return false
 	end
   end
   if loc == PRIO_TOFIELD then
@@ -2031,7 +2046,7 @@ function FSabreToothCond(loc,c)
 	  return false
 	end
 	if FilterLocation(c,LOCATION_GRAVE) then
-	  return true
+	  return false
 	end
 	if FilterLocation(c,LOCATION_REMOVED) then
 	  return true
@@ -2113,7 +2128,7 @@ function FKrakenCond(loc,c)
 	  return false
 	end
 	if FilterLocation(c,LOCATION_GRAVE) then
-	  return true
+	  return false
 	end
 	if FilterLocation(c,LOCATION_REMOVED) then
 	  return true
@@ -2265,7 +2280,7 @@ function FBearCond(loc,c)
 	  return true
 	end
 	if FilterLocation(c,LOCATION_GRAVE) then
-	  return true
+	  return false
 	end
 	if FilterLocation(c,LOCATION_REMOVED) then
 	  return true
@@ -2336,7 +2351,7 @@ function FWolfCond(loc,c)
 	  return true
 	end
 	if FilterLocation(c,LOCATION_ONFIELD) then
-	  return true
+	  return false
 	end
 	if FilterLocation(c,LOCATION_GRAVE) then
 	  return true
@@ -2413,7 +2428,7 @@ function FTigerCond(loc,c)
 	  return true
 	end
 	if FilterLocation(c,LOCATION_GRAVE) then
-	  return true
+	  return false
 	end
 	if FilterLocation(c,LOCATION_REMOVED) then
 	  if not HasID(AIGrave(),c.id,true) then
@@ -2498,10 +2513,10 @@ function FSheepCond(loc,c)
 	  return true
 	end
 	if FilterLocation(c,LOCATION_ONFIELD) then
-	  return true
+	  return false
 	end
 	if FilterLocation(c,LOCATION_GRAVE) then
-	  return true
+	  return false
 	end
 	if FilterLocation(c,LOCATION_REMOVED) then
 	  return true
@@ -2730,7 +2745,7 @@ FluffalPriorityList={
  [61173621] = {8,2,4,4,7,1,9,1,4,1,ChainCond},		-- Edge Imp Chain
  [30068120] = {7,3,4,3,6,3,5,3,5,1,SabresCond},		-- Edge Imp Sabres
  [10802915] = {1,1,1,1,9,1,8,1,9,8,TGuideCond},		-- Tour Guide
- [79109599] = {1,1,2,1,8,2,2,1,3,2,KoSCond},		-- King of the Swamp
+ [79109599] = {8,4,2,1,8,2,2,1,3,2,KoSCond},		-- King of the Swamp
  [06205579] = {1,1,8,1,2,1,2,1,3,2,PFusionerCond},	-- Parasite Fusioner
  [67441435] = {1,1,8,2,9,6,9,4,1,1,nil},			-- Glow-Up Bulb
 
@@ -2742,6 +2757,7 @@ FluffalPriorityList={
  [01845204] = {1,1,1,1,3,2,3,1,8,1,IFusionCond},	-- Instant Fusion
  [24094653] = {2,1,1,1,2,1,2,1,2,1,PolyCond},		-- Polymerization
  [94820406] = {1,1,1,1,2,1,2,1,1,1,DFusionCond},	-- Dark Fusion
+ [18511384] = {1,1,1,1,2,1,2,1,7,1,nil},			-- Fusion Recovery
  [05133471] = {1,1,1,1,7,5,6,5,1,1,GCycloneCond},	-- Galaxy Cyclone
  [43455065] = {1,1,1,1,1,1,2,1,1,1,nil},			-- Magical Spring
  [43898403] = {1,1,1,1,5,3,6,4,1,1,nil},			-- Twin Twister

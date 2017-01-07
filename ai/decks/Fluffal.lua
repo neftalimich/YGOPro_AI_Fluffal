@@ -95,6 +95,8 @@ FluffalActivateBlacklist={
 01845204, -- Instant Fusion
 24094653, -- Polymerization
 94820406, -- Dark Fusion
+18511384, -- Fusion Recovery
+100911000, -- Fusion Recycle Plant (BETA)
 05133471, -- Galaxy Cyclone
 35726888, -- Foolish Burial of Belongings
 43455065, -- Magical Spring
@@ -161,6 +163,7 @@ FluffalSetBlacklist={
 01845204, -- Instant Fusion
 24094653, -- Polymerization
 94820406, -- Dark Fusion
+18511384, -- Fusion Recovery
 05133471, -- Galaxy Cyclone
 35726888, -- Foolish Burial of Belongings
 12580477, -- Raigeki
@@ -330,6 +333,9 @@ function FluffalInit(cards,to_bp_allowed,to_ep_allowed) -- FLUFFAL INIT
 	if HasIDNotNegated(SetMon,72413000,SetFluffal) then -- Wings
       return {COMMAND_SET_MONSTER,CurrentIndex}
     end
+	if HasIDNotNegated(SetMon,87246309,SetFluffal) then -- Octo
+      return {COMMAND_SET_MONSTER,CurrentIndex}
+    end
 	if HasIDNotNegated(SetMon,98280324,SetFluffal) -- Sheep
 	and AI.GetPlayerLP(1) < 6000
 	then
@@ -426,6 +432,14 @@ function FluffalPrincipal(cards,to_bp_allowed,to_ep_allowed)
       return {COMMAND_ACTIVATE,CurrentIndex}
     end
     return {COMMAND_SPECIAL_SUMMON,CurrentIndex}
+  end
+  if HasID(Act,18511384) then -- FRecovery
+    return {COMMAND_ACTIVATE,CurrentIndex}
+  end
+  if HasID(Act,100911000,false,nil,LOCATION_HAND) -- FRecyclePlant
+  and CardsMatchingFilter(AIST(),FilterType,TYPE_FIELD) == 0
+  then
+    return {COMMAND_ACTIVATE,CurrentIndex}
   end
   if HasIDNotNegated(Act,30068120,UseSabresFPatchwork) then
     return {COMMAND_ACTIVATE,CurrentIndex}
@@ -583,6 +597,10 @@ function FluffalPrincipal(cards,to_bp_allowed,to_ep_allowed)
     return {COMMAND_ACTIVATE,CurrentIndex}
   end
   if HasIDNotNegated(Act,79109599,UseKoS) then
+    return {COMMAND_ACTIVATE,CurrentIndex}
+  end
+  if HasID(Act,100911000,UseFRecyclePlant) -- FRecyclePlant
+  then
     return {COMMAND_ACTIVATE,CurrentIndex}
   end
   if HasIDNotNegated(Act,03841833,UseBearPoly) then
@@ -1074,6 +1092,7 @@ function FluffalPrioMode(safemode)
 
   if AI.GetPlayerLP(1) <= 4500
   or OppGetStrongestAttack() >= AI.GetPlayerLP(1)
+  or (OppGetStrongestAttack() >= 3500 and CardsMatchingFilter(AIMon(),FrightfurMonFilter) == 0)
   then
     minPrio = 2
   end

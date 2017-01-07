@@ -32,6 +32,8 @@
 - Fusion Substitute
 - Dark Fusion
 - Instant Fusion
+- Fusion Recovery
+- Fusion Recycle Plant(BETA)
 - Fusion Reserve
 
 **OTHER MON**

@@ -152,7 +152,7 @@ end
 -- Other Filter
 function FluffalDestroyFilter(c,nontarget,skipblacklist,skipignore)
   return DestroyFilter(c,nontarget,skipblacklist,skipignore)
-  and not BypassDestroyFilter(c)
+  --and not BypassDestroyFilter(c)
 end
 function FluffalSendFilter(c,nontarget)
   return not FilterStatus(c,STATUS_LEAVE_CONFIRMED)
@@ -250,7 +250,7 @@ function CountFrighturFusion(prio)
   if prio == nil then prio = 3 end
   --local fusionExtra = SubGroup(AIExtra(),FilterType,TYPE_FUSION)
   --CountPrioTarget(AIExtra(),PRIO_TOFIELD,3,nil,FilterType,TYPE_FUSION,"CountFrighturFusion")
-  result = CountPrioTarget(AIExtra(),PRIO_TOFIELD,1)
+  result = CountPrioTarget(AIExtra(),PRIO_TOFIELD,prio)
   return result
 end
 function CountFluffalMaterial(cards,loc,safe)
@@ -416,6 +416,8 @@ end
 01845204, -- Instant Fusion
 24094653, -- Polymerization
 94820406, -- Dark Fusion
+18511384, -- Fusion Recovery
+100911000, -- Fusion Recycle Plant (BETA)
 05133471, -- Galaxy Cyclone
 35726888, -- Foolish Burial of Belongings
 43455065, -- Magical Spring

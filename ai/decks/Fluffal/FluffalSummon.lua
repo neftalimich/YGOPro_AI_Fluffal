@@ -42,6 +42,10 @@ function SummonPenguinAwesome(c)
   return false
 end
 function SummonOwl(c)
+  print("SummonOwl")
+  print(OPTCheck(65331686))
+  print(CardsMatchingFilter(OppField(),ExtraDeckBlockedFilter))
+  print(CardsMatchingFilter(UseLists({AIHand(),AIMon()}),FluffalFusionMonFilter))
   return
     OPTCheck(65331686) -- Own
 	and CardsMatchingFilter(OppField(),ExtraDeckBlockedFilter) == 0
@@ -52,6 +56,7 @@ function SummonOwl(c)
 	) > 0
 end
 function SummonOwlNoFusionST(c)
+  print("SummonOwlNoFusionST")
   return
     OPTCheck(65331686) -- Own
 	and CardsMatchingFilter(UseLists({AIHand(),AIST()}),FluffalFusionSTFilter) == 0
@@ -666,6 +671,8 @@ end
 01845204, -- Instant Fusion
 24094653, -- Polymerization
 94820406, -- Dark Fusion
+18511384, -- Fusion Recovery
+100911000, -- Fusion Recycle Plant (BETA)
 05133471, -- Galaxy Cyclone
 35726888, -- Foolish Burial of Belongings
 43455065, -- Magical Spring

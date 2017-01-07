@@ -228,6 +228,15 @@ function IFusionTarget(cards,min,max,c)
   OPTSet(cards[1].cardid)
   return result
 end
+function FRecyclePlantTarget(cards,min,max,c)
+  if LocCheck(cards,LOCATION_HAND)then
+    return Add(cards,PRIO_DISCARD,min)
+  end
+  if LocCheck(cards,LOCATION_GRAVE)then
+    return Add(cards,PRIO_TOHAND,max)
+  end
+  return Add(cards,PRIO_TOHAND,max)
+end
 function FBoBTarget(cards,min,max,c)
   return Add(cards,PRIO_TOGRAVE,max)
 end
@@ -492,6 +501,12 @@ function FluffalCard(cards,min,max,id,c)  -- FLUFFAL CARD
   if id == 17194258 then -- FConscription
 	return FReserveTarget(cards,min,max,c)
   end
+  if id == 18511384 then -- FRecovery
+	return Add(cards,PRIO_TOHAND,max)
+  end
+  if id == 100911000 then -- FRecyclePlant
+    return FRecyclePlantTarget(cards,min,max,c)
+  end
   -- Spell TARGET
   if id == 35726888 then -- FBoB
     return FBoBTarget(cards,min,max,c)
@@ -576,6 +591,8 @@ end
 01845204, -- Instant Fusion
 24094653, -- Polymerization
 94820406, -- Dark Fusion
+18511384, -- Fusion Recovery
+100911000, -- Fusion Recycle Plant (BETA)
 05133471, -- Galaxy Cyclone
 35726888, -- Foolish Burial of Belongings
 43455065, -- Magical Spring

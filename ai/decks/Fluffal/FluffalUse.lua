@@ -69,15 +69,12 @@ function UseOwlPoly(c)
   end
   if CardsMatchingFilter(AIDeck(),FilterID,24094653) > 1 -- Polymerization
   then
-    OPTSet(c.id)
     return true
   elseif CardsMatchingFilter(UseLists({AIDeck(),AIHand(),AIST()}),FilterID,34773082) == 0 -- FPatchwork
   then
-    OPTSet(c.id)
     return true
   elseif CardsMatchingFilter(AIDeck(),CountFPatchworkTarget) == 0
   then
-    OPTSet(c.id)
     return true
   end
   return false
@@ -502,6 +499,16 @@ function UseBFusion()
   end
   return false
 end
+function UseFRecyclePlant(c)
+  if FilterLocation(c,LOCATION_SZONE) then
+    if CardsMatchingFilter(UseLists({AIHand(),AIST()}),FluffalFusionSTFilter2) == 0 
+	and	PriorityCheck(AIHand(),PRIO_DISCARD) > 5 
+	then
+	  return true
+	end
+  end
+  return false
+end
 function UseMSpring(c)
   local countOppSTFaceUp = CardsMatchingFilter(OppST(),FilterPosition,POS_FACEUP)
   local countOppSTFaceDown = CardsMatchingFilter(OppST(),FilterPosition,POS_FACEDOWN)
@@ -652,6 +659,8 @@ function UseFKrakenSend(c)
   then
     canSummonFSabres = true
   end
+  print("fkrakenCanAttak",fkrakenCanAttak)
+  print("indestructable",CardsMatchingFilter(OppMon(),FilterAffected,EFFECT_INDESTRUCTABLE))
   if countOppMon > 2
   and fkrakenCanSend > 0
   then
@@ -763,6 +772,10 @@ function FluffalEffectYesNo(id,card) -- FLUFFAL EFFECT YESNO
   if id == 70245411 then -- TVendor
 	result = 1
   end
+  
+  if id == 100911000 then -- FRecyclePlant
+    result = 1
+  end
 
   if id == 91034681 then -- FDaredevil
 	result = 1
@@ -854,6 +867,8 @@ end
 01845204, -- Instant Fusion
 24094653, -- Polymerization
 94820406, -- Dark Fusion
+18511384, -- Fusion Recovery
+100911000, -- Fusion Recycle Plant (BETA)
 05133471, -- Galaxy Cyclone
 35726888, -- Foolish Burial of Belongings
 43455065, -- Magical Spring

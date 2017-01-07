@@ -1,4 +1,9 @@
 VERSIONES:
+- v0.0.2.0.6
+	- Fusion Recycle Plant: agregado el script
+	- Fusion Recovery: agregado el script
+	- Owl: bug corregido.
+	- Bugs corregidos.
 - v0.0.2.0.5
 	- Frightfur Daredevil: agregado el script
 	- Mejoras en general.
