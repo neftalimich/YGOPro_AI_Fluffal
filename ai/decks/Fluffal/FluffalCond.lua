@@ -322,7 +322,6 @@ function BearCond(loc,c)
 	  then
 	    return 6
 	  elseif Get_Card_Count_ID(AIST(),70245411) > 0 -- TVendor
-	  and not (PriorityCheck(AIHand(),PRIO_DISCARD) > FluffalPrioMode(mode))
 	  then
 	    return 3
 	  else
