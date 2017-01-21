@@ -50,16 +50,18 @@ function FluffalPosition(id,available) -- FLUFFAL POSITION
   end
 
   if id == 57477163 then -- FSheep
-      local frightfurAtk = 2000 + FrightfurBoost(id)
-	  --print("FSheep - Atk: "..frightfurAtk)
-      if FluffalCanAttack(OppMon(),frightfurAtk) == 0
-	  and FluffalCannotAttack(OppMon(),frightfurAtk,FilterPosition,POS_FACEUP_ATTACK) > 0
-	  and frightfurAtk < 3200
-	  then
-        result = 4 -- POS_FACEUP_DEFENSE?
-	  else
-	    result = 1 -- POS_FACEUP_ATTACK
-      end
+    --print("FSheep")
+    local frightfurAtk = 2000 + FrightfurBoost(id)
+	if GlobalFSheep == 1 then frightfurAtk = frightfurAtk + 800 end
+	print("FSheep - Atk: "..frightfurAtk)
+    if FluffalCanAttack(OppMon(),frightfurAtk) == 0
+	and FluffalCannotAttack(OppMon(),frightfurAtk,FilterPosition,POS_FACEUP_ATTACK) > 0
+	and frightfurAtk < 3200
+	then
+      result = 4 -- POS_FACEUP_DEFENSE?
+	else
+	  result = 1 -- POS_FACEUP_ATTACK
+    end
   end
 
   if id == 40636712 then -- FKraken
@@ -197,7 +199,7 @@ function FluffalAttackBoost(cards)  -- FLUFFAL BOOST
       c.attack = c.attack + 200
     end
 	if c.id == 57477163 then -- FSheep
-	  local boost = FrightfurBoost(0)
+	  local boost = FrightfurBoost(0,0)
 	  if c.attack - boost == c.base_attack
 	  and OPTCheck(57477163)
 	  and AI.GetPlayerLP(1) > 800
@@ -319,18 +321,20 @@ function FrighfurAttackTarget(cards,source,ignorebonus,filter,opt)
   return result
 end
 
-function FrightfurBoost(frightfurId)
+function FrightfurBoost(frightfurId,extra)
+  if extra == nil then extra = 1 end
   local boost = 0
-  local frightufs = CountFrightfurMon(AIMon()) + 1 -- Own
+  local frightfurs = CountFrightfurMon(AIMon()) + extra -- Own
+  local fluffals = CountFluffal(AIMon())
 
   if frightfurId == 80889750 -- FSabreTooth
   then
     if CountFrightfurMon(AIGrave()) > 0 then
-      frightufs = frightufs + 1
+      frightfurs = frightfurs + 1
 	  if not HasIDNotNegated(AIMon(),00464362,true) -- FTiger Field
 	  and HasIDNotNegated(AIGrave(),00464362,true) -- FTiger Grave
 	  then
-	    boost = boost + (frightufs * 300)
+	    boost = boost + (frightfurs * 300)
 	  end
 	end
 	boost = boost + 400
@@ -338,7 +342,7 @@ function FrightfurBoost(frightfurId)
 
   if frightfurId == 00464362 -- FTiger
   then
-    boost = boost + (frightufs * 300)
+    boost = boost + (frightfurs * 300)
   end
 
   if frightfurId == 57477163 -- FSheep
@@ -353,7 +357,7 @@ function FrightfurBoost(frightfurId)
 
   if HasIDNotNegated(AIMon(),00464362,true) -- FTiger
   then
-    boost = boost + (frightufs * 300)
+    boost = boost + ((frightfurs + fluffals)* 300)
   end
 
   return boost

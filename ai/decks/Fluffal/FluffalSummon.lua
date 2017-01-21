@@ -403,8 +403,12 @@ function FSummonFTiger(c)
 	end
 	if GlobalFFusion > 0 
 	and CardsMatchingFilter(OppField(),FTigerDestroyFilter) > 3
+	and PriorityCheck(AIGrave(),PRIO_BANISH,3,FluffalFilter) > 2
 	then
-	  return 10
+	  if CardsMatchingFilter(AIMon(),FrightfurMonFilter) > 0
+	  then
+	    return 10
+	  end
 	end
 	if OppGetStrongestAttDef() >= AIGetStrongestAttack()
 	and OppGetStrongestAttDef() > 3000
@@ -422,6 +426,12 @@ function FSummonFTiger(c)
 	end
     return
 	  CardsMatchingFilter(OppField(),FTigerDestroyFilter) > 1
+	  and (
+	    CardsMatchingFilter(AIMon(),FrightfurMonFilter) > 0
+		or (
+		  GlobalFluffalMaterial > 2
+		)
+	  )
 	  or
 	  CardsMatchingFilter(OppField(),FTigerDestroyFilter) == 1
 	  and OppGetStrongestAttDef() >= AIGetStrongestAttack()

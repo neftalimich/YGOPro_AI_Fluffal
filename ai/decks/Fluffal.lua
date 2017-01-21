@@ -8,7 +8,7 @@ require("ai.decks.Fluffal.FluffalChain")
 require("ai.decks.Fluffal.FluffalBattle")
 
 function FluffalStartup(deck)
-  print("AI_Fluffal v0.0.2.0.5 by neftalimich.")
+  print("AI_Fluffal v0.0.2.0.7 by neftalimich.")
   deck.Init					= FluffalInit
   deck.Card					= FluffalCard
   deck.Chain				= FluffalChain
@@ -204,6 +204,7 @@ function FluffalInit(cards,to_bp_allowed,to_ep_allowed) -- FLUFFAL INIT
   GlobalPenguin = 0
   GlobalOwl = 0
   GlobalSabres = 0
+  GlobalFSheep = 0
   GlobalTVendor = 0
   GlobalEffectId = 0
   GlobalSummonId = 0

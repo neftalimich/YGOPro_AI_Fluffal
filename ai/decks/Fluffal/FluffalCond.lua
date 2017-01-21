@@ -551,6 +551,9 @@ function OctoCond(loc,c)
 	    GlobalOctoAux = 0
 	  end
 	  return 8 + PrioFluffalMaterial(c,1)
+	elseif FilterPosition(c,POS_FACEUP_ATTACK)
+	then
+	  return 3 + PrioFluffalMaterial(c,1)
 	else
 	  return 1
 	end

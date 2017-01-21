@@ -659,8 +659,8 @@ function UseFKrakenSend(c)
   then
     canSummonFSabres = true
   end
-  print("fkrakenCanAttak",fkrakenCanAttak)
-  print("indestructable",CardsMatchingFilter(OppMon(),FilterAffected,EFFECT_INDESTRUCTABLE))
+  --print("fkrakenCanAttak",fkrakenCanAttak)
+  --print("indestructable",CardsMatchingFilter(OppMon(),FilterAffected,EFFECT_INDESTRUCTABLE))
   if countOppMon > 2
   and fkrakenCanSend > 0
   then
@@ -669,7 +669,11 @@ function UseFKrakenSend(c)
   elseif canSummonFSabres then
     OPTSet(c.id)
     return true
-  elseif CardsMatchingFilter(OppMon(),FilterAffected,EFFECT_INDESTRUCTABLE) > 0
+  elseif (
+    CardsMatchingFilter(OppMon(),FilterAffected,EFFECT_INDESTRUCTABLE) > 0
+	or CardsMatchingFilter(OppMon(),FilterAffected,EFFECT_INDESTRUCTABLE_EFFECT) > 0
+	or CardsMatchingFilter(OppMon(),FilterAffected,EFFECT_INDESTRUCTABLE_BATTLE) > 0
+  )
   and fkrakenCanSend > 0
   then
     OPTSet(c.id)
@@ -793,6 +797,7 @@ function FluffalEffectYesNo(id,card) -- FLUFFAL EFFECT YESNO
     return UseFTiger(card)
   end
   if id == 57477163 then -- FSheep
+    GlobalFSheep = 1
     result = 1
   end
 
