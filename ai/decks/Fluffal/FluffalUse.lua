@@ -836,7 +836,7 @@ function FluffalYesNo(desc) -- FLUFFAL YESNO
     --print("YesNo - desc: "..desc)
   end
   if desc == 93 then -- Choose material?
-    if GlobalFusionId == 80889750 then
+    if GlobalCountMaterial > 0 then
 	  return 1
 	end
     return 0

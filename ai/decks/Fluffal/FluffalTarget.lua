@@ -316,11 +316,8 @@ end
 function MaxMaterials(fusionId,min,max)
   local result = 1
   if fusionId == 80889750 -- FSabreTooth
-  and GlobalFusionPerform == 3
   then
     result = 2
-  else
-    result = 1
   end
 
   if fusionId == 11039171 then -- FWolf
@@ -413,10 +410,26 @@ function FusionSummonTarget(cards,min,max,source,materialDest)
 	return Add(cards,materialDest)
   end
 
-  if GlobalFusionPerform >= 2 then
+  if GlobalFusionPerform == 2 then
+    GlobalFusionPerform = GlobalFusionPerform + 1
+	--CountPrioTarget(cards,materialDest,MaxMaterials(GlobalFusionId,1,#cards),nil,nil,nil,"FusionTarget"..(GlobalFusionPerform-1))
+	GlobalCountMaterial = MaxMaterials(GlobalFusionId,1,#cards)
+	local auxMaterial = math.max(math.min(GlobalCountMaterial,max),min)
+	--print("GlobalCountMaterial",GlobalCountMaterial,auxMaterial)
+	
+	local result = Add(cards,materialDest,auxMaterial)
+	GlobalCountMaterial = GlobalCountMaterial - auxMaterial
+	return result
+  end
+  if GlobalFusionPerform > 2 then
     GlobalFusionPerform = GlobalFusionPerform + 1
 	--CountPrioTarget(cards,materialDest,MaxMaterials(GlobalFusionId,min,max),nil,nil,nil,"FusionTarget"..(GlobalFusionPerform-1))
-	return Add(cards,materialDest,MaxMaterials(GlobalFusionId,min,max))
+	local auxMaterial = math.max(math.min(GlobalCountMaterial,max),min)
+	--print("GlobalCountMaterial",GlobalCountMaterial,auxMaterial)
+	
+	local result = Add(cards,materialDest,auxMaterial)
+	GlobalCountMaterial = GlobalCountMaterial - auxMaterial
+	return result
   end
 end
 
