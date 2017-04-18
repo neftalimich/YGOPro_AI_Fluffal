@@ -249,7 +249,7 @@ function CountFrighturFusion(prio)
   local result = 0
   if prio == nil then prio = 3 end
   --local fusionExtra = SubGroup(AIExtra(),FilterType,TYPE_FUSION)
-  --CountPrioTarget(AIExtra(),PRIO_TOFIELD,3,nil,FilterType,TYPE_FUSION,"CountFrighturFusion")
+  --CountPrioTarget(AIExtra(),PRIO_TOFIELD,prio,nil,FilterType,TYPE_FUSION,"CountFrighturFusion")
   result = CountPrioTarget(AIExtra(),PRIO_TOFIELD,prio)
   return result
 end
@@ -345,6 +345,7 @@ function BossMonFilter(c)
 	  or c.id == 01561110 -- BusterDragon
 	  or c.id == 10443957 -- Infinity
 	  or c.id == 48905153 -- Zodiac Beast Drancia
+	  or c.id == 18940556 -- Ultimate Conductor Tyranno
 	) and NotNegated(c)
 end
 function InfinityMonFilter(c)

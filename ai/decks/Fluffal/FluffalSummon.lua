@@ -42,10 +42,10 @@ function SummonPenguinAwesome(c)
   return false
 end
 function SummonOwl(c)
-  print("SummonOwl")
-  print(OPTCheck(65331686))
-  print(CardsMatchingFilter(OppField(),ExtraDeckBlockedFilter))
-  print(CardsMatchingFilter(UseLists({AIHand(),AIMon()}),FluffalFusionMonFilter))
+  --print("SummonOwl")
+  --print(OPTCheck(65331686))
+  --print(CardsMatchingFilter(OppField(),ExtraDeckBlockedFilter))
+  --print(CardsMatchingFilter(UseLists({AIHand(),AIMon()}),FluffalFusionMonFilter))
   return
     OPTCheck(65331686) -- Own
 	and CardsMatchingFilter(OppField(),ExtraDeckBlockedFilter) == 0
@@ -56,7 +56,7 @@ function SummonOwl(c)
 	) > 0
 end
 function SummonOwlNoFusionST(c)
-  print("SummonOwlNoFusionST")
+  --print("SummonOwlNoFusionST")
   return
     OPTCheck(65331686) -- Own
 	and CardsMatchingFilter(UseLists({AIHand(),AIST()}),FluffalFusionSTFilter) == 0
@@ -234,10 +234,11 @@ end
 
 function FSummonFSabreTooth(c)
   if not HasIDNotNegated(AIMon(),80889750,true) -- FSabreTooth
+  and (#AIMon() <= 4 or CountFluffal(AIMon()) > 1)
   then
     return true
   elseif CardsMatchingFilter(AIMon(),FilterID,80889750) < 2
-  and #AIMon() <= 4
+  and (#AIMon() <= 4 or CountFluffal(AIMon()) > 1)
   and CardsMatchingFilter(OppST(),FilterPosition,POS_FACEDOWN) <= 2
   and BattlePhaseCheck()
   and (

@@ -1036,7 +1036,7 @@ function PrioFluffalMaterial(c,mode)
   if mode == 1
   then
     if FilterLocation(c,LOCATION_MZONE)
-    and #AIMon() == 5 and GlobalFusionId == 80889750 -- FKraken
+    and #AIMon() == 5 and GlobalFusionId == 80889750 -- FSabreTooth
     then
 	  result = 4
 	elseif FilterLocation(c,LOCATION_MZONE)
