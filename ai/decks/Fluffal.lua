@@ -209,6 +209,7 @@ function FluffalInit(cards,to_bp_allowed,to_ep_allowed) -- FLUFFAL INIT
   GlobalEffectId = 0
   GlobalSummonId = 0
   GlobalFusionId = 0
+  --GlobalPreFusionId = 0
   GlobalPolymerization = 0
   GlobalDFusion = 0
   GlobalFFusion = 0
@@ -330,6 +331,10 @@ function FluffalInit(cards,to_bp_allowed,to_ep_allowed) -- FLUFFAL INIT
       return {COMMAND_SET_MONSTER,CurrentIndex}
     end
 	if HasIDNotNegated(SetMon,30068120,SetSabres) then
+      return {COMMAND_SET_MONSTER,CurrentIndex}
+    end
+	if HasIDNotNegated(SetMon,67441435,false) -- FBulb
+	then
       return {COMMAND_SET_MONSTER,CurrentIndex}
     end
 	if HasIDNotNegated(SetMon,72413000,SetFluffal) then -- Wings
@@ -718,15 +723,33 @@ function FluffalPrincipal(cards,to_bp_allowed,to_ep_allowed)
   print("---7.11")
   -- ACTIVE EFFECT FUSION PRINCIPAL
   if HasIDNotNegated(Act,01845204,UseIFusion) then
-    return {COMMAND_ACTIVATE,CurrentIndex}
+    local CurrentIndexAux = CurrentIndex
+	if GlobalFusionId == 80889750 -- FSabreTooth
+	and HasIDNotNegated(Act,40636712,false) -- FKraken
+	then
+      return {COMMAND_ACTIVATE,CurrentIndex}
+	end
+    return {COMMAND_ACTIVATE,CurrentIndexAux}
   end
   if HasIDNotNegated(Act,65331686,UseOwlFusion) then
-    return {COMMAND_ACTIVATE,CurrentIndex}
+    local CurrentIndexAux = CurrentIndex
+	if GlobalFusionId == 80889750 -- FSabreTooth
+	and HasIDNotNegated(Act,40636712,false) -- FKraken
+	then
+      return {COMMAND_ACTIVATE,CurrentIndex}
+	end
+    return {COMMAND_ACTIVATE,CurrentIndexAux}
   end
   if HasIDNotNegated(Act,43698897,UseFFactory)
   and HasID(AIGrave(),06077601,true) -- FFusion
   then
-    return {COMMAND_ACTIVATE,CurrentIndex}
+    local CurrentIndexAux = CurrentIndex
+	if GlobalFusionId == 80889750 -- FSabreTooth
+	and HasIDNotNegated(Act,40636712,false) -- FKraken
+	then
+      return {COMMAND_ACTIVATE,CurrentIndex}
+	end
+    return {COMMAND_ACTIVATE,CurrentIndexAux}
   end
   if HasIDNotNegated(Act,43698897,ActiveFFactory)
   and HasID(AIGrave(),06077601,true) -- FFusion
@@ -735,19 +758,43 @@ function FluffalPrincipal(cards,to_bp_allowed,to_ep_allowed)
   end
   if HasIDNotNegated(Act,94820406,UseDFusion) then
     if MaterialFSabreTooth() then
-	  return {COMMAND_ACTIVATE,CurrentIndex}
+	  local CurrentIndexAux = CurrentIndex
+	  if GlobalFusionId == 80889750 -- FSabreTooth
+	  and HasIDNotNegated(Act,40636712,false) -- FKraken
+	  then
+        return {COMMAND_ACTIVATE,CurrentIndex}
+	  end
+      return {COMMAND_ACTIVATE,CurrentIndexAux}
 	end
   end
   if HasIDNotNegated(Act,24094653,false,nil,LOCATION_HAND+LOCATION_SZONE)
   and UseFSubstitute(Act[CurrentIndex])
   then
-    return {COMMAND_ACTIVATE,CurrentIndex}
+    local CurrentIndexAux = CurrentIndex
+	if GlobalFusionId == 80889750 -- FSabreTooth
+	and HasIDNotNegated(Act,40636712,false) -- FKraken
+	then
+      return {COMMAND_ACTIVATE,CurrentIndex}
+	end
+    return {COMMAND_ACTIVATE,CurrentIndexAux}
   end
   if HasIDNotNegated(Act,24094653,UsePolymerization) then
-    return {COMMAND_ACTIVATE,CurrentIndex}
+    local CurrentIndexAux = CurrentIndex
+	if GlobalFusionId == 80889750 -- FSabreTooth
+	and HasIDNotNegated(Act,40636712,false) -- FKraken
+	then
+      return {COMMAND_ACTIVATE,CurrentIndex}
+	end
+    return {COMMAND_ACTIVATE,CurrentIndexAux}
   end
   if HasIDNotNegated(Act,94820406,UseDFusion) then
-    return {COMMAND_ACTIVATE,CurrentIndex}
+    local CurrentIndexAux = CurrentIndex
+	if GlobalFusionId == 80889750 -- FSabreTooth
+	and HasIDNotNegated(Act,40636712,false) -- FKraken
+	then
+      return {COMMAND_ACTIVATE,CurrentIndex}
+	end
+    return {COMMAND_ACTIVATE,CurrentIndexAux}
   end
   print("---7.12")
   -- ACTIVE EFFECT POST FUSION

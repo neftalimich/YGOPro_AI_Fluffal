@@ -1170,7 +1170,11 @@ function ChainCond(loc,c)
 	    return 1
 	  end
 	elseif GlobalFusionPerform > 2 then
-	  return 5 + PrioFluffalMaterial(c,1)
+	  if OPTCheck(c.id) then
+	    return 5 + PrioFluffalMaterial(c,1)
+	  else
+	    return 2
+	  end
 	end
 	if OPTCheck(c.id) then
 	  return 6 + PrioFluffalMaterial(c,1)

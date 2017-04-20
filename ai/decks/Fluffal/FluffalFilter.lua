@@ -250,6 +250,9 @@ function CountFrighturFusion(prio)
   if prio == nil then prio = 3 end
   --local fusionExtra = SubGroup(AIExtra(),FilterType,TYPE_FUSION)
   --CountPrioTarget(AIExtra(),PRIO_TOFIELD,prio,nil,FilterType,TYPE_FUSION,"CountFrighturFusion")
+  local tofield = Add(AIExtra(),PRIO_TOFIELD)
+  GlobalFusionId = AIExtra()[tofield[1]].id
+  --print("Pre-GlobalFusionId",GlobalFusionId)
   result = CountPrioTarget(AIExtra(),PRIO_TOFIELD,prio)
   return result
 end
@@ -359,6 +362,7 @@ end
 function FTigerAdvantageFilter(c)
   return
 	BossMonFilter(c)
+	or c.id == 100912087 -- Spyral Gear - Last Resort (BETA)
 end
 function FSheepAdvantageFilter(c)
   return

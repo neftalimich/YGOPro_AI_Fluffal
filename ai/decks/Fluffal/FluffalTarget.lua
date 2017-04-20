@@ -223,7 +223,7 @@ end
 GlobalIFusion = 0
 function IFusionTarget(cards,min,max,c)
   GlobalIFusion = 1
-  CountPrioTarget(cards,PRIO_TOFIELD,1,nil,nil,nil,"IFusionTarget")
+  --CountPrioTarget(cards,PRIO_TOFIELD,1,nil,nil,nil,"IFusionTarget")
   local result = Add(cards,PRIO_TOFIELD,max)
   OPTSet(cards[1].cardid)
   return result
@@ -270,7 +270,7 @@ function FLeoTarget(cards,min,max,c)
 end
 function FTigerTarget(cards,min,max,c)
   local maxTargets = CardsMatchingFilter(OppField(),FTigerDestroyFilter)
-  --print("maxTargets: "..maxTargets)
+  print("FTiger - maxTargets:",maxTargets)
   if maxTargets > max then
     maxTargets = max
   end
@@ -331,10 +331,15 @@ function MaxMaterials(fusionId,min,max)
   end
 
   if fusionId == 00464362 then -- FTiger
-    if CardsMatchingFilter(OppField(),FTigerAdvantageFilter)
+    if CardsMatchingFilter(OppField(),BossMonFilter)
 	then
 	  return min
 	end
+	if CardsMatchingFilter(OppField(),FTigerAdvantageFilter)
+	then
+	  return math.max(CardsMatchingFilter(OppField(),FTigerDestroyFilter) - 1,min)
+	end
+	
     if CardsMatchingFilter(UseLists({AIHand(),AIST()}),FluffalFusionSTFilter) > 0
 	then
 	  result = max - 2
