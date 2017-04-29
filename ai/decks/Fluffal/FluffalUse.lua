@@ -34,7 +34,7 @@ function UseBearDiscard(c,mode)
 	and (
 	  HasID(AIHand(),39246582,true) and OPTCheck(39246582) -- Dog
 	  or
-	  HasID(AIHand(),87246309,true) and SummonOcto() -- Octo
+	  HasID(AIHand(),87246309,true) and SummonOctopus() -- Octopus
 	)
 	then
 	  OPTSet(c.id)
@@ -143,7 +143,7 @@ function CanUseSheep(includeHand)
   end
   return false
 end
-function UseOcto()
+function UseOctopus()
   local edgeImpGrave = CountEdgeImp(AIGrave())
   local fluffalGrave = CountFluffal(AIGrave())
   return
@@ -321,7 +321,7 @@ function ActiveTVendor(c,mode)
   and (
     HasID(AIHand(),39246582,true) and OPTCheck(39246582) -- Dog
 	or
-	HasID(AIHand(),87246309,true) and SummonOcto() -- Octo
+	HasID(AIHand(),87246309,true) and SummonOctopus() -- Octopus
   )
   and OPTCheck(72413000) and not HasID(AIGrave(),72413000,true) -- Wings
   then
@@ -369,7 +369,7 @@ function UseTVendor(c,mode)
   and (
     HasID(AIHand(),39246582,true) and OPTCheck(39246582) -- Dog
 	or
-	HasID(AIHand(),87246309,true) and SummonOcto() -- Octo
+	HasID(AIHand(),87246309,true) and SummonOctopus() -- Octopus
   )
   and OPTCheck(72413000) and not HasID(AIGrave(),72413000,true) -- Wings
   then
@@ -466,7 +466,7 @@ function UseIFusion(c)
   elseif not HasID(AIMon(),80889750,true) -- FSabreTooth
   and HasID(UseLists({AIHand(),AIST()}),06077601,true) -- FFusion
   and CountFrightfurMon(UseLists({AIMon(),AIGrave()})) > 2 -- Frightfurs
-  and CountMaterialFTarget(UseLists({AIMon(),AIGrave()}),PRIO_BANISH) > 1
+  and CountFluffalMaterial(UseLists({AIMon(),AIGrave()}),PRIO_BANISH) > 1
   and #AIMon() <= 3
   then
     OPTSet(c.id)
@@ -648,17 +648,17 @@ function UseFKrakenSend(c)
   local frightfurAtk = 2200 + FrightfurBoost(c.id)
   local fkrakenCanAttak = FluffalCanAttack(OppMon(),frightfurAtk)
   local countOppMon = #OppMon()
-  local canSummonFSabres = false
-  if HasID(AIExtra(),80889750,true) -- FSabreTooth
-  and CardsMatchingFilter(AIMon(),FilterID,80889750) <= 2
-  and CardsMatchingFilter(UseLists({AIHand(),AIST()}),FluffalFusionSTFilter) > 0
-  and (
-	CountEdgeImp(UseLists({AIHand(),AIMon()}))
-    + CountFluffalMaterial(UseLists({AIHand(),AIMon()}),MATERIAL_TOGRAVE,true)
-  ) >= 2
-  then
-    canSummonFSabres = true
-  end
+  --local canSummonFSabres = false
+  --if HasID(AIExtra(),80889750,true) -- FSabreTooth
+  --and CardsMatchingFilter(AIMon(),FilterID,80889750) <= 2
+  --and CardsMatchingFilter(UseLists({AIHand(),AIST()}),FluffalFusionSTFilter) > 0
+  --and (
+	--CountEdgeImp(UseLists({AIHand(),AIMon()}))
+    --+ CountFluffalMaterial(UseLists({AIHand(),AIMon()}),MATERIAL_TOGRAVE,true)
+  --) >= 2
+  --then
+    --canSummonFSabres = true
+  --end
   --print("fkrakenCanAttak",fkrakenCanAttak)
   --print("indestructable",CardsMatchingFilter(OppMon(),FilterAffected,EFFECT_INDESTRUCTABLE))
   if countOppMon > 2
@@ -666,9 +666,9 @@ function UseFKrakenSend(c)
   then
     OPTSet(c.id)
     return true
-  elseif canSummonFSabres then
-    OPTSet(c.id)
-    return true
+  --elseif canSummonFSabres then
+    --OPTSet(c.id)
+    --return true
   elseif (
     CardsMatchingFilter(OppMon(),FilterAffected,EFFECT_INDESTRUCTABLE) > 0
 	or CardsMatchingFilter(OppMon(),FilterAffected,EFFECT_INDESTRUCTABLE_EFFECT) > 0
@@ -744,7 +744,7 @@ function FluffalEffectYesNo(id,card) -- FLUFFAL EFFECT YESNO
   if id == 65331686 and UseOwlPoly(card) then -- Owl
 	result = 1
   end
-  if id == 87246309  then -- Octo
+  if id == 87246309  then -- Octopus
     if (card.description/16) == id then
 	  id = id
 	else -- Material
@@ -777,7 +777,7 @@ function FluffalEffectYesNo(id,card) -- FLUFFAL EFFECT YESNO
 	result = 1
   end
   
-  if id == 100911000 then -- FRecyclePlant
+  if id == 22829942 then -- FRecyclePlant
     result = 1
   end
 
@@ -850,7 +850,7 @@ end
 03841833, -- Fluffal Bear
 65331686, -- Fluffal Owl
 98280324, -- Fluffal Sheep
-87246309, -- Fluffal Octo
+87246309, -- Fluffal Octopus
 02729285, -- Fluffal Cat
 38124994, -- Fluffal Rabit
 06142488, -- Fluffal Mouse
@@ -873,7 +873,7 @@ end
 24094653, -- Polymerization
 94820406, -- Dark Fusion
 18511384, -- Fusion Recovery
-100911000, -- Fusion Recycle Plant (BETA)
+22829942, -- Fusion Recycle Plant
 05133471, -- Galaxy Cyclone
 35726888, -- Foolish Burial of Belongings
 43455065, -- Magical Spring

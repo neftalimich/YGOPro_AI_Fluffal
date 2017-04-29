@@ -20,7 +20,7 @@ FluffalAtt={
 }
 FluffalDef={
 98280324, -- Fluffal Sheep
-87246309, -- Fluffal Octo
+87246309, -- Fluffal Octopus
 02729285, -- Fluffal Cat
 38124994, -- Fluffal Rabit
 06142488, -- Fluffal Mouse

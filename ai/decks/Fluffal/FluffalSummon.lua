@@ -94,8 +94,8 @@ function SpSummonSheepEnd()
     return false
   end
 end
-function SummonOcto()
-  if UseOcto() then
+function SummonOctopus()
+  if UseOctopus() then
     if CardsMatchingFilter(AIBanish(),FilterType,TYPE_MONSTER) > 0
 	and CardsMatchingFilter(UseLists({AIHand(),AIST()}),FluffalFusionSTFilter) > 0
 	then
@@ -107,8 +107,8 @@ function SummonOcto()
   end
   return false
 end
-function SummonOctoDiscard()
-  if UseOcto()
+function SummonOctopusDiscard()
+  if UseOctopus()
   and (
     HasID(AIHand(),70245411,true) -- TVendor
 	or
@@ -660,7 +660,7 @@ end
 03841833, -- Fluffal Bear
 65331686, -- Fluffal Owl
 98280324, -- Fluffal Sheep
-87246309, -- Fluffal Octo
+87246309, -- Fluffal Octopus
 02729285, -- Fluffal Cat
 38124994, -- Fluffal Rabit
 06142488, -- Fluffal Mouse
@@ -683,7 +683,7 @@ end
 24094653, -- Polymerization
 94820406, -- Dark Fusion
 18511384, -- Fusion Recovery
-100911000, -- Fusion Recycle Plant (BETA)
+22829942, -- Fusion Recycle Plant
 05133471, -- Galaxy Cyclone
 35726888, -- Foolish Burial of Belongings
 43455065, -- Magical Spring

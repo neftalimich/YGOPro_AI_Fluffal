@@ -532,23 +532,23 @@ function SheepCond(loc,c)
   end
   return true
 end
-GlobalOctoAux = 0
-function OctoCond(loc,c)
+GlobalOctopusAux = 0
+function OctopusCond(loc,c)
   if loc == MATERIAL_TOGRAVE then
     if OPTCheck(c.id + 1)
 	and CardsMatchingFilter(AIBanish(),FilterType,TYPE_MONSTER) >= 1
 	then
 	  if Get_Card_Count_ID(UseLists({AIHand(),AIMon()}),c.id) == 2 then
-	    if GlobalOctoAux == 0 then
-		  GlobalOctoAux = c.cardid
+	    if GlobalOctopusAux == 0 then
+		  GlobalOctopusAux = c.cardid
 		end
-	    if GlobalOctoAux == c.cardid then
+	    if GlobalOctopusAux == c.cardid then
 		  return 1
 		else
 		  return 8 + PrioFluffalMaterial(c,1)
 		end
 	  else
-	    GlobalOctoAux = 0
+	    GlobalOctopusAux = 0
 	  end
 	  return 8 + PrioFluffalMaterial(c,1)
 	elseif FilterPosition(c,POS_FACEUP_ATTACK)
@@ -743,7 +743,7 @@ function RabitCond(loc,c)
     if OPTCheck(c.id)
 	and (
 	  HasID(UseLists({AIHand(),AIMon(),AIGrave()}),02729285,true) -- Cat
-	  or HasID(AIGrave(),87246309,true) -- Octo
+	  or HasID(AIGrave(),87246309,true) -- Octopus
 	)
 	then
       return 9 + PrioFluffalMaterial(c,1)
@@ -2741,7 +2741,7 @@ FluffalPriorityList={
  [03841833] = {10,3,2,1,5,2,2,1,8,3,BearCond},		-- Fluffal Bear
  [65331686] = {8,3,6,4,2,1,1,1,5,2,OwlCond},		-- Fluffal Owl
  [98280324] = {4,2,0,0,2,1,3,1,7,2,SheepCond},		-- Fluffal Sheep
- [87246309] = {5,2,8,3,1,1,2,1,4,2,OctoCond},		-- Fluffal Octo
+ [87246309] = {5,2,8,3,1,1,2,1,4,2,OctopusCond},		-- Fluffal Octopus
  [02729285] = {7,4,3,1,1,0,1,1,3,1,CatCond},		-- Fluffal Cat
  [38124994] = {5,3,3,1,1,0,1,1,2,1,RabitCond},		-- Fluffal Rabit
  [06142488] = {1,1,9,3,5,0,6,1,9,8,MouseCond},		-- Fluffal Mouse

@@ -8,7 +8,7 @@ require("ai.decks.Fluffal.FluffalChain")
 require("ai.decks.Fluffal.FluffalBattle")
 
 function FluffalStartup(deck)
-  print("AI_Fluffal v0.0.2.0.8 by neftalimich.")
+  print("AI_Fluffal v0.0.2.1.0 by neftalimich.")
   deck.Init					= FluffalInit
   deck.Card					= FluffalCard
   deck.Chain				= FluffalChain
@@ -39,7 +39,7 @@ function FluffalStartup(deck)
   deck.PriorityList         = FluffalPriorityList
 
   -- DEBUG
-  --[[
+  ----[[
   local e0=Effect.GlobalEffect()
 	e0:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e0:SetCode(EVENT_CHAIN_SOLVED)
@@ -72,7 +72,7 @@ FluffalActivateBlacklist={
 03841833, -- Fluffal Bear
 65331686, -- Fluffal Owl
 98280324, -- Fluffal Sheep
-87246309, -- Fluffal Octo
+87246309, -- Fluffal Octopus
 02729285, -- Fluffal Cat
 38124994, -- Fluffal Rabit
 06142488, -- Fluffal Mouse
@@ -96,7 +96,7 @@ FluffalActivateBlacklist={
 24094653, -- Polymerization
 94820406, -- Dark Fusion
 18511384, -- Fusion Recovery
-100911000, -- Fusion Recycle Plant (BETA)
+22829942, -- Fusion Recycle Plant
 05133471, -- Galaxy Cyclone
 35726888, -- Foolish Burial of Belongings
 43455065, -- Magical Spring
@@ -128,7 +128,7 @@ FluffalSummonBlacklist={
 03841833, -- Fluffal Bear
 65331686, -- Fluffal Owl
 98280324, -- Fluffal Sheep
-87246309, -- Fluffal Octo
+87246309, -- Fluffal Octopus
 02729285, -- Fluffal Cat
 38124994, -- Fluffal Rabit
 06142488, -- Fluffal Mouse
@@ -209,7 +209,6 @@ function FluffalInit(cards,to_bp_allowed,to_ep_allowed) -- FLUFFAL INIT
   GlobalEffectId = 0
   GlobalSummonId = 0
   GlobalFusionId = 0
-  --GlobalPreFusionId = 0
   GlobalPolymerization = 0
   GlobalDFusion = 0
   GlobalFFusion = 0
@@ -340,7 +339,7 @@ function FluffalInit(cards,to_bp_allowed,to_ep_allowed) -- FLUFFAL INIT
 	if HasIDNotNegated(SetMon,72413000,SetFluffal) then -- Wings
       return {COMMAND_SET_MONSTER,CurrentIndex}
     end
-	if HasIDNotNegated(SetMon,87246309,SetFluffal) then -- Octo
+	if HasIDNotNegated(SetMon,87246309,SetFluffal) then -- Octopus
       return {COMMAND_SET_MONSTER,CurrentIndex}
     end
 	if HasIDNotNegated(SetMon,98280324,SetFluffal) -- Sheep
@@ -364,7 +363,7 @@ end
 06142488, -- Fluffal Mouse
 72413000, -- Fluffal Wings
 81481818, -- Fluffal Patchwork
-87246309, -- Fluffal Octo
+87246309, -- Fluffal Octopus
 97567736, -- Edge Imp Tomahawk
 61173621, -- Edge Imp Chain
 30068120, -- Edge Imp Sabres
@@ -443,7 +442,7 @@ function FluffalPrincipal(cards,to_bp_allowed,to_ep_allowed)
   if HasID(Act,18511384) then -- FRecovery
     return {COMMAND_ACTIVATE,CurrentIndex}
   end
-  if HasID(Act,100911000,false,nil,LOCATION_HAND) -- FRecyclePlant
+  if HasID(Act,22829942,false,nil,LOCATION_HAND) -- FRecyclePlant
   and CardsMatchingFilter(AIST(),FilterType,TYPE_FIELD) == 0
   then
     return {COMMAND_ACTIVATE,CurrentIndex}
@@ -531,7 +530,7 @@ function FluffalPrincipal(cards,to_bp_allowed,to_ep_allowed)
   then
     return {COMMAND_SUMMON,CurrentIndex}
   end
-  if HasIDNotNegated(Sum,87246309,SummonOcto)
+  if HasIDNotNegated(Sum,87246309,SummonOctopus)
   and not HasID(Sum,39246582,true)
   then
     local CurrentIndexAux = CurrentIndex
@@ -606,7 +605,7 @@ function FluffalPrincipal(cards,to_bp_allowed,to_ep_allowed)
   if HasIDNotNegated(Act,79109599,UseKoS) then
     return {COMMAND_ACTIVATE,CurrentIndex}
   end
-  if HasID(Act,100911000,UseFRecyclePlant) -- FRecyclePlant
+  if HasID(Act,22829942,UseFRecyclePlant) -- FRecyclePlant
   then
     return {COMMAND_ACTIVATE,CurrentIndex}
   end
@@ -618,7 +617,7 @@ function FluffalPrincipal(cards,to_bp_allowed,to_ep_allowed)
   if HasIDNotNegated(Sum,10802915,SummonTGuide) then
     return {COMMAND_SUMMON,CurrentIndex}
   end
-  if HasIDNotNegated(Sum,87246309,SummonOcto) then
+  if HasIDNotNegated(Sum,87246309,SummonOctopus) then
     local CurrentIndexAux = CurrentIndex
     if HasIDNotNegated(Sum,13241004,SummonPenguin)
     then
@@ -652,7 +651,7 @@ function FluffalPrincipal(cards,to_bp_allowed,to_ep_allowed)
     end
     return {COMMAND_SUMMON,CurrentIndexAux}
   end
-  if HasIDNotNegated(Sum,87246309,SummonOctoDiscard) then
+  if HasIDNotNegated(Sum,87246309,SummonOctopusDiscard) then
     local CurrentIndexAux = CurrentIndex
     if HasIDNotNegated(Sum,13241004,SummonPenguin)
     then
@@ -818,13 +817,25 @@ function FluffalPrincipal(cards,to_bp_allowed,to_ep_allowed)
   if HasIDNotNegated(Act,06077601,UseFFusion)
   and AI.GetCurrentPhase() == PHASE_MAIN1
   then
-    return {COMMAND_ACTIVATE,CurrentIndex}
+    local CurrentIndexAux = CurrentIndex
+	if GlobalFusionId == 80889750 -- FSabreTooth
+	and HasIDNotNegated(Act,40636712,false) -- FKraken
+	then
+      return {COMMAND_ACTIVATE,CurrentIndex}
+	end
+    return {COMMAND_ACTIVATE,CurrentIndexAux}
   end
   if HasIDNotNegated(Act,43698897,UseFFactory) then
     return {COMMAND_ACTIVATE,CurrentIndex}
   end
   if HasIDNotNegated(Act,43698897,ActiveFFactory) then
-    return {COMMAND_ACTIVATE,CurrentIndex}
+    local CurrentIndexAux = CurrentIndex
+	if GlobalFusionId == 80889750 -- FSabreTooth
+	and HasIDNotNegated(Act,40636712,false) -- FKraken
+	then
+      return {COMMAND_ACTIVATE,CurrentIndex}
+	end
+    return {COMMAND_ACTIVATE,CurrentIndexAux}
   end
   print("---7.15")
   -- ACTIVE END
@@ -972,10 +983,10 @@ function FluffalVsVanity(cards,to_bp_allowed,to_ep_allowed)
     return {COMMAND_ACTIVATE,CurrentIndex}
   end
   -- VANITY NORMAL SUMMON 2
-  if HasIDNotNegated(Sum,87246309,SummonOcto) then
+  if HasIDNotNegated(Sum,87246309,SummonOctopus) then
     return {COMMAND_SUMMON,CurrentIndex}
   end
-  if HasIDNotNegated(Sum,87246309,SummonOctoDiscard) then
+  if HasIDNotNegated(Sum,87246309,SummonOctopusDiscard) then
     return {COMMAND_SUMMON,CurrentIndex}
   end
   if HasIDNotNegated(Sum,39246582,SummonDogEnd) then

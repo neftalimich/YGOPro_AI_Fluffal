@@ -15,9 +15,9 @@ function PenguinFilter(c)
 	or c.id == 06142488 -- Mouse
   then
 	return true
-  elseif c.id == 87246309 -- Octo
+  elseif c.id == 87246309 -- Octopus
   then
-    return UseOcto()
+    return UseOctopus()
   else
     return false
   end
@@ -399,7 +399,7 @@ end
 03841833, -- Fluffal Bear
 65331686, -- Fluffal Owl
 98280324, -- Fluffal Sheep
-87246309, -- Fluffal Octo
+87246309, -- Fluffal Octopus
 02729285, -- Fluffal Cat
 38124994, -- Fluffal Rabit
 06142488, -- Fluffal Mouse
@@ -422,7 +422,7 @@ end
 24094653, -- Polymerization
 94820406, -- Dark Fusion
 18511384, -- Fusion Recovery
-100911000, -- Fusion Recycle Plant (BETA)
+22829942, -- Fusion Recycle Plant
 05133471, -- Galaxy Cyclone
 35726888, -- Foolish Burial of Belongings
 43455065, -- Magical Spring

@@ -47,20 +47,20 @@ function SheepTarget(cards,min,max,c)
     return Add(cards,PRIO_TOFIELD,max)
   end
 end
-function OctoTarget(cards,min,max,c)
+function OctopusTarget(cards,min,max,c)
   if LocCheck(cards,LOCATION_GRAVE) then
     if HasID(AIGrave(),72413000,true) -- Wings
 	and OPTCheck(72413000)
 	and CountFluffal(AIGrave()) <= 2
 	and CountEdgeImp(AIGrave()) > 0
 	then
-	  --CountPrioTarget(cards,PRIO_TOHAND,max,nil,EdgeImpFilter,nil,"OctoTarget")
+	  --CountPrioTarget(cards,PRIO_TOHAND,max,nil,EdgeImpFilter,nil,"OctopusTarget")
 	  result = Add(cards,PRIO_TOHAND,max,EdgeImpFilter)
 	else
-	  --CountPrioTarget(cards,PRIO_TOHAND,max,nil,nil,nil,"OctoTarget")
+	  --CountPrioTarget(cards,PRIO_TOHAND,max,nil,nil,nil,"OctopusTarget")
 	  result = Add(cards,PRIO_TOHAND,max)
 	end
-	GlobalOcto = 0
+	GlobalOctopus = 0
     return result
   end
   if LocCheck(cards,LOCATION_REMOVED) then
@@ -270,7 +270,7 @@ function FLeoTarget(cards,min,max,c)
 end
 function FTigerTarget(cards,min,max,c)
   local maxTargets = CardsMatchingFilter(OppField(),FTigerDestroyFilter)
-  print("FTiger - maxTargets:",maxTargets)
+  --print("FTiger - maxTargets:",maxTargets)
   if maxTargets > max then
     maxTargets = max
   end
@@ -455,8 +455,8 @@ function FluffalCard(cards,min,max,id,c)  -- FLUFFAL CARD
   if id == 98280324 then -- Sheep
     return SheepTarget(cards)
   end
-  if id == 87246309 then -- Octo
-    return OctoTarget(cards,min,max,c)
+  if id == 87246309 then -- Octopus
+    return OctopusTarget(cards,min,max,c)
   end
   if id == 02729285 then -- Cat
     return CatTarget(cards)
@@ -522,7 +522,7 @@ function FluffalCard(cards,min,max,id,c)  -- FLUFFAL CARD
   if id == 18511384 then -- FRecovery
 	return Add(cards,PRIO_TOHAND,max)
   end
-  if id == 100911000 then -- FRecyclePlant
+  if id == 22829942 then -- FRecyclePlant
     return FRecyclePlantTarget(cards,min,max,c)
   end
   -- Spell TARGET
@@ -587,7 +587,7 @@ end
 03841833, -- Fluffal Bear
 65331686, -- Fluffal Owl
 98280324, -- Fluffal Sheep
-87246309, -- Fluffal Octo
+87246309, -- Fluffal Octopus
 02729285, -- Fluffal Cat
 38124994, -- Fluffal Rabit
 06142488, -- Fluffal Mouse
@@ -610,7 +610,7 @@ end
 24094653, -- Polymerization
 94820406, -- Dark Fusion
 18511384, -- Fusion Recovery
-100911000, -- Fusion Recycle Plant (BETA)
+22829942, -- Fusion Recycle Plant
 05133471, -- Galaxy Cyclone
 35726888, -- Foolish Burial of Belongings
 43455065, -- Magical Spring
