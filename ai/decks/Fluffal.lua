@@ -8,7 +8,7 @@ require("ai.decks.Fluffal.FluffalChain")
 require("ai.decks.Fluffal.FluffalBattle")
 
 function FluffalStartup(deck)
-  print("AI_Fluffal v0.0.2.1.0 by neftalimich.")
+  print("AI_Fluffal v0.0.2.1.1(ALPHA) by neftalimich.")
   deck.Init					= FluffalInit
   deck.Card					= FluffalCard
   deck.Chain				= FluffalChain
@@ -831,7 +831,7 @@ function FluffalPrincipal(cards,to_bp_allowed,to_ep_allowed)
 	then
       return {COMMAND_ACTIVATE,CurrentIndex}
 	end
-	if HasIDNotNegated(Act,73240432,false) -- CEater
+	if HasIDNotNegated(Act,73240432,UseCEaterScale) -- CEater
 	then
       return {COMMAND_ACTIVATE,CurrentIndex}
 	end
@@ -863,9 +863,6 @@ function FluffalPrincipal(cards,to_bp_allowed,to_ep_allowed)
   if HasIDNotNegated(Act,28039390,UseFReborn)
   and AI.GetCurrentPhase() == PHASE_MAIN1
   then
-    return {COMMAND_ACTIVATE,CurrentIndex}
-  end
-  if HasIDNotNegated(Act,98280324,UseSheepCEater) then
     return {COMMAND_ACTIVATE,CurrentIndex}
   end
   --print("---7.16")

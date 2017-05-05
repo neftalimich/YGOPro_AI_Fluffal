@@ -112,7 +112,7 @@ function FluffalChainOrder(cards) -- FLUFFAL CHAIN ORDER
 
   for i=1,#cards do
     local c = cards[i]
-    if c.level > 4 then -- To protect Frightfur 
+    if c.level > 4 and c.id ~= 73240432 then -- To protect Frightfur 
       result[#result + 1] = i
     end
   end
@@ -134,6 +134,13 @@ function FluffalChainOrder(cards) -- FLUFFAL CHAIN ORDER
 	and c.level > 0
 	and not (c.id == 39246582) -- Exclude Dog
 	and not (c.id == 13241004) -- Exclude Penguin
+	then
+      result[#result + 1] = i
+    end
+  end
+  for i=1,#cards do
+    local c=cards[i]
+    if c.id == 73240432 -- CEater
 	then
       result[#result + 1] = i
     end

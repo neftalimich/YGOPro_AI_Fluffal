@@ -33,6 +33,11 @@ FluffalDef={
 }
 function FluffalPosition(id,available) -- FLUFFAL POSITION
   result = nil
+  if AIGetStrongestAttack() < OppGetStrongestAttack()
+  and CardsMatchingFilter(OppMon(),FluffalDisvantageFilter) > 0
+  then
+    return POS_FACEUP_DEFENSE
+  end
   for i=1,#FluffalAtt do
     if FluffalAtt[i]==id
     then

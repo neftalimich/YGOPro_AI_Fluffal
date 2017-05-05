@@ -197,8 +197,8 @@ end
 -- EdgeImp USE
 function UseCEaterScale(c)
   if not HasID(AIPendulum(),c.id,true)
-  and CardsMatchingFilter(UseLists({AIHand(),AIMon()}),FluffalFusionMonFilter) > 1 
-  and CountFluffal(UseLists({AIHand(),AIMon()})) > 0
+  and CardsMatchingFilter(UseLists({AIHand(),AIMon()}),FluffalFusionMonFilter) > 1
+  and GlobalCanFusionSummon == true
   then
     return true
   end
@@ -749,7 +749,7 @@ end
 
 function FluffalEffectYesNo(id,card) -- FLUFFAL EFFECT YESNO
   if card then
-    print("EffectYesNo - Cardid: "..card.id.." - desc: "..card.description)
+    print("EffectYesNo ",card.id,card.description,(card.description - (id * 16)),GetName(card))
   end
   local result = nil
 
@@ -764,12 +764,6 @@ function FluffalEffectYesNo(id,card) -- FLUFFAL EFFECT YESNO
 	result = 1
   end
   if id == 87246309  then -- Octopus
-    --if (card.description/16) == id then
-	  --id = id
-	--else -- Material
-	  --id = id + 1
-	--end
-	print("USE TEST OCTO",id + (card.description % 16))
 	result = 1
   end
   if id == 02729285 then -- Cat
@@ -780,7 +774,6 @@ function FluffalEffectYesNo(id,card) -- FLUFFAL EFFECT YESNO
   end
   
   if id == 73240432 then -- CEater
-    print("USE TEST CEATER",id + (card.description % 16))
 	result = 1
   end
 

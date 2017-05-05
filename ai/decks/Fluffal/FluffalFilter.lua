@@ -2,7 +2,8 @@
 -------- FILTER --------
 ------------------------
 -- FluffalM FILTER
-function FluffalFilter(c)
+function FluffalFilter(c,exceptId)
+  if exceptId == nil then exceptId = 0 end
   return FilterSet(c,0xA9)
 end
 function NotFluffalFilter(c)
@@ -29,8 +30,11 @@ function FluffalFusionProtectFilter(c)
 	or c.id == 13241004 -- Penguin
 end
 -- EdgeImp FILTER
-function EdgeImpFilter(c)
-  return FilterSet(c,0xC3)
+function EdgeImpFilter(c,exceptId)
+  if exceptId == nil then exceptId = 0 end
+  return 
+    FilterSet(c,0xC3)
+	and c.id ~= except
 end
 -- Other FILTER
 function FluffalFusionMonFilter(c)
@@ -226,8 +230,8 @@ function CountFluffal(cards)
   return CardsMatchingFilter(cards,FluffalFilter)
 end
 -- EdgeImp COUNT
-function CountEdgeImp(cards)
-  return CardsMatchingFilter(cards,EdgeImpFilter)
+function CountEdgeImp(cards,exceptId)
+  return CardsMatchingFilter(cards,EdgeImpFilter,exceptId)
 end
 -- Other COUNT
 -- FluffalS COUNT
@@ -393,6 +397,15 @@ function MaxxCZBAdvantageFilter(c)
 	or c.id == 11510448 -- ZBTigress
 end
 
+--Disvantage Filter
+function FluffalDisvantageFilter(c)
+  return
+    c.attack >= 4500
+	and (
+	  not Targetable(c,TYPE_MONSTER)
+      or not Affected(c,TYPE_MONSTER)
+	)
+end
 --[[
 39246582, -- Fluffal Dog
 13241004, -- Fluffal Penguin

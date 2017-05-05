@@ -445,9 +445,15 @@ function OwlCond(loc,c)
 end
 function SheepCond(loc,c)
   if loc == MATERIAL_TOGRAVE then
-    if not OPTCheck(c.id) or Get_Card_Count_ID(AIHand(),c.id) > 1
+    if not OPTCheck(c.id) 
+	or Get_Card_Count_ID(AIHand(),c.id) > 1	  
 	then
       return 3 + PrioFluffalMaterial(c,1)
+	elseif
+	  OppGetStrongestAttack() > 3000
+	  and OppGetStrongestAttack() > AIGetStrongestAttack()
+	then
+	  return 2 + PrioFluffalMaterial(c,1)
 	else
 	  return 1
 	end
@@ -458,7 +464,7 @@ function SheepCond(loc,c)
 	then
 	  return 1
 	end
-    local edgeImpHand = CountEdgeImp(AIHand())
+    local edgeImpHand = CountEdgeImp(AIHand(),73240432) -- Except CEater
 	local edgeImpMon = CountEdgeImp(AIMon())
 	local edgeImpGrave = CountEdgeImp(AIGrave())
     if FilterLocation(c,LOCATION_DECK)
@@ -1090,8 +1096,11 @@ end
 -- EdgeImp COND
 function CEaterCond(loc,c)
   if loc == MATERIAL_TOGRAVE then
-    if CountEdgeImp(UseLists({AIHand(),AIMon()})) == 1
-	and #AIMon() == 0
+    if HasID(AIPendulum(),c.id,true)
+	then
+	  return 4
+	elseif CountEdgeImp(UseLists({AIHand(),AIMon()})) == 1
+	and CardsMatchingFilter(AIMon(),FrightfurMonFilter) == 0
 	then
 	  return 3 + PrioFluffalMaterial(c,1)
 	end
@@ -1101,10 +1110,13 @@ function CEaterCond(loc,c)
     if FilterLocation(c,LOCATION_DECK)
 	then
 	  if HasID(AIHand(),c.id,true)
+	  or HasID(AIPendulum(),c.id,true)
 	  then
 	    return false
 	  end
-	  return CardsMatchingFilter(AIHand(),FluffalFusionMonFilter) > 1
+	  return
+		CardsMatchingFilter(AIHand(),FluffalFusionMonFilter) > 0
+		and GlobalCanFusionSummon == true
 	end
 	if FilterLocation(c,LOCATION_ONFIELD) then
 	  if not HasID(AIHand(),c.id,true)
@@ -1125,19 +1137,17 @@ function CEaterCond(loc,c)
   if loc == PRIO_TOFIELD then
     if FilterLocation(c,LOCATION_HAND)
 	then
-	  if HasID(AIPendulum(),c.id,true) then
-	    return true
-	  end
-	  return false
+	  return
+	    HasID(AIPendulum(),c.id,true)
+		or Get_Card_Count_ID(AIHand(),c.id) > 1
 	end
-	
 	if FilterLocation(c,LOCATION_DECK)
 	or FilterLocation(c,LOCATION_GRAVE)
 	or FilterLocation(c,LOCATION_REMOVED)
 	then
 	  if OPTCheck(c.id + 1)
 	  then
-	    return true
+	    return 6
 	  else
 	    return false
 	  end
@@ -1147,7 +1157,9 @@ function CEaterCond(loc,c)
     if FilterLocation(c,LOCATION_HAND)
 	or FilterLocation(c,LOCATION_ONFIELD)
 	then
-	  return false
+	  return
+	    HasID(AIPendulum(),c.id,true)
+		or Get_Card_Count_ID(AIHand(),c.id) > 1
 	end
 	if FilterLocation(c,LOCATION_DECK) then
 	  return true
@@ -1282,7 +1294,17 @@ function ChainCond(loc,c)
 	  then
 	    return false
 	  end
-	  return OPTCheck(c.id + 1) and not HasID(AIHand(),c.id,true)
+	  if OPTCheck(c.id + 1) 
+	  and not HasID(AIHand(),c.id,true)
+	  then
+	    if OPTCheck(34773082) -- FPatchwork
+	    then 
+		  return true -- 9
+		else
+		  return 7
+		end
+	  end
+	  return false
 	end
 	if FilterLocation(c,LOCATION_ONFIELD) then
 	  if not HasID(AIHand(),c.id,true)
@@ -1302,7 +1324,14 @@ function ChainCond(loc,c)
   end
   if loc == PRIO_TOFIELD then
     if FilterLocation(c,LOCATION_HAND)
-	or FilterLocation(c,LOCATION_DECK)
+	then
+	   if OPTCheck(c.id + 1)
+	   then
+	     return true
+	   end
+	   return false
+	end
+	if FilterLocation(c,LOCATION_DECK)
 	or FilterLocation(c,LOCATION_GRAVE)
 	or FilterLocation(c,LOCATION_REMOVED)
 	then
@@ -2515,6 +2544,9 @@ function FWolfCond(loc,c)
 end
 function FTigerCond(loc,c)
   if loc == MATERIAL_TOGRAVE then
+    if CardsMatchingFilter(OppField(),FTigerAdvantageFilter) > 0 then
+	  return 10 + PrioFrightfurMaterial(c,1)
+	end
     return 5 + PrioFrightfurMaterial(c,1)
   end
   if loc == PRIO_TOHAND then
@@ -2839,10 +2871,10 @@ FluffalPriorityList={
  [06142488] = {1,1,9,3,5,0,6,1,9,8,MouseCond},		-- Fluffal Mouse
  [72413000] = {9,1,4,2,9,4,10,8,6,1,WingsCond},		-- Fluffal Wings
  [81481818] = {2,1,5,3,5,1,4,1,5,3,PatchworkCond},	-- Fluffal Patchwork
- [73240432] = {1,1,1,1,1,1,6,1,1,1,CEaterCond},		-- Edge Imp Cotton Eater
- [97567736] = {1,1,5,2,1,1,8,4,6,2,TomahawkCond},	-- Edge Imp Tomahawk
- [61173621] = {8,2,4,4,7,1,9,1,4,1,ChainCond},		-- Edge Imp Chain
- [30068120] = {7,3,4,3,6,3,5,3,5,1,SabresCond},		-- Edge Imp Sabres
+ [73240432] = {8,3,3,1,5,2,6,1,3,1,CEaterCond},		-- Edge Imp Cotton Eater
+ [97567736] = {7,1,4,2,1,1,8,4,6,2,TomahawkCond},	-- Edge Imp Tomahawk
+ [61173621] = {9,2,5,4,7,1,9,1,4,1,ChainCond},		-- Edge Imp Chain
+ [30068120] = {6,4,3,3,6,3,5,3,5,1,SabresCond},		-- Edge Imp Sabres
  [10802915] = {1,1,1,1,9,1,8,1,9,8,TGuideCond},		-- Tour Guide
  [79109599] = {8,4,2,1,8,2,2,1,3,2,KoSCond},		-- King of the Swamp
  [06205579] = {1,1,8,1,2,1,2,1,3,2,PFusionerCond},	-- Parasite Fusioner
