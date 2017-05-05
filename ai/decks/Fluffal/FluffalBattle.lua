@@ -4,6 +4,7 @@
 FluffalAtt={
 39246582, -- Fluffal Dog
 13241004, -- Fluffal Penguin
+73240432, -- Edge Imp Cotton Eater
 97567736, -- Edge Imp Tomahawk
 
 91034681, -- Frightfur Daredevil

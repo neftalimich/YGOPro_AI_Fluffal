@@ -18,6 +18,15 @@ function SummonPenguin()
   and CardsMatchingFilter(OppST(),FilterPosition,POS_FACEDOWN) == 0
   then
     return true
+  elseif (
+    OppGetStrongestAttack() < 1600
+	or (
+	  AIGetStrongestAttack() > OppGetStrongestAttack()
+	  and CardsMatchingFilter(OppMon(),FilterAttackMin,3000) < 3
+	)
+  )
+  then
+    return true
   end
   return false
 end
@@ -238,6 +247,7 @@ function FSummonFSabreTooth(c)
   then
     return true
   elseif CardsMatchingFilter(AIMon(),FilterID,80889750) < 2
+  and OppGetStrongestAttack() < 4500
   and (#AIMon() <= 4 or CountFluffal(AIMon()) > 1)
   and CardsMatchingFilter(OppST(),FilterPosition,POS_FACEDOWN) <= 2
   and BattlePhaseCheck()
@@ -448,6 +458,7 @@ function SpSummonFTiger(c)
   return
     not HasID(AIMon(),00464362,true) -- FTiger
     and OppGetStrongestAttDef() >= AIGetStrongestAttack()
+	and OppGetStrongestAttack() < 4500
 	and HasID(AIMon(),80889750,true) -- FSabreTooth
 	and BattlePhaseCheck()
 end
@@ -666,6 +677,7 @@ end
 06142488, -- Fluffal Mouse
 72413000, -- Fluffal Wings
 81481818, -- Fluffal Patchwork
+73240432, -- Edge Imp Cotton Eater
 97567736, -- Edge Imp Tomahawk
 61173621, -- Edge Imp Chain
 30068120, -- Edge Imp Sabres

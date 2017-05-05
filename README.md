@@ -1,10 +1,10 @@
 # YGOPro_AI_Fluffal
-YGOPro - AI - Fluffal v0.0.2.0.6 (Stable) by neftalimich
+YGOPro - AI - Fluffal v0.0.2.1.1 (ALPHA) by neftalimich
 
 Español: 
 
 **Próximamente**
-- v.0.0.2.1: Mas jugadas alternativas contra decks que le generan debilidad.
+- v.0.0.3.0: Mas jugadas alternativas contra decks que le generan debilidad.
 	
 **Desarrollo:**
 

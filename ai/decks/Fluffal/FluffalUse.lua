@@ -103,6 +103,15 @@ function UseSheep(c)
     return false
   end
 end
+function UseSheepCEater(c)
+  if HasID(UseLists({AIHand(),AIGrave()}),73240432,true) 
+  then
+    OPTSet(c.id)
+    return true
+  else
+    return false
+  end
+end
 function UseSheepEnd(c)
   if CountEdgeImp(UseLists({AIGrave(),AIHand()})) > 0
   then
@@ -186,6 +195,15 @@ function UseWingsDisadvantage(c)
   end
 end
 -- EdgeImp USE
+function UseCEaterScale(c)
+  if not HasID(AIPendulum(),c.id,true)
+  and CardsMatchingFilter(UseLists({AIHand(),AIMon()}),FluffalFusionMonFilter) > 1 
+  and CountFluffal(UseLists({AIHand(),AIMon()})) > 0
+  then
+    return true
+  end
+  return false
+end
 function UseTomahawkCopy(c)
   OPTCheck(c.id + 1)
   return true
@@ -501,8 +519,9 @@ function UseBFusion()
 end
 function UseFRecyclePlant(c)
   if FilterLocation(c,LOCATION_SZONE) then
-    if CardsMatchingFilter(UseLists({AIHand(),AIST()}),FluffalFusionSTFilter2) == 0 
-	and	PriorityCheck(AIHand(),PRIO_DISCARD) > 5 
+    if CardsMatchingFilter(UseLists({AIHand(),AIST()}),FluffalFusionSTFilter2) == 0
+	and CardsMatchingFilter(AIHand(),FluffalFusionMonFilter) > 0
+	and	PriorityCheck(AIHand(),PRIO_DISCARD) > 4
 	then
 	  return true
 	end
@@ -730,7 +749,7 @@ end
 
 function FluffalEffectYesNo(id,card) -- FLUFFAL EFFECT YESNO
   if card then
-    --print("EffectYesNo - Cardid: "..card.id.." - desc: "..card.description)
+    print("EffectYesNo - Cardid: "..card.id.." - desc: "..card.description)
   end
   local result = nil
 
@@ -745,17 +764,23 @@ function FluffalEffectYesNo(id,card) -- FLUFFAL EFFECT YESNO
 	result = 1
   end
   if id == 87246309  then -- Octopus
-    if (card.description/16) == id then
-	  id = id
-	else -- Material
-	  id = id + 1
-	end
+    --if (card.description/16) == id then
+	  --id = id
+	--else -- Material
+	  --id = id + 1
+	--end
+	print("USE TEST OCTO",id + (card.description % 16))
 	result = 1
   end
   if id == 02729285 then -- Cat
 	result = 1
   end
   if id == 38124994 then -- Rabit
+	result = 1
+  end
+  
+  if id == 73240432 then -- CEater
+    print("USE TEST CEATER",id + (card.description % 16))
 	result = 1
   end
 
@@ -822,6 +847,9 @@ function FluffalEffectYesNo(id,card) -- FLUFFAL EFFECT YESNO
 
   if result then
     if result == 1 then
+	  if card.description > 0 then
+	    id = id + (card.description - (id * 16))
+	  end
       OPTSet(id)
 	end
   end
@@ -856,6 +884,7 @@ end
 06142488, -- Fluffal Mouse
 72413000, -- Fluffal Wings
 81481818, -- Fluffal Patchwork
+73240432, -- Edge Imp Cotton Eater
 97567736, -- Edge Imp Tomahawk
 61173621, -- Edge Imp Chain
 30068120, -- Edge Imp Sabres

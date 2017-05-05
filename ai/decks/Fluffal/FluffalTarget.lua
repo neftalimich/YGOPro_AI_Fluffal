@@ -593,6 +593,7 @@ end
 06142488, -- Fluffal Mouse
 72413000, -- Fluffal Wings
 81481818, -- Fluffal Patchwork
+73240432, -- Edge Imp Cotton Eater
 97567736, -- Edge Imp Tomahawk
 61173621, -- Edge Imp Chain
 30068120, -- Edge Imp Sabres

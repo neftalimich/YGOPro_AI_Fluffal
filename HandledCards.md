@@ -10,6 +10,7 @@
 - Fluffal Mouse
 - Fluffal Wings
 - Fluffal Patchwork
+- Edge Imp Cotton Eater
 - Edge Imp Tomahawk
 - Edge Imp Chain
 - Edge Imp Sabres

@@ -79,6 +79,7 @@ FluffalActivateBlacklist={
 72413000, -- Fluffal Wings
 81481818, -- Fluffal Patchwork
 
+73240432, -- Edge Imp Cotton Eater
 97567736, -- Edge Imp Tomahawk
 61173621, -- Edge Imp Chain
 30068120, -- Edge Imp Sabres
@@ -134,6 +135,7 @@ FluffalSummonBlacklist={
 06142488, -- Fluffal Mouse
 72413000, -- Fluffal Wings
 81481818, -- Fluffal Patchwork
+73240432, -- Edge Imp Cotton Eater
 97567736, -- Edge Imp Tomahawk
 61173621, -- Edge Imp Chain
 30068120, -- Edge Imp Sabres
@@ -364,6 +366,7 @@ end
 72413000, -- Fluffal Wings
 81481818, -- Fluffal Patchwork
 87246309, -- Fluffal Octopus
+73240432, -- Edge Imp Cotton Eater
 97567736, -- Edge Imp Tomahawk
 61173621, -- Edge Imp Chain
 30068120, -- Edge Imp Sabres
@@ -699,6 +702,11 @@ function FluffalPrincipal(cards,to_bp_allowed,to_ep_allowed)
   if HasIDNotNegated(Act,17194258) and BattlePhaseCheck() then -- FConscription
     return {COMMAND_ACTIVATE,CurrentIndex}
   end
+  if HasID(Act,73240432,UseCEaterScale)
+  and GlobalCanFusionSummon == true
+  then
+    return {COMMAND_ACTIVATE,CurrentIndex}
+  end
   print("---7.10")
   -- ACTIVE EFFECT TOY VENDOR 2
   if HasIDNotNegated(Act,70245411,nil,nil,LOCATION_SZONE,POS_FACEUP)
@@ -823,6 +831,10 @@ function FluffalPrincipal(cards,to_bp_allowed,to_ep_allowed)
 	then
       return {COMMAND_ACTIVATE,CurrentIndex}
 	end
+	if HasIDNotNegated(Act,73240432,false) -- CEater
+	then
+      return {COMMAND_ACTIVATE,CurrentIndex}
+	end
     return {COMMAND_ACTIVATE,CurrentIndexAux}
   end
   if HasIDNotNegated(Act,43698897,UseFFactory) then
@@ -851,6 +863,9 @@ function FluffalPrincipal(cards,to_bp_allowed,to_ep_allowed)
   if HasIDNotNegated(Act,28039390,UseFReborn)
   and AI.GetCurrentPhase() == PHASE_MAIN1
   then
+    return {COMMAND_ACTIVATE,CurrentIndex}
+  end
+  if HasIDNotNegated(Act,98280324,UseSheepCEater) then
     return {COMMAND_ACTIVATE,CurrentIndex}
   end
   --print("---7.16")
