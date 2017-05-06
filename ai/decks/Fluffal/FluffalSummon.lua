@@ -18,7 +18,11 @@ function SummonPenguin()
   and CardsMatchingFilter(OppST(),FilterPosition,POS_FACEDOWN) == 0
   then
     return true
-  elseif (
+  end
+  return false
+end
+function SummonPenguinAttack()
+  if (
     OppGetStrongestAttack() < 1600
 	or (
 	  AIGetStrongestAttack() > OppGetStrongestAttack()
@@ -570,6 +574,7 @@ end
 function RepFSabreTooth(c)
   if FilterPosition(c,POS_DEFENSE)
   and CardsMatchingFilter(OppMon(),FilterAttackMax,c.attack) > 0
+  and OppGetStrongestAttack() < AIGetStrongestAttack()
   then
     return true
   elseif FilterPosition(c,POS_ATTACK)
@@ -645,7 +650,14 @@ function RepDante(c)
   end
 end
 
-
+function DefensiveReposition(c)
+  if FilterPosition(c,POS_ATTACK) 
+  and OppGetStrongestAttack() > c.attack
+  then
+    return true
+  end
+  return false
+end
 function GenericReposition(c)
   if FilterPosition(c,POS_ATTACK) then
     if c.defense > c.attack

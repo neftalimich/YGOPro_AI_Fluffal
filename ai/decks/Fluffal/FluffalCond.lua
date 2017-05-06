@@ -2889,6 +2889,7 @@ FluffalPriorityList={
  [24094653] = {2,1,1,1,2,1,2,1,2,1,PolyCond},		-- Polymerization
  [94820406] = {1,1,1,1,2,1,2,1,1,1,DFusionCond},	-- Dark Fusion
  [18511384] = {1,1,1,1,2,1,2,1,7,1,nil},			-- Fusion Recovery
+ [22829942] = {1,1,1,1,2,1,2,1,6,1,nil},			-- Fusion Recycling Plant
  [05133471] = {1,1,1,1,7,5,6,5,1,1,GCycloneCond},	-- Galaxy Cyclone
  [43455065] = {1,1,1,1,1,1,2,1,1,1,nil},			-- Magical Spring
  [43898403] = {1,1,1,1,5,3,6,4,1,1,nil},			-- Twin Twister

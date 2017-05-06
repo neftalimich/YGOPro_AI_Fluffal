@@ -517,6 +517,15 @@ function UseBFusion()
   end
   return false
 end
+function ActiveFRecyclePlant(c)
+  if FilterLocation(c,LOCATION_HAND) then
+    if UseFRecyclePlant(c)
+	then
+	  return true
+	end
+  end
+  return false
+end
 function UseFRecyclePlant(c)
   if FilterLocation(c,LOCATION_SZONE) then
     if CardsMatchingFilter(UseLists({AIHand(),AIST()}),FluffalFusionSTFilter2) == 0

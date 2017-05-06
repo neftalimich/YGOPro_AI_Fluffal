@@ -8,7 +8,7 @@ require("ai.decks.Fluffal.FluffalChain")
 require("ai.decks.Fluffal.FluffalBattle")
 
 function FluffalStartup(deck)
-  print("AI_Fluffal v0.0.2.1.1(ALPHA) by neftalimich.")
+  print("AI_Fluffal v0.0.2.1.1 by neftalimich.")
   deck.Init					= FluffalInit
   deck.Card					= FluffalCard
   deck.Chain				= FluffalChain
@@ -39,7 +39,7 @@ function FluffalStartup(deck)
   deck.PriorityList         = FluffalPriorityList
 
   -- DEBUG
-  ----[[
+  --[[
   local e0=Effect.GlobalEffect()
 	e0:SetType(EFFECT_TYPE_FIELD+EFFECT_TYPE_CONTINUOUS)
 	e0:SetCode(EVENT_CHAIN_SOLVED)
@@ -294,7 +294,7 @@ function FluffalInit(cards,to_bp_allowed,to_ep_allowed) -- FLUFFAL INIT
     return {principal[1],principal[2]}
   end
   --print("--8")
-  -- FLUFFAL REPOSITION
+  -- FRIGHTFUR REPOSITION
   if HasIDNotNegated(Rep,80889750,RepFSabreTooth) then
     return {COMMAND_CHANGE_POS,CurrentIndex}
   end
@@ -318,6 +318,11 @@ function FluffalInit(cards,to_bp_allowed,to_ep_allowed) -- FLUFFAL INIT
       return {COMMAND_ACTIVATE,CurrentIndex}
     end
 	if HasIDNotNegated(Act,03841833,UseBearPoly) then
+      return {COMMAND_ACTIVATE,CurrentIndex}
+    end
+	if HasID(Act,22829942,false) -- FRecyclePlant
+    and CardsMatchingFilter(AIST(),FilterType,TYPE_FIELD) == 0
+    then
       return {COMMAND_ACTIVATE,CurrentIndex}
     end
     -- SET ST END
@@ -349,6 +354,30 @@ function FluffalInit(cards,to_bp_allowed,to_ep_allowed) -- FLUFFAL INIT
 	then
       return {COMMAND_SET_MONSTER,CurrentIndex}
     end
+	-- SET MON END 2
+	if OppGetStrongestAttack() > 2000
+	and AI.GetPlayerLP(1) <= 5000
+	and #AIMon() == 0
+	then
+	  if HasIDNotNegated(SetMon,38124994,false) then -- Rabbit
+        return {COMMAND_SET_MONSTER,CurrentIndex}
+      end
+	  if HasIDNotNegated(SetMon,13241004,false) then -- Penguin
+        return {COMMAND_SET_MONSTER,CurrentIndex}
+      end
+	  if HasIDNotNegated(SetMon,02729285,false) then -- Cat
+        return {COMMAND_SET_MONSTER,CurrentIndex}
+      end
+	end
+	-- DEFENSIVE REPOSITION
+	for i=1,#Rep do
+	  local c = Rep[i]
+	  if FluffalFilter(c)
+	  and DefensiveReposition(c) 
+	  then
+	    return {COMMAND_CHANGE_POS,i}
+	  end
+	end
   end
   --print("--END")
   return nil
@@ -445,7 +474,7 @@ function FluffalPrincipal(cards,to_bp_allowed,to_ep_allowed)
   if HasID(Act,18511384) then -- FRecovery
     return {COMMAND_ACTIVATE,CurrentIndex}
   end
-  if HasID(Act,22829942,false,nil,LOCATION_HAND) -- FRecyclePlant
+  if HasID(Act,22829942,ActiveFRecyclePlant)
   and CardsMatchingFilter(AIST(),FilterType,TYPE_FIELD) == 0
   then
     return {COMMAND_ACTIVATE,CurrentIndex}
@@ -870,6 +899,10 @@ function FluffalPrincipal(cards,to_bp_allowed,to_ep_allowed)
   if HasIDNotNegated(Sum,61173621,SummonChain) then
     return {COMMAND_SUMMON,CurrentIndex}
   end
+  if HasIDNotNegated(Sum,13241004,SummonPenguinAttack)
+  then
+    return {COMMAND_SUMMON,CurrentIndex}
+  end
   if HasIDNotNegated(Sum,67441435,SummonBulb) then
     return {COMMAND_SUMMON,CurrentIndex}
   end
@@ -1066,7 +1099,7 @@ function FluffalVsDarkLaw(cards,to_bp_allowed,to_ep_allowed)
     return {COMMAND_ACTIVATE,CurrentIndex}
   end
 
-  -- FLUFFAL REPOSITION
+  -- FLUFFAL REPOSITION DARKLAW
   if HasIDNotNegated(Rep,40636712,RepFKraken) then
     return {COMMAND_CHANGE_POS,CurrentIndex}
   end
