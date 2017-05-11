@@ -8,7 +8,7 @@ require("ai.decks.Fluffal.FluffalChain")
 require("ai.decks.Fluffal.FluffalBattle")
 
 function FluffalStartup(deck)
-  print("AI_Fluffal v0.0.2.1.1 by neftalimich.")
+  print("AI_Fluffal v0.0.2.1.2 by neftalimich.")
   deck.Init					= FluffalInit
   deck.Card					= FluffalCard
   deck.Chain				= FluffalChain
@@ -175,6 +175,8 @@ FluffalSetBlacklist={
 51452091, -- Royal Decree
 }
 FluffalRepositionBlacklist={
+80889750, -- Frightfur Sabre-Tooth
+
 98280324, -- Fluffal Sheep
 02729285, -- Fluffal Cat
 38124994, -- Fluffal Rabit
@@ -203,8 +205,8 @@ function FluffalInit(cards,to_bp_allowed,to_ep_allowed) -- FLUFFAL INIT
   local SetST = cards.st_setable_cards
 
   -- GLOBAL
-  GlobalPenguin = 0
-  GlobalOwl = 0
+  GlobalFluffalCardID = 0
+  GlobalFluffalMode = 0
   GlobalSabres = 0
   GlobalFSheep = 0
   GlobalTVendor = 0
@@ -214,6 +216,7 @@ function FluffalInit(cards,to_bp_allowed,to_ep_allowed) -- FLUFFAL INIT
   GlobalPolymerization = 0
   GlobalDFusion = 0
   GlobalFFusion = 0
+  GlobalIFusion = 0
   GlobalFluffalMaterial = 0
   GlobalEdgeImpMaterial = 0
   GlobalCanFusionSummon = false
@@ -296,12 +299,14 @@ function FluffalInit(cards,to_bp_allowed,to_ep_allowed) -- FLUFFAL INIT
   --print("--8")
   -- FRIGHTFUR REPOSITION
   if HasIDNotNegated(Rep,80889750,RepFSabreTooth) then
+    print("RepFSabreTooth")
     return {COMMAND_CHANGE_POS,CurrentIndex}
   end
   if HasIDNotNegated(Rep,40636712,RepFKraken) then
     return {COMMAND_CHANGE_POS,CurrentIndex}
   end
   if HasIDNotNegated(Rep,57477163,RepFSheep) then
+    print("RepFSheep")
     return {COMMAND_CHANGE_POS,CurrentIndex}
   end
   if HasIDNotNegated(Rep,83531441,RepDante) then
@@ -372,9 +377,16 @@ function FluffalInit(cards,to_bp_allowed,to_ep_allowed) -- FLUFFAL INIT
 	-- DEFENSIVE REPOSITION
 	for i=1,#Rep do
 	  local c = Rep[i]
-	  if FluffalFilter(c)
-	  and DefensiveReposition(c) 
+	  if (OppGetStrongestAttack() - c.attack) >= AI.GetPlayerLP(1)
+	  and FilterPosition(c,POS_ATTACK)
+	  or
+	  FluffalFilter(c)
+	  and DefensiveReposition(c,400)
+	  or
+	  FrightfurMonFilter(c)
+	  and DefensiveReposition(c,800)
 	  then
+	    print("DefensiveReposition")
 	    return {COMMAND_CHANGE_POS,i}
 	  end
 	end
@@ -533,6 +545,11 @@ function FluffalPrincipal(cards,to_bp_allowed,to_ep_allowed)
   if HasIDNotNegated(Act,13241004,UsePenguin) then
     return {COMMAND_ACTIVATE,CurrentIndex}
   end
+  if HasIDNotNegated(Act,98280324,true) -- Sheep
+  and HasIDNotNegated(Act,13241004,false) -- Penguin
+  then
+    return {COMMAND_ACTIVATE,CurrentIndex}
+  end
   if HasIDNotNegated(Act,98280324,UseSheep) then
     return {COMMAND_ACTIVATE,CurrentIndex}
   end
@@ -648,6 +665,19 @@ function FluffalPrincipal(cards,to_bp_allowed,to_ep_allowed)
   -- NORMAL SUMMON 2
   if HasIDNotNegated(Sum,10802915,SummonTGuide) then
     return {COMMAND_SUMMON,CurrentIndex}
+  end
+  if FSummonFStarve()
+  and CardsMatchingFilter(AIMon(),FilterAttribute,ATTRIBUTE_DARK) > 0
+  and HasID(UseLists({AIHand(),AIST()}),24094653,true) -- Polymerization
+  then
+    for i=1,#Sum do
+      local c = Sum[i]
+	  if c.level < 5
+	  and FilterAttribute(c,ATTRIBUTE_DARK)
+	  then
+	    return {COMMAND_SUMMON,i}
+	  end
+    end
   end
   if HasIDNotNegated(Sum,87246309,SummonOctopus) then
     local CurrentIndexAux = CurrentIndex
@@ -765,12 +795,22 @@ function FluffalPrincipal(cards,to_bp_allowed,to_ep_allowed)
 	then
       return {COMMAND_ACTIVATE,CurrentIndex}
 	end
+	if HasIDNotNegated(Act,73240432,false) -- CEater
+	and not HasID(AIPendulum(),73240432,true)
+	then
+      return {COMMAND_ACTIVATE,CurrentIndex}
+	end
     return {COMMAND_ACTIVATE,CurrentIndexAux}
   end
   if HasIDNotNegated(Act,65331686,UseOwlFusion) then
     local CurrentIndexAux = CurrentIndex
 	if GlobalFusionId == 80889750 -- FSabreTooth
 	and HasIDNotNegated(Act,40636712,false) -- FKraken
+	then
+      return {COMMAND_ACTIVATE,CurrentIndex}
+	end
+	if HasIDNotNegated(Act,73240432,UseCEaterScale) -- CEater
+	and not HasID(AIPendulum(),73240432,true)
 	then
       return {COMMAND_ACTIVATE,CurrentIndex}
 	end
@@ -909,7 +949,6 @@ function FluffalPrincipal(cards,to_bp_allowed,to_ep_allowed)
   if HasIDNotNegated(Sum,30068120,SummonSabres) then
     return {COMMAND_SUMMON,CurrentIndex}
   end
-  GlobalIFusion = 0
   print("---7 END")
 end
 
@@ -1104,6 +1143,7 @@ function FluffalVsDarkLaw(cards,to_bp_allowed,to_ep_allowed)
     return {COMMAND_CHANGE_POS,CurrentIndex}
   end
   if HasIDNotNegated(Rep,57477163,RepFSheep) then
+    print("RepFSheep - DarkLaw")
     return {COMMAND_CHANGE_POS,CurrentIndex}
   end
   if HasIDNotNegated(Rep,83531441,RepDante) then

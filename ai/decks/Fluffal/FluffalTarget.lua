@@ -1,24 +1,25 @@
 ------------------------
 -------- TARGET --------
 ------------------------
+GlobalFluffalCardID = 0
+GlobalFluffalMode = 0
 function DogTarget(cards,min,max,c)
   --CountPrioTarget(cards,PRIO_TOHAND,1,nil,nil,nil,"DogTarget")
   return Add(cards,PRIO_TOHAND,max)
 end
-GlobalPenguin = 0
 function PenguinTarget(cards,min,max,c)
-  if GlobalPenguin == 1 then
+  if GlobalFluffalCardID == c.id then
     --CountPrioTarget(cards,PRIO_TOFIELD,1,nil,nil,nil,"PenguinTarget - Field")
     return Add(cards,PRIO_TOFIELD,max)
   end
-  if GlobalPenguin == 0 then
+  if GlobalFluffalCardID ~= c.id then
     --CountPrioTarget(cards,PRIO_DISCARD,1,nil,nil,nil,"PenguinTarget - Grave")
     return Add(cards,PRIO_DISCARD,min)
   end
 end
 function OwlTarget(cards,min,max,c)
   local result
-  if GlobalOwl == 1 then
+  if GlobalFluffalCardID == c.id then
     result = FusionSummonTarget(cards,min,max,c,MATERIAL_TOGRAVE)
   else
     result = Add(cards)
@@ -226,6 +227,7 @@ function IFusionTarget(cards,min,max,c)
   --CountPrioTarget(cards,PRIO_TOFIELD,1,nil,nil,nil,"IFusionTarget")
   local result = Add(cards,PRIO_TOFIELD,max)
   OPTSet(cards[1].cardid)
+  GlobalIFusion = 2
   return result
 end
 function FRecyclePlantTarget(cards,min,max,c)
@@ -339,7 +341,7 @@ function MaxMaterials(fusionId,min,max)
 	then
 	  return math.max(CardsMatchingFilter(OppField(),FTigerDestroyFilter) - 1,min)
 	end
-	
+
     if CardsMatchingFilter(UseLists({AIHand(),AIST()}),FluffalFusionSTFilter) > 0
 	then
 	  result = max - 2
@@ -411,8 +413,8 @@ function FusionSummonTarget(cards,min,max,source,materialDest)
 
   if GlobalFusionPerform == 1 then
     GlobalFusionPerform = 2
-	--CountPrioTarget(cards,materialDest,1,nil,nil,nil,"FusionTarget1")
-	return Add(cards,materialDest)
+    --CountPrioTarget(cards,materialDest,min,nil,nil,nil,"FusionTarget1")
+	return Add(cards,materialDest,min)
   end
 
   if GlobalFusionPerform == 2 then
@@ -421,7 +423,7 @@ function FusionSummonTarget(cards,min,max,source,materialDest)
 	GlobalCountMaterial = MaxMaterials(GlobalFusionId,1,#cards)
 	local auxMaterial = math.max(math.min(GlobalCountMaterial,max),min)
 	--print("GlobalCountMaterial",GlobalCountMaterial,auxMaterial)
-	
+
 	local result = Add(cards,materialDest,auxMaterial)
 	GlobalCountMaterial = GlobalCountMaterial - auxMaterial
 	return result
@@ -431,7 +433,7 @@ function FusionSummonTarget(cards,min,max,source,materialDest)
 	--CountPrioTarget(cards,materialDest,MaxMaterials(GlobalFusionId,min,max),nil,nil,nil,"FusionTarget"..(GlobalFusionPerform-1))
 	local auxMaterial = math.max(math.min(GlobalCountMaterial,max),min)
 	--print("GlobalCountMaterial",GlobalCountMaterial,auxMaterial)
-	
+
 	local result = Add(cards,materialDest,auxMaterial)
 	GlobalCountMaterial = GlobalCountMaterial - auxMaterial
 	return result

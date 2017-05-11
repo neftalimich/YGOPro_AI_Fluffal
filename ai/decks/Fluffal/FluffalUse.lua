@@ -5,7 +5,7 @@
 function UsePenguin(c)
   if CardsMatchingFilter(AIHand(),PenguinFilter) > 0
   then
-    GlobalPenguin = 1
+    GlobalFluffalCardID = c.id
 	OPTSet(c.cardid)
     return true
   end
@@ -63,7 +63,7 @@ function UseOwlPoly(c)
   if CardsMatchingFilter(OppField(),SpellBlockedFilter) > 0
   or
   HasID(UseLists({AIHand(),AIMon()}),61173621,true) -- Chain
-  and OPTCheck(61173621)
+  and OPTCheck(61173621 + 1)
   then
     return false
   end
@@ -83,14 +83,14 @@ function UseOwlFusion(c)
   if AI.GetPlayerLP(1) <= 500 then
     return false
   end
-  GlobalOwl = 1
+  GlobalFluffalCardID = c.id
   GlobalFluffalMaterial = CountFluffalMaterial(UseLists({AIMon(),AIHand()}),MATERIAL_TOGRAVE)
   GlobalEdgeImpMaterial = CountEdgeImpMaterial(UseLists({AIMon(),AIHand()}),MATERIAL_TOGRAVE)
   local countF = CountFrighturFusion()
-  GlobalOwl = 0
+  GlobalFluffalCardID = 0
   if countF > 0
   then
-    GlobalOwl = 1
+    GlobalFluffalCardID = c.id
     return true
   end
   return false
@@ -104,7 +104,7 @@ function UseSheep(c)
   end
 end
 function UseSheepCEater(c)
-  if HasID(UseLists({AIHand(),AIGrave()}),73240432,true) 
+  if HasID(UseLists({AIHand(),AIGrave()}),73240432,true)
   then
     OPTSet(c.id)
     return true
@@ -198,7 +198,7 @@ end
 function UseCEaterScale(c)
   if not HasID(AIPendulum(),c.id,true)
   and CardsMatchingFilter(UseLists({AIHand(),AIMon()}),FluffalFusionMonFilter) > 1
-  and GlobalCanFusionSummon == true
+  and CardsMatchingFilter(UseLists({AIHand(),AIST()}),FluffalFusionSTFilter) > 0
   then
     return true
   end
@@ -218,7 +218,7 @@ function UseTomahawkDamage(c)
   AI.GetPlayerLP(2) <= 800
   or
   HasID(AIHand(),61173621,true) -- Chain
-  and OPTCheck(61173621)
+  and OPTCheck(61173621 + 1)
   then
     OPTCheck(c.id)
     return true
@@ -284,7 +284,7 @@ function UseKoS(c)
       return true
 	end
   end
-  if GlobalIFusion > 0 
+  if GlobalIFusion > 0
   and CardsMatchingFilter(UseLists({AIHand(),AIST()}),FluffalFusionSTFilter2) <= 1
   then
     return true
@@ -331,7 +331,7 @@ function ActiveTVendor(c,mode)
   then
 	return true
   elseif HasID(AIHand(),61173621,true) -- Chain
-  and OPTCheck(61173621)
+  and OPTCheck(61173621 + 1)
   and OPTCheck(34773082) -- FPatchwork
   then
     return true
@@ -378,7 +378,7 @@ function UseTVendor(c,mode)
     OPTSet(c.cardid)
 	return true
   elseif HasID(AIHand(),61173621,true) -- Chain
-  and OPTCheck(61173621)
+  and OPTCheck(61173621 + 1)
   and OPTCheck(34773082) -- FPatchwork
   then
 	OPTSet(c.cardid)
@@ -781,7 +781,7 @@ function FluffalEffectYesNo(id,card) -- FLUFFAL EFFECT YESNO
   if id == 38124994 then -- Rabit
 	result = 1
   end
-  
+
   if id == 73240432 then -- CEater
 	result = 1
   end
@@ -803,7 +803,7 @@ function FluffalEffectYesNo(id,card) -- FLUFFAL EFFECT YESNO
   if id == 70245411 then -- TVendor
 	result = 1
   end
-  
+
   if id == 22829942 then -- FRecyclePlant
     result = 1
   end

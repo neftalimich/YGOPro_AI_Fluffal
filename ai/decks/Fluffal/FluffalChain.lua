@@ -112,7 +112,7 @@ function FluffalChainOrder(cards) -- FLUFFAL CHAIN ORDER
 
   for i=1,#cards do
     local c = cards[i]
-    if c.level > 4 and c.id ~= 73240432 then -- To protect Frightfur 
+    if c.level > 4 and c.id ~= 73240432 then -- To protect Frightfur
       result[#result + 1] = i
     end
   end

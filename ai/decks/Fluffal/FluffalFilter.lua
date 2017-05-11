@@ -4,7 +4,9 @@
 -- FluffalM FILTER
 function FluffalFilter(c,exceptId)
   if exceptId == nil then exceptId = 0 end
-  return FilterSet(c,0xA9)
+  return
+    FilterSet(c,0xA9)
+    and c.id ~= exceptId
 end
 function NotFluffalFilter(c)
   return not FluffalFilter(c)
@@ -32,9 +34,9 @@ end
 -- EdgeImp FILTER
 function EdgeImpFilter(c,exceptId)
   if exceptId == nil then exceptId = 0 end
-  return 
+  return
     FilterSet(c,0xC3)
-	and c.id ~= except
+	and c.id ~= exceptId
 end
 -- Other FILTER
 function FluffalFusionMonFilter(c)
@@ -98,10 +100,12 @@ function FluffalFusionSTFilter2(c)
 end
 -- Trap FILTER
 -- Frightfur FILTER
-function FrightfurMonFilter(c)
+function FrightfurMonFilter(c,exceptId)
+  if exceptId == nil then exceptId = 0 end
   return
     FilterSet(c,0xAD)
 	and FilterType(c,TYPE_MONSTER)
+	and c.id ~= exceptId
 end
 function NotFrightfurMonFilter(c)
   return
@@ -366,7 +370,8 @@ end
 function FTigerAdvantageFilter(c)
   return
 	BossMonFilter(c)
-	or c.id == 37433748 -- Spyral Gear - Last Resort
+	or (c.id == 37433748 and FilterLocation(c,LOCATION_SZONE)) -- Spyral Gear - Last Resort
+	or (c.id == 54631665) -- Spyral Resort
 end
 function FSheepAdvantageFilter(c)
   return

@@ -35,6 +35,7 @@ function FluffalPosition(id,available) -- FLUFFAL POSITION
   result = nil
   if AIGetStrongestAttack() < OppGetStrongestAttack()
   and CardsMatchingFilter(OppMon(),FluffalDisvantageFilter) > 0
+  and id ~= 41209827 -- FStarve
   then
     return POS_FACEUP_DEFENSE
   end
@@ -51,7 +52,7 @@ function FluffalPosition(id,available) -- FLUFFAL POSITION
     end
   end
 
-  if id == 57477163 and GlobalIFusion == 1 then -- FSheep by IFusion
+  if id == 57477163 and GlobalIFusion == 2 then -- FSheep by IFusion
     return 4 -- POS_FACEUP_DEFENSE?
   end
 
@@ -84,6 +85,9 @@ function FluffalPosition(id,available) -- FLUFFAL POSITION
 	or
 	not BattlePhaseCheck()
 	and frightfurAtk < 3000
+	or
+	CardsMatchingFilter(OppMon(),FKrakenSendFilter) == 0
+	and frightfurAtk <= OppGetStrongestAttDef()
 	then
 	  result = 4 -- POS_FACEUP_DEFENSE?
 	end

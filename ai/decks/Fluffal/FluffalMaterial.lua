@@ -186,6 +186,10 @@ function MaterialFStarve()
   local monSubgroup = SubGroup(AIMon(),NotFrightfurMonFilter)
   countStarveMaterial = CardsMatchingFilter(monSubgroup,FilterAttribute,ATTRIBUTE_DARK)
   if (frightfurs - fsabre) > 0
+  or
+  (frightfurs) > 0
+  and AI.GetPlayerLP(2) <= 2800
+  and OppGetStrongestAttack() > AIGetStrongestAttack()
   then
     countStarveMaterial = countStarveMaterial + 1
   end

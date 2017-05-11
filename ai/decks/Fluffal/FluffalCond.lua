@@ -341,7 +341,7 @@ function BearCond(loc,c)
 end
 function OwlCond(loc,c)
   if loc == MATERIAL_TOGRAVE then
-    if not OPTCheck(c.id) or GlobalOwl == 1
+    if not OPTCheck(c.id) or GlobalFluffalCardID == c.id
 	or Get_Card_Count_ID(AIHand(),c.id) > 1
 	then
       return 3 + PrioFluffalMaterial(c,1)
@@ -371,11 +371,11 @@ function OwlCond(loc,c)
 	  end
 	end
 	if FilterLocation(c,LOCATION_ONFIELD) then
-	  if not HasID(AIHand(),c.id,true) 
+	  if not HasID(AIHand(),c.id,true)
 	  then
 	    if not OPTCheck(c.id) then
 		  return 9
-		elseif not NormalSummonCheck() 
+		elseif not NormalSummonCheck()
 		then
 		  return true
 		else
@@ -445,8 +445,8 @@ function OwlCond(loc,c)
 end
 function SheepCond(loc,c)
   if loc == MATERIAL_TOGRAVE then
-    if not OPTCheck(c.id) 
-	or Get_Card_Count_ID(AIHand(),c.id) > 1	  
+    if not OPTCheck(c.id)
+	or Get_Card_Count_ID(AIHand(),c.id) > 1
 	then
       return 3 + PrioFluffalMaterial(c,1)
 	elseif
@@ -604,12 +604,15 @@ function OctopusCond(loc,c)
 	or FilterLocation(c,LOCATION_GRAVE)
 	or FilterLocation(c,LOCATION_REMOVED)
 	then
+	  local fluffalsGrave = CountFluffal(AIGrave())
+	  local edgeImpsGrave = CountEdgeImp(AIGrave())
 	  if CardsMatchingFilter(UseLists({AIHand(),AIST()}),FluffalFusionSTFilter) > 0
 	  and not (
 	    HasID(AIGrave(),72413000,true) -- Wings
 	    and OPTCheck(72413000)
-	    and CountFluffal(AIGrave()) <= 2
+	    and fluffalsGrave <= 2
 	  )
+	  and (fluffalsGrave + edgeImpsGrave) > 0
 	  then
 	    return true
 	  else
@@ -675,7 +678,7 @@ function CatCond(loc,c)
 	    return 1
 	  end
 	  local polyCount = CardsMatchingFilter(UseLists({AIHand(),AIST()}),FilterID,24094653)
-	  if polyCount > 1 
+	  if polyCount > 1
 	  and not HasID(UseLists({AIHand(),AIMon()}),13241004,true) -- Penguin
 	  then
 	    return 5
@@ -1098,7 +1101,11 @@ function CEaterCond(loc,c)
   if loc == MATERIAL_TOGRAVE then
     if HasID(AIPendulum(),c.id,true)
 	then
-	  return 4
+	  if FilterLocation(c,LOCATION_ONFIELD)
+	  then
+	    return 2
+	  end
+	  return 4 + PrioFluffalMaterial(c,1)
 	elseif CountEdgeImp(UseLists({AIHand(),AIMon()})) == 1
 	and CardsMatchingFilter(AIMon(),FrightfurMonFilter) == 0
 	then
@@ -1294,11 +1301,11 @@ function ChainCond(loc,c)
 	  then
 	    return false
 	  end
-	  if OPTCheck(c.id + 1) 
+	  if OPTCheck(c.id + 1)
 	  and not HasID(AIHand(),c.id,true)
 	  then
 	    if OPTCheck(34773082) -- FPatchwork
-	    then 
+	    then
 		  return true -- 9
 		else
 		  return 7
@@ -1742,7 +1749,7 @@ function FFusionCond(loc,c)
   end
   if loc == PRIO_DISCARD then
     if FilterLocation(c,LOCATION_HAND) then
-	  return 
+	  return
 	    CardsMatchingFilter(UseLists({AIST(),AIHand(),AIDeck()}),FilterID,c.id) == 3
 		and not (PriorityCheck(AIGrave(),PRIO_BANISH,3) > 3)
 	end
@@ -2133,7 +2140,7 @@ function FDaredevil(loc,c)
 	end
   end
   if loc == PRIO_TOGRAVE then
-	if FilterLocation(c,LOCATION_EXTRA) 
+	if FilterLocation(c,LOCATION_EXTRA)
 	or FilterLocation(c,LOCATION_OVERLAY)
 	or FilterLocation(c,LOCATION_ONFIELD)
 	then
@@ -2186,15 +2193,15 @@ function FSabreToothCond(loc,c)
 	  end
 	  if GlobalFFusion > 0 then
 	    if MaterialFSabreToothBanish() then
-		  if GlobalIFusion == 1 then
-		    return 11
+		  if GlobalIFusion == 2 then
+		    return 15
 		  end
 		  return FSummonFSabreTooth(c)
 		end
 	  else
 	    if MaterialFSabreTooth() then
-		  if GlobalIFusion == 1 then
-		    return 11
+		  if GlobalIFusion == 2 then
+		    return 15
 		  end
 		  return FSummonFSabreTooth(c)
 		end
@@ -2570,7 +2577,7 @@ function FTigerCond(loc,c)
   end
   if loc == PRIO_TOFIELD then
     if FilterLocation(c,LOCATION_EXTRA) then
-	  if not HasID(AIExtra(),c.id,true) 
+	  if not HasID(AIExtra(),c.id,true)
 	  or HasID(AIMon(),c.id,true)
 	  then
 	    return 0
@@ -2657,10 +2664,10 @@ function FSheepCond(loc,c)
 	  if not HasID(AIExtra(),c.id,true) then
 	    return 0
 	  end
-	  if GlobalIFusion > 0 then
+	  if GlobalIFusion == 1 then
 	    return 5
 	  end
-	  if GlobalFFusion > 0 then
+	  if GlobalFFusion == 1 then
 	    if MaterialFSheepBanish() then
 		  return FSummonFSheep(c)
 		end

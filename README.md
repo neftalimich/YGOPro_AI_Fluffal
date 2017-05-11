@@ -27,6 +27,7 @@ Cada etapa irá mejorando conforme se encuentren errores, deficiencias en su alg
 Se colocará junto a la versión si es estable o no.
 
 **Problemas conocidos:**
+- Problemas con la reposición de batalla.
 - Siempre invoica monstruo con toy vendor. Faltan colocar las condiciones.
 - Fluffal Sheep tiene varios problemas de realizar su juego en el tiempo correcto.
 - A veces, invoca a Patchwork sin necesidad.

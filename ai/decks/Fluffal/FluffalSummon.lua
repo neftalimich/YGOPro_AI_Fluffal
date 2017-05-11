@@ -29,6 +29,7 @@ function SummonPenguinAttack()
 	  and CardsMatchingFilter(OppMon(),FilterAttackMin,3000) < 3
 	)
   )
+  and BattlePhaseCheck()
   then
     return true
   end
@@ -232,9 +233,9 @@ function SpSummonFDaredevil(c)
   local frightfurAtk = c.attack + FrightfurBoost(c.id)
   local canAttack = FluffalCanAttack(OppMon(),frightfurAtk)
   local frightfurGrave = CountFrightfurMon(UseLists({AIGrave(),AIMon()}))
-  
-  if (frightfurGrave + 1) * 500 >= AI.GetPlayerLP(2) 
-  or 
+
+  if (frightfurGrave + 1) * 500 >= AI.GetPlayerLP(2)
+  or
   OppGetStrongestAttDef() >= AIGetStrongestAttack()
   and frightfurAtk > OppGetStrongestAttDef()
   and OppGetStrongestAttDef() > 3000
@@ -373,6 +374,7 @@ function FWolfFinish()
 	HasIDNotNegated(AIMon(),80889750,true)
 	and HasIDNotNegated(AIMon(),00464362,true)
 	and CardsMatchingFilter(OppST(),FilterPosition,POS_FACEDOWN) < 3
+	and OppGetStrongestAttDef() < 4500
 	or
 	#OppMon() <= 1
 	and HasIDNotNegated(AIMon(),00464362,true)
@@ -416,7 +418,7 @@ function FSummonFTiger(c)
 	then
 	  return 11
 	end
-	if GlobalFFusion > 0 
+	if GlobalFFusion > 0
 	and CardsMatchingFilter(OppField(),FTigerDestroyFilter) > 3
 	and PriorityCheck(AIGrave(),PRIO_BANISH,3,FluffalFilter) > 2
 	then
@@ -427,7 +429,7 @@ function FSummonFTiger(c)
 	end
 	if OppGetStrongestAttDef() >= AIGetStrongestAttack()
 	and OppGetStrongestAttDef() > 3000
-	and CardsMatchingFilter(OppMon(),FilterAffected,EFFECT_IMMUNE_EFFECT) > 0
+	and CardsMatchingFilter(OppMon(),FTigerDestroyFilter) > 0
 	then
 	  if HasID(AIMon(),80889750,true) -- FSabreTooth
 	  then
@@ -443,9 +445,11 @@ function FSummonFTiger(c)
 	  CardsMatchingFilter(OppField(),FTigerDestroyFilter) > 1
 	  and (
 	    CardsMatchingFilter(AIMon(),FrightfurMonFilter) > 0
-		or (
-		  GlobalFluffalMaterial > 2
-		)
+		or
+		GlobalFluffalMaterial > 2
+		or
+		#OppField() < 4
+		and GlobalFluffalMaterial > 0
 	  )
 	  or
 	  CardsMatchingFilter(OppField(),FTigerDestroyFilter) == 1
@@ -471,7 +475,7 @@ function FSummonFSheep(c)
   if not HasIDNotNegated(AIMon(),57477163,true) -- FSheep
   then
     if Duel.GetTurnCount() == 1
-	and not OPTCheck(61173621) -- Chain
+	and not OPTCheck(61173621 + 1) -- Chain
 	then
 	  return 1
 	end
@@ -492,6 +496,10 @@ function SpSummonFSheep(c)
 	    return 5
 	  end
     end
+	if not OPTCheck(61173621 + 1) -- Chain
+	then
+	  return 4
+	end
     return true
   else
     if not BattlePhaseCheck() then
@@ -505,7 +513,7 @@ function FSummonFStarve(c)
   return
 	CardsMatchingFilter(OppMon(),FilterSummon,SUMMON_TYPE_SPECIAL) > 0
 	and (
-      SpSummonFStarve()
+      SpSummonFStarve(c)
 	  or
 	  AI.GetPlayerLP(2) <= 2800
 	  and CardsMatchingFilter(OppMon(),FilterPosition,POS_FACEUP_ATTACK) > 0
@@ -616,6 +624,7 @@ function RepFKraken(c)
 end
 function RepFSheep(c)
   if FilterPosition(c,POS_DEFENSE)
+  and OppGetStrongestAttack() < AIGetStrongestAttack()
   then
     return true
   else
@@ -650,9 +659,12 @@ function RepDante(c)
   end
 end
 
-function DefensiveReposition(c)
-  if FilterPosition(c,POS_ATTACK) 
-  and OppGetStrongestAttack() > c.attack
+function DefensiveReposition(c,boost)
+  if FilterPosition(c,POS_DEFENSE)
+  then
+    return false
+  end
+  if OppGetStrongestAttack() > (c.attack + boost)
   then
     return true
   end
