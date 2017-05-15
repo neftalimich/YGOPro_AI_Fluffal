@@ -35,6 +35,7 @@ function DogCond(loc,c)
 		  return 7
 		end
 	  end
+	  return false
 	end
   end
   if loc == PRIO_TOFIELD then

@@ -766,7 +766,6 @@ function FluffalEffectYesNo(id,card) -- FLUFFAL EFFECT YESNO
 	result = 1
   end
   if id == 13241004  then -- Penguin
-    id = id + 1 -- Material
 	result = 1
   end
   if id == 65331686 and UseOwlPoly(card) then -- Owl
